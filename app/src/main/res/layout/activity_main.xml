@@ -7,21 +7,6 @@
     tools:context=".MainActivity">
 
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/questionNavigation"
-        android:layout_width="191dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="399dp"
-        android:layout_marginEnd="-37dp"
-        android:layout_marginRight="-37dp"
-        app:menu="@menu/menu_question_navigation" />
-
-
-
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"

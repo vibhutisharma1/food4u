@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragments.QuestionTwo">
+    <!-- question1 -->
+
+
+    <!-- Rectangle 37 -->
+    <ScrollView
+        android:id="@+id/content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="-4dp">
+    </ScrollView>
+
+
+
+    <View
+            android:id="@+id/rectangle_3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="-3dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="2dp"
+            android:background="@drawable/gradient_background" />
+
+        <View
+            android:id="@+id/rectangle_6"
+            android:layout_width="112dp"
+            android:layout_height="89dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="14dp"
+            android:layout_marginTop="132dp"
+            android:background="@drawable/blob1824"
+            android:elevation="4dp" />
+
+        <TextView
+            android:id="@+id/btn18"
+            android:layout_width="88dp"
+            android:layout_height="45dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="156dp"
+            android:gravity="center_horizontal|top"
+            android:text="18-24"
+            android:textAppearance="@style/some_id" />
+
+        <TextView
+            android:id="@+id/what_age_ra"
+            android:layout_width="414dp"
+            android:layout_height="174dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="58dp"
+            android:gravity="center_horizontal|top"
+            android:text="What Age Range Are You In?"
+            android:textAppearance="@style/what_age_ra" />
+
+
+
+
+</RelativeLayout>
