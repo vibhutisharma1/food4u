@@ -28,12 +28,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
     public static final String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&health=vegan&dishType=Biscuits%20and%20cookies";
-
     public static final String TAG = "MainActivity";
 
     ActivityMainBinding binding;
@@ -63,7 +64,8 @@ public class MainActivity extends AppCompatActivity {
                     JSONArray results = response.getJSONArray("hits");
                     Log.i(TAG, "Results" + results.toString());
                     Log.i(TAG, "OnSuccess");
-//
+                    processResults(results);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -104,6 +106,39 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+    }
+
+    public ArrayList<Recipe> processResults(JSONArray response){
+        ArrayList<Recipe> allRecipes = new ArrayList<>();
+        try {
+
+            for (int i = 0; i < response.length(); i++) {
+                //gets specific hit
+                JSONObject recipeJSON = response.getJSONObject(i);
+                //goes into the recipe portion of hit
+                JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
+                String recipeName = currentRecipe.getString("label");
+                String image = currentRecipe.getString("image");
+                String recipeURL = currentRecipe.getString("url");
+                String calories = Integer.toString(currentRecipe.getInt("calories"));
+                String servings = Integer.toString(currentRecipe.getInt("yield"));
+
+                //looks into an array of ingredients and add them to the recipe
+                ArrayList<String> ingredients = new ArrayList<>();
+                JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
+                for (int j = 0; j < ingredientList.length(); j++) {
+                    ingredients.add(ingredientList.get(j).toString());
+                }
+
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
+                allRecipes.add(recipe);
+            }
+
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return allRecipes;
     }
 
 

@@ -72,9 +72,9 @@ public class QuestionActivity extends FragmentActivity {
         @Override
         public Fragment createFragment(int position) {
             if (position == 0)
-                return new QuestionOne();
-            else
                 return new QuestionTwo();
+            else
+                return new QuestionOne();
         }
 
         @Override

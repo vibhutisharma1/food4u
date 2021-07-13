@@ -11,7 +11,7 @@ public class HealthLabel {
                 "alcohol-free",
                 "immuno-supportive",
                 "celery-free",
-                "crustacean-free",
+                "crustacean-free",//didnt include
                 "dairy-free",
                 "egg-free",
                 "fish-free",
@@ -23,7 +23,7 @@ public class HealthLabel {
                 "low-potassium",
                 "lupine-free",
                 "mustard-free",
-                "low-fat-abs",
+                "low-fat-abs",//start here
                 "No-oil-added",
                 "low-sugar",
                 "paleo",
