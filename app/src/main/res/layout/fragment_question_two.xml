@@ -8,74 +8,61 @@
 
 
     <!-- Rectangle 37 -->
-    <ScrollView
-        android:id="@+id/content"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+
+    <!--    <ScrollView-->
+<!--        android:id="@+id/content"-->
+<!--        android:layout_width="409dp"-->
+<!--        android:layout_height="730dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:layout_marginStart="2dp"-->
+<!--        android:layout_marginTop="1dp"-->
+<!--        android:layout_marginBottom="0dp">-->
+<!--        -->
+<!--    </ScrollView>-->
+
+    <View
+        android:id="@+id/rectangle_3"
+        android:layout_width="412dp"
+        android:layout_height="773dp"
         android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="2dp"
-        android:layout_marginBottom="-4dp">
-    </ScrollView>
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="-42dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/gradient_background" />
 
-
+    <TextView
+        android:id="@+id/what_age_ra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="2dp"
+        android:gravity="center_horizontal|top"
+        android:text="What Age Range Are You In?"
+        android:textAppearance="@style/what_age_ra" />
 
     <View
-            android:id="@+id/rectangle_3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="-3dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginBottom="2dp"
-            android:background="@drawable/gradient_background" />
-
-        <View
-            android:id="@+id/rectangle_6"
-            android:layout_width="112dp"
-            android:layout_height="89dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="14dp"
-            android:layout_marginTop="132dp"
-            android:background="@drawable/blob1824"
-            android:elevation="4dp" />
-
-        <TextView
-            android:id="@+id/btn18"
-            android:layout_width="88dp"
-            android:layout_height="45dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="27dp"
-            android:layout_marginTop="156dp"
-            android:gravity="center_horizontal|top"
-            android:text="18-24"
-            android:textAppearance="@style/some_id" />
-
-        <TextView
-            android:id="@+id/what_age_ra"
-            android:layout_width="414dp"
-            android:layout_height="174dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="58dp"
-            android:gravity="center_horizontal|top"
-            android:text="What Age Range Are You In?"
-            android:textAppearance="@style/what_age_ra" />
-
-
+        android:id="@+id/rectangle_6"
+        android:layout_width="121dp"
+        android:layout_height="71dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="17dp"
+        android:layout_marginLeft="31dp"
+        android:layout_marginTop="147dp"
+        android:layout_marginEnd="272dp"
+        android:background="@drawable/blob1824"
+        android:elevation="4dp" />
 
 
 </RelativeLayout>

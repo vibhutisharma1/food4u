@@ -25,6 +25,20 @@
 
     </style>
 
+    <style name="hey_jane_le">
+
+        <item name="android:textSize">
+            36sp
+        </item>
+
+        <item name="android:textColor">
+            #A1000000
+        </item>
+
+    </style>
+
+
+
 
 
 </resources>

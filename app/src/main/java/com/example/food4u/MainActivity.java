@@ -10,6 +10,12 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.codepath.asynchttpclient.AsyncHttpClient;
 import com.codepath.asynchttpclient.RequestParams;
 import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
@@ -27,13 +33,11 @@ import okhttp3.Headers;
 public class MainActivity extends AppCompatActivity {
 
     public static final String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&health=vegan&dishType=Biscuits%20and%20cookies";
-            //"https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&health=vegan";
-            //"https://api.edamam.com/api/recipes/v2?type=public&q=chicken&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&diet=balanced&mealType=Dinner&imageSize=REGULAR";
-            //  crustacean free doesnt work "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&health=alcohol-free&health=celery-free&health=crustacean-free&health=dairy-free&health=egg-free&cuisineType=Indian&mealType=Dinner";
 
     public static final String TAG = "MainActivity";
 
     ActivityMainBinding binding;
+    RequestQueue recipeQueue;
     final FragmentManager fragmentManager = getSupportFragmentManager();
 
 
@@ -48,34 +52,34 @@ public class MainActivity extends AppCompatActivity {
 
 
         //retrieve api
-        RequestParams params = new RequestParams();
-        params.put("limit", "20");
-        params.put("page", 1);
+        recipeQueue = Volley.newRequestQueue(this);
 
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.get(REQUEST_URL, params, new JsonHttpResponseHandler() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,REQUEST_URL,null, new Response.Listener<JSONObject>(){
 
             @Override
-            public void onSuccess(int statusCode, Headers headers, JSON json) {
-                Log.d(TAG, "onSuccess");
-                JSONObject jsonObject = json.jsonObject;
+            public void onResponse(JSONObject response) {
                 try {
-                    JSONArray results = jsonObject.getJSONArray("hits");
+
+                    JSONArray results = response.getJSONArray("hits");
                     Log.i(TAG, "Results" + results.toString());
+                    Log.i(TAG, "OnSuccess");
+//
+
                 } catch (JSONException e) {
-                    Log.e(TAG, "Hit json exception", e);
                     e.printStackTrace();
                 }
-
             }
+            }, new Response.ErrorListener(){
 
-            @Override
-            public void onFailure(int i, Headers headers, String s, Throwable throwable) {
-                Log.d(TAG, "onFailure");
-                Log.e(TAG, "Hit json exception", throwable);
+                @Override
+                public void onErrorResponse (VolleyError error){
+                    Log.i(TAG, "OnFailure");
+                    error.printStackTrace();
 
-            }
-        });
+                }
+            });
+        recipeQueue.add(jsonObjectRequest);
+        //Recipe.processResults(jsonObjectRequest);
 
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                     default:
-                       // fragment = new ProfileFragment();
+                        // fragment = new ProfileFragment();
                         break;
                 }
                 //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
@@ -100,6 +104,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
-
     }
+
+
+
+
 }
+
