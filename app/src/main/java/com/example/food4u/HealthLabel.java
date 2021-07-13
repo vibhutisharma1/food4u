@@ -4,28 +4,27 @@ import java.util.Arrays;
 
 public class HealthLabel {
 
-    String [] health_tags;
+    String  [] health_tags;
 
     public HealthLabel(){
         health_tags = new String[]{
                 "alcohol-free",
-                "immuno-supportive",
                 "celery-free",
-                "crustacean-free",//didnt include
                 "dairy-free",
                 "egg-free",
                 "fish-free",
                 "fodmap-free",
                 "gluten-free",
+                "immuno-supportive",
                 "keto-friendly",
                 "kidney-friendly",
                 "kosher",
+                "low-fat-abs",
                 "low-potassium",
+                "low-sugar",
                 "lupine-free",
                 "mustard-free",
-                "low-fat-abs",//start here
                 "No-oil-added",
-                "low-sugar",
                 "paleo",
                 "peanut-free",
                 "pecatarian",
@@ -49,7 +48,6 @@ public class HealthLabel {
      */
     public static String apiHealthString(String health) {
          return "&health="+health;
-        // return Arrays.asList(health_tags).lastIndexOf(health) != -1? true : false;
 
     }
 

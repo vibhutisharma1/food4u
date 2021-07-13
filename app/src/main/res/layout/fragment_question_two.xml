@@ -124,6 +124,14 @@
         android:layout_toEndOf="@+id/age25"
         android:text="35-44" />
 
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="655dp"
+        android:text="Show me the Recipes!" />
+
     <!--    <View-->
 <!--        android:id="@+id/rectangle_6"-->
 <!--        android:layout_width="121dp"-->

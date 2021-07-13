@@ -7,17 +7,17 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import com.example.food4u.databinding.ActivityQuestionBinding;
+import com.example.food4u.databinding.FragmentQuestionTwoBinding;
 import com.example.food4u.fragments.QuestionOne;
 import com.example.food4u.fragments.QuestionTwo;
 
 
 public class QuestionActivity extends FragmentActivity {
-
-    ActivityQuestionBinding binding;
 
     /**
      * The number of pages (wizard steps) to show in this demo.
@@ -41,11 +41,18 @@ public class QuestionActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+//        bindingQ = FragmentQuestionTwoBinding.inflate(getLayoutInflater());
+//        View v = bindingQ.getRoot();
+//        setContentView(v);
+
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
         //viewPager.setAdapter(second_pagerAdapter);
+
+
+
     }
 
     @Override
@@ -59,6 +66,12 @@ public class QuestionActivity extends FragmentActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
+    public void buttonClicked(View v) {
+        Fragment q1 = new QuestionOne();
+        ((QuestionOne) q1).buttonClicked(v);
+    }
+
+
 
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
@@ -69,19 +82,23 @@ public class QuestionActivity extends FragmentActivity {
             super(fa);
         }
 
+
         @Override
         public Fragment createFragment(int position) {
-            if (position == 0)
-                return new QuestionTwo();
-            else
+            if (position == 0) {
                 return new QuestionOne();
+            }
+            else
+                return new QuestionTwo();
         }
 
         @Override
         public int getItemCount() {
             return NUM_PAGES;
         }
+
     }
+
 
 
 

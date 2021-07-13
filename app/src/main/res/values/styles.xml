@@ -37,8 +37,29 @@
 
     </style>
 
+    <style name="food4u">
+
+        <item name="android:textSize">
+            64sp
+        </item>
+
+        <item name="android:textColor">
+            #46C6E9
+        </item>
+
+    </style>
 
 
+    <style name="explore_new">
 
+        <item name="android:textSize">
+            25sp
+        </item>
+
+        <item name="android:textColor">
+            #A14E757F
+        </item>
+
+    </style>
 
 </resources>

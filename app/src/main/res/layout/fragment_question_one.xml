@@ -31,18 +31,19 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="-3dp"
-        android:layout_marginBottom="-2dp">
+        android:layout_marginStart="-10dp"
+        android:layout_marginTop="74dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="-75dp">
 
     </ScrollView>
 
     <Button
-        android:id="@+id/age42"
+        android:id="@+id/fodmap_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age33"
+        android:layout_below="@+id/red_meat_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="-1dp"
         android:layout_marginTop="14dp"
@@ -51,36 +52,38 @@
         android:textSize="13sp" />
 
     <Button
-        android:id="@+id/age43"
+        android:id="@+id/shellfish_free"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age32"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="18dp"
-        android:layout_toEndOf="@+id/age42"
+        android:layout_below="@+id/sesame_free"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="16dp"
+        android:layout_toEndOf="@+id/fodmap_free"
+        android:onClick="buttonClicked"
         android:text="shellfish-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age41"
+        android:id="@+id/vegan"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="38dp"
         android:layout_below="@+id/what_age_ra2"
         android:layout_marginStart="8dp"
         android:layout_marginTop="13dp"
-        android:layout_toEndOf="@+id/age4"
+        android:layout_toEndOf="@+id/alcohol_free"
         android:text="vegan"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age40"
+        android:id="@+id/vegetarian"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age14"
+        android:layout_below="@+id/immuno_supportive"
         android:layout_marginStart="31dp"
         android:layout_marginTop="7dp"
-        android:layout_toEndOf="@+id/age11"
+        android:layout_toEndOf="@+id/dairy_free"
         android:text="vegetarian"
         android:textAllCaps="false" />
 
@@ -96,10 +99,11 @@
         android:textSize="40dp" />
 
     <Button
-        android:id="@+id/age27"
+        android:id="@+id/no_oil_added"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age19"
+        android:layout_below="@+id/paleo"
         android:layout_alignParentStart="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="19dp"
@@ -107,72 +111,54 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/age19"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="19dp"
-        android:text="no-oil-added"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/age29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/age19"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="7dp"
-        android:layout_marginTop="19dp"
-        android:text="no-oil-added"
-        android:textAllCaps="false" />
-
-    <Button
-        android:id="@+id/age30"
+        android:id="@+id/tree_nut_free"
+        android:onClick="buttonClicked"
         android:layout_width="138dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age31"
+        android:layout_below="@+id/wheat_free"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="25dp"
         android:layout_marginEnd="9dp"
         android:layout_marginBottom="23dp"
-        android:layout_toEndOf="@+id/age43"
+        android:layout_toEndOf="@+id/shellfish_free"
         android:text="tree-nut-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age31"
+        android:id="@+id/wheat_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age34"
+        android:layout_below="@+id/pork_free"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="11dp"
-        android:layout_toEndOf="@+id/age32"
+        android:layout_toEndOf="@+id/sesame_free"
         android:text="wheat-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age32"
+        android:id="@+id/sesame_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age36"
+        android:layout_below="@+id/mustard_free"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/age33"
+        android:layout_marginTop="4dp"
+        android:layout_toEndOf="@+id/red_meat_free"
         android:text="sesame-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age33"
+        android:id="@+id/red_meat_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age37"
+        android:layout_below="@+id/lupine_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="6dp"
@@ -180,34 +166,37 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age34"
+        android:id="@+id/pork_free"
+        android:onClick="buttonClicked"
         android:layout_width="101dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age15"
+        android:layout_below="@+id/pecatarian"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="15dp"
-        android:layout_toEndOf="@+id/age36"
+        android:layout_toEndOf="@+id/mustard_free"
         android:text="pork-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age36"
+        android:id="@+id/mustard_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age38"
+        android:layout_below="@+id/peanut_free"
         android:layout_marginStart="25dp"
         android:layout_marginTop="16dp"
-        android:layout_toEndOf="@+id/age37"
+        android:layout_toEndOf="@+id/lupine_free"
         android:text="mustard-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age37"
+        android:id="@+id/lupine_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age27"
+        android:layout_below="@+id/no_oil_added"
         android:layout_alignParentStart="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="18dp"
@@ -215,55 +204,60 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age38"
+        android:id="@+id/peanut_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age16"
+        android:layout_below="@+id/low_sugar"
         android:layout_marginStart="21dp"
         android:layout_marginTop="17dp"
-        android:layout_toEndOf="@+id/age27"
+        android:layout_toEndOf="@+id/no_oil_added"
         android:text="peanut-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age4"
+        android:id="@+id/alcohol_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/what_age_ra2"
         android:layout_alignParentStart="true"
         android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:text="peanut-free"
+        android:text="alcohol-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age8"
+        android:id="@+id/sugar_conscious"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age40"
+        android:layout_below="@+id/vegetarian"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
-        android:layout_toEndOf="@+id/age9"
+        android:layout_toEndOf="@+id/fish_free"
         android:text="sugar-conscious"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age9"
+        android:id="@+id/fish_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age11"
+        android:layout_below="@+id/dairy_free"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="25dp"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/age10"
+        android:layout_toEndOf="@+id/egg_free"
         android:text="fish-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age10"
+        android:id="@+id/egg_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age12"
+        android:layout_below="@+id/celery_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="10dp"
         android:layout_marginTop="15dp"
@@ -272,35 +266,37 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age15"
+        android:id="@+id/pecatarian"
+        android:onClick="buttonClicked"
         android:layout_width="116dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age19"
+        android:layout_below="@+id/paleo"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="14dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="2dp"
-        android:layout_toEndOf="@+id/age38"
+        android:layout_toEndOf="@+id/peanut_free"
         android:text="pescatarian"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age16"
+        android:id="@+id/low_sugar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age20"
-        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/low_potassium"
         android:layout_marginStart="22dp"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/age17"
+        android:layout_toEndOf="@+id/low_fat_abs"
+        android:onClick="buttonClicked"
         android:text="low-sugar"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age17"
+        android:id="@+id/low_fat_abs"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age21"
+        android:layout_below="@+id/kidney_friendly"
         android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"
@@ -309,34 +305,37 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age19"
+        android:id="@+id/paleo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age20"
+        android:layout_below="@+id/low_potassium"
         android:layout_marginStart="43dp"
         android:layout_marginTop="10dp"
-        android:layout_toEndOf="@+id/age16"
+        android:layout_toEndOf="@+id/low_sugar"
+        android:onClick="buttonClicked"
         android:text="paleo"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age20"
+        android:id="@+id/low_potassium"
+        android:onClick="buttonClicked"
         android:layout_width="145dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age23"
+        android:layout_below="@+id/keto_friendly"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="13dp"
         android:layout_marginEnd="-1dp"
-        android:layout_toEndOf="@+id/age39"
+        android:layout_toEndOf="@+id/soy_free"
         android:text="low-potassium"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age21"
+        android:id="@+id/kidney_friendly"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age24"
+        android:layout_below="@+id/gluten_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="6dp"
         android:layout_marginTop="17dp"
@@ -345,45 +344,49 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age39"
+        android:id="@+id/soy_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age24"
+        android:layout_below="@+id/gluten_free"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="17dp"
         android:layout_marginTop="17dp"
-        android:layout_toEndOf="@+id/age21"
+        android:layout_toEndOf="@+id/kidney_friendly"
         android:text="soy-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age22"
+        android:id="@+id/kosher"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age8"
+        android:layout_below="@+id/sugar_conscious"
         android:layout_marginStart="32dp"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/age23"
+        android:layout_toEndOf="@+id/keto_friendly"
         android:text="kosher"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age23"
+        android:id="@+id/keto_friendly"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age9"
+        android:layout_below="@+id/fish_free"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="14dp"
-        android:layout_toEndOf="@+id/age24"
+        android:layout_toEndOf="@+id/gluten_free"
         android:text="keto-friendly"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age24"
+        android:id="@+id/gluten_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age10"
+        android:layout_below="@+id/egg_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="19dp"
@@ -392,30 +395,33 @@
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age11"
+        android:id="@+id/dairy_free"
+        android:onClick="buttonClicked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age14"
+        android:layout_below="@+id/immuno_supportive"
         android:layout_marginStart="18dp"
         android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/age12"
+        android:layout_toEndOf="@+id/celery_free"
         android:text="dairy-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age12"
+        android:id="@+id/celery_free"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/age4"
+        android:layout_below="@+id/alcohol_free"
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
-        android:layout_toEndOf="@+id/age18"
+        android:layout_toEndOf="@+id/alcohol_free"
+        android:onClick="buttonClicked"
         android:text="celery-free"
         android:textAllCaps="false" />
 
     <Button
-        android:id="@+id/age14"
+        android:id="@+id/immuno_supportive"
+        android:onClick="buttonClicked"
         android:layout_width="181dp"
         android:layout_height="44dp"
         android:layout_below="@+id/what_age_ra2"
@@ -423,7 +429,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="-5dp"
-        android:layout_toEndOf="@+id/age41"
+        android:layout_toEndOf="@+id/vegan"
         android:text="immuno-supportive"
         android:textAllCaps="false" />
 

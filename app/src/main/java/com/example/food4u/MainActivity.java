@@ -3,8 +3,8 @@ package com.example.food4u;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -16,11 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.codepath.asynchttpclient.AsyncHttpClient;
-import com.codepath.asynchttpclient.RequestParams;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
+
 import com.example.food4u.databinding.ActivityMainBinding;
-import com.example.food4u.databinding.ActivityQuestionBinding;
+import com.example.food4u.fragments.HomeFragment;
+import com.example.food4u.fragments.QuestionOne;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
@@ -30,17 +29,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import okhttp3.Headers;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8&health=vegan&dishType=Biscuits%20and%20cookies";
+    public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=655d39c01f4f38804731f9996ab01ee8";
     public static final String TAG = "MainActivity";
 
     ActivityMainBinding binding;
     RequestQueue recipeQueue;
-    final FragmentManager fragmentManager = getSupportFragmentManager();
+    public String healthTags;
+    final FragmentManager fragmentManager;
 
+    public MainActivity(FragmentManager fragmentManager) {
+        this.fragmentManager = fragmentManager;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,14 @@ public class MainActivity extends AppCompatActivity {
 
         //retrieve api
         recipeQueue = Volley.newRequestQueue(this);
+
+        //add the health tags to the URL if not null
+
+        healthTags = QuestionOne.healthStringTags;
+        System.out.println(healthTags);
+        if(healthTags != null){
+            REQUEST_URL+=healthTags;
+        }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,REQUEST_URL,null, new Response.Listener<JSONObject>(){
 
@@ -90,16 +100,17 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
                     case R.id.action_camera:
-                        //fragment = new ComposeFragment();
+                        fragment = new HomeFragment();
                         break;
                     case R.id.action_home:
-                        //fragment = new PostsFragment();
+                        fragment = new HomeFragment();
                         break;
                     case R.id.action_profile:
                     default:
-                        // fragment = new ProfileFragment();
+                        fragment = new HomeFragment();
                         break;
                 }
+
                 //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         });
