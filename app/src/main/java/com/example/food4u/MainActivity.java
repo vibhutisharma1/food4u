@@ -2,9 +2,9 @@ package com.example.food4u;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 
-import android.app.FragmentManager;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -38,11 +38,14 @@ public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     RequestQueue recipeQueue;
     public String healthTags;
-    final FragmentManager fragmentManager;
+    final FragmentManager fragmentManager  = getSupportFragmentManager();;
+    public static ArrayList<Recipe> allRecipes = new ArrayList<>();
 
-    public MainActivity(FragmentManager fragmentManager) {
-        this.fragmentManager = fragmentManager;
-    }
+//    public MainActivity(){}
+//
+////    public MainActivity(FragmentManager fragmentManager) {
+////        this.fragmentManager = fragmentManager;
+////    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,9 +102,6 @@ public class MainActivity extends AppCompatActivity {
             public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
                 switch (menuItem.getItemId()) {
-                    case R.id.action_camera:
-                        fragment = new HomeFragment();
-                        break;
                     case R.id.action_home:
                         fragment = new HomeFragment();
                         break;
@@ -111,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
 
-                //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+               fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         });
 
@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public ArrayList<Recipe> processResults(JSONArray response){
-        ArrayList<Recipe> allRecipes = new ArrayList<>();
         try {
 
             for (int i = 0; i < response.length(); i++) {
@@ -149,6 +148,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+       Log.e(TAG, "recipe size in main activity" + allRecipes.size());
         return allRecipes;
     }
 

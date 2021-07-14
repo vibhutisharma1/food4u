@@ -29,8 +29,27 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
+    public ArrayList<String> getIngredients() {
+        return ingredients;
+    }
 
+    public String getCalories() {
+        return calories;
+    }
 
+    public String getServings() {
+        return servings;
+    }
 
+    public String getRecipeURL() {
+        return recipeURL;
+    }
 
+    public String getImage() {
+        return image;
+    }
+
+    public String getRecipeName() {
+        return recipeName;
+    }
 }

@@ -9,7 +9,6 @@
         android:id="@+id/explore_new"
         android:layout_width="329dp"
         android:layout_height="28dp"
-        android:layout_below="@+id/food4u"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_centerHorizontal="true"
