@@ -41,15 +41,14 @@ public class QuestionActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-//        bindingQ = FragmentQuestionTwoBinding.inflate(getLayoutInflater());
-//        View v = bindingQ.getRoot();
-//        setContentView(v);
 
         // Instantiate a ViewPager2 and a PagerAdapter.
         viewPager = findViewById(R.id.pager);
         pagerAdapter = new ScreenSlidePagerAdapter(this);
         viewPager.setAdapter(pagerAdapter);
-        //viewPager.setAdapter(second_pagerAdapter);
+
+        //DepthPageTrasnformer Effect
+        viewPager.setPageTransformer(new DepthPageTransformer());
 
 
 

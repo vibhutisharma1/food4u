@@ -3,12 +3,14 @@ package com.example.food4u;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -41,11 +43,6 @@ public class MainActivity extends AppCompatActivity {
     final FragmentManager fragmentManager  = getSupportFragmentManager();;
     public static ArrayList<Recipe> allRecipes = new ArrayList<>();
 
-//    public MainActivity(){}
-//
-////    public MainActivity(FragmentManager fragmentManager) {
-////        this.fragmentManager = fragmentManager;
-////    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
         setContentView(v);
+
+        //toolbar
+        // Find the toolbar view inside the activity layout
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
+        setSupportActionBar(toolbar);
+        // Remove default title text
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+        // Get access to the custom title view
+        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
 
         //retrieve api
