@@ -42,10 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
 
     ActivityMainBinding binding;
-    public static RequestQueue recipeQueue;
-    public String healthTags;
     final FragmentManager fragmentManager  = getSupportFragmentManager();;
-    public static ArrayList<Recipe> allRecipes = new ArrayList<>();
 
 
     @Override
@@ -69,11 +66,7 @@ public class MainActivity extends AppCompatActivity {
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
 
-        //retrieve api
-        recipeQueue = Volley.newRequestQueue(this);
-
         //add the health tags to the URL if not null
-
 
         //maybe set this info into a new string to avoid failure if crash
         //remove duplicate tags
@@ -101,103 +94,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
     }
 
-    public static ArrayList<Recipe> getRecipesFromAPI(String url){
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET,url,null, new Response.Listener<JSONObject>(){
 
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-
-                    JSONArray results = response.getJSONArray("hits");
-                    Log.i(TAG, "Results" + results.toString());
-                    Log.i(TAG, "OnSuccess");
-                    processResults(results);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener(){
-
-            @Override
-            public void onErrorResponse (VolleyError error){
-                Log.i(TAG, "OnFailure");
-                error.printStackTrace();
-
-            }
-        });
-        recipeQueue.add(jsonObjectRequest);
-
-        return  allRecipes;
-    }
-
-    public static ArrayList<Recipe> processResults(JSONArray response){
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                //gets specific hit
-                JSONObject recipeJSON = response.getJSONObject(i);
-                //goes into the recipe portion of hit
-                JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
-                String recipeName = currentRecipe.getString("label");
-                String image = currentRecipe.getString("image");
-                String recipeURL = currentRecipe.getString("url");
-                String calories = Integer.toString(currentRecipe.getInt("calories"));
-                String servings = Integer.toString(currentRecipe.getInt("yield"));
-
-                //looks into an array of ingredients and add them to the recipe
-                ArrayList<String> ingredients = new ArrayList<>();
-                JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-                for (int j = 0; j < ingredientList.length(); j++) {
-                    ingredients.add(ingredientList.get(j).toString());
-                }
-
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                allRecipes.add(recipe);
-            }
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-       Log.e(TAG, "recipe size in main activity" + allRecipes.size());
-        return allRecipes;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_recipe_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                // perform query here
-                String new_url = REQUEST_URL;
-                if(query != null){
-                    new_url+="&q=" + query;
-                }
-                getRecipesFromAPI(new_url);
-
-                // workaround to avoid issues with some emulators and keyboard devices firing twice if a keyboard enter is used
-                // see https://code.google.com/p/android/issues/detail?id=24599
-                searchView.clearFocus();
-
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-        searchItem.expandActionView();
-        searchView.requestFocus();
-        return super.onCreateOptionsMenu(menu);
-
-    }
 
 
 
