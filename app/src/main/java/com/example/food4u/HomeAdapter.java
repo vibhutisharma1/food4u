@@ -22,7 +22,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
     private Context mContext;
     private List<Recipe> recipeList;
 
-
     public HomeAdapter(Context context, List<Recipe> recipes) {
         mContext = context;
         if (recipes == null) {
@@ -72,8 +71,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
 
         }
 
-
     }
-
 
 }

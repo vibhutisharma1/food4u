@@ -1,23 +1,17 @@
-package com.example.food4u.fragments;
-
-import android.os.Bundle;
+package com.example.food4u;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
-import androidx.appcompat.widget.SearchView.OnQueryTextListener;
 import androidx.core.view.MenuItemCompat;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -25,85 +19,103 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.codepath.asynchttpclient.callback.JsonHttpResponseHandler;
-import com.example.food4u.HomeAdapter;
-import com.example.food4u.MainActivity;
-import com.example.food4u.R;
-import com.example.food4u.Recipe;
+import com.example.food4u.databinding.ActivityMainBinding;
+import com.example.food4u.databinding.ActivitySearchBinding;
 import com.example.food4u.databinding.FragmentHomeBinding;
+import com.example.food4u.fragments.HomeFragment;
+import com.example.food4u.fragments.QuestionOne;
 
-import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.zip.Inflater;
 
-import okhttp3.Headers;
+public class SearchActivity extends AppCompatActivity {
 
-
-public class HomeFragment extends Fragment  {
-
-    FragmentHomeBinding binding;
+    ActivitySearchBinding binding;
     public static final String TAG = "PostsFragment";
     protected HomeAdapter adapter;
-    protected List<Recipe> allRecipes;
-
-    public HomeFragment() {
-        // Required empty public constructor
-    }
-
+    protected List<Recipe> searchRecipes;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
-        return view;
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        // Find RecyclerView and bind to adapter
+        //binding
+        binding = ActivitySearchBinding.inflate(getLayoutInflater());
+        View v = binding.getRoot();
+        setContentView(v);
 
         // allows for optimizations
         binding.rvPosts.setHasFixedSize(true);
 
         // Define 2 column grid layout
-        final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
+        final GridLayoutManager layout = new GridLayoutManager(this, 2);
 
-        //add the new health tags to url
-        String healthTags = QuestionOne.healthStringTags;
-
-        allRecipes = new ArrayList<>();
+        searchRecipes = new ArrayList<>();
 
         //maybe set this info into a new string to avoid failure if crash
-        //remove duplicate tags
-        if(healthTags != null){
-            MainActivity.REQUEST_URL+=healthTags;
-        }
+
         // Create an adapter
-        adapter = new HomeAdapter(getContext(), allRecipes);
+        adapter = new HomeAdapter(this, searchRecipes);
         // Bind adapter to list
         binding.rvPosts.setAdapter(adapter);
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
 
-        retrieveFromAPI(MainActivity.REQUEST_URL);
-
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_recipe_search, menu);
+        MenuItem searchItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                String new_url = MainActivity.REQUEST_URL;
+                if(query != null){
+                    new_url+="&q=" + query;
+                }
+                retrieveFromAPI(new_url);
+                searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+        searchItem.expandActionView();
+        searchView.requestFocus();
+        return super.onCreateOptionsMenu(menu);
+    }
+
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     public void retrieveFromAPI(String url){
         //retrieve api
-        RequestQueue recipeQueue = Volley.newRequestQueue(getContext());
+        RequestQueue recipeQueue = Volley.newRequestQueue(this);
         //filter different pages
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
@@ -153,7 +165,7 @@ public class HomeFragment extends Fragment  {
                 }
 
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                allRecipes.add(recipe);
+                searchRecipes.add(recipe);
             }
 
 
@@ -162,6 +174,7 @@ public class HomeFragment extends Fragment  {
         }
 
     }
+
 
 
 }

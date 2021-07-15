@@ -70,6 +70,8 @@ public class QuestionOne extends Fragment {
         //create the health tag from what they clicked
         healthStringTags+= HealthLabel.apiHealthString(buttonText);
 
+        //onToggle: button has state boolean if true then add health tag otherwise remove
+        //array of tags
 
     }
 

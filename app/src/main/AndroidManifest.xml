@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".SearchActivity"></activity>
+        <activity android:name=".DetailsActivity" />
         <activity android:name=".MainActivity" />
         <activity android:name=".QuestionActivity">
             <intent-filter>
@@ -24,6 +25,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
