@@ -38,7 +38,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -61,9 +60,18 @@ public class HomeFragment extends Fragment {
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
 
         // Unlike ListView, you have to explicitly give a LayoutManager to the RecyclerView to position items on the screen.
-        // There are three LayoutManager provided at the moment: GridLayoutManager, StaggeredGridLayoutManager and LinearLayoutManager.
+        //set layout manager
         binding.rvPosts.setLayoutManager(layout);
 
+        //add the new health tags to url
+        String healthTags = QuestionOne.healthStringTags;
+
+        //maybe set this info into a new string to avoid failure if crash
+        //remove duplicate tags
+        if(healthTags != null){
+            MainActivity.REQUEST_URL+=healthTags;
+        }
+        MainActivity.getRecipesFromAPI(MainActivity.REQUEST_URL);
         // get data
         allRecipes = MainActivity.allRecipes;
 
@@ -73,4 +81,6 @@ public class HomeFragment extends Fragment {
         // Bind adapter to list
         binding.rvPosts.setAdapter(adapter);
     }
+
+
 }

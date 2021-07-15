@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.load.engine.Resource;
 import com.example.food4u.HealthLabel;
 import com.example.food4u.MainActivity;
 import com.example.food4u.R;
@@ -59,20 +60,9 @@ public class QuestionOne extends Fragment {
     }
 
     public void buttonClicked(View view) {
-
-//        String[] healthTags = {"alcoholFree","celeryFree", "dairyFree", "eggFree", "fishFree", "fodmapFree", "glutenFree",
-//                "immunoSupportive", "ketoFriendly", "kidneyFriendly", "kosher","lowFatAbs", "lowPotassium","lowSugar",
-//                "lupineFree", "mustardFree", "noOilAdded", "paleo", "peanutFree", "pecatarian", "porkFree", "redMeatFree",
-//                "sesameFree", "shellfishFree", "soyFree", "sugarConscious", "treeNutFree", "vegan", "vegetarian", "wheatFree"};
         Button b = (Button)view;
+        b.setBackgroundResource(R.drawable.clicked);
         String buttonText = b.getText().toString();
-
-       // b.setBackgroundTintList(getContext().getResources().getColorStateList(R.color.));
-
-        b.setBackground(Drawable.createFromPath("#37AEE4"));
-//        android:background="#37AEE4"
-//        android:backgroundTint="#FEFBDE"
-
 
         if(buttonText == "pescatarian"){
             buttonText = "pecatarian";

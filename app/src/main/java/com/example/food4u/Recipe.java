@@ -11,14 +11,12 @@ import java.util.ArrayList;
 
 public class Recipe {
 
-
     String recipeName;
     String image;
     String recipeURL;
     String calories;
     String servings;
     ArrayList<String> ingredients;
-
 
     public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings) {
         this.recipeName = recipeName;

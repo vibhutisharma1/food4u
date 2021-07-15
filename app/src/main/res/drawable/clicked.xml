@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!-- drawable/rectangle_5.xml -->
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
@@ -16,7 +18,7 @@
 
         <path
             android:pathData="M0 0V89H112V0"
-            android:fillColor="#FFFFFF"
+            android:fillColor="#C4C4C4"
             />
 
     </group>
