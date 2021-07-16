@@ -9,12 +9,12 @@
     tools:context=".MainActivity">
 
 
-        <FrameLayout
-            android:id="@+id/flContainer"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_above="@id/bottomNavigation"
-            />
+    <FrameLayout
+        android:id="@+id/flContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomNavigation"
+        />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

@@ -38,6 +38,7 @@ public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "PostsFragment";
     protected HomeAdapter adapter;
     protected List<Recipe> searchRecipes;
+    RequestQueue recipeQueue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,59 +67,11 @@ public class SearchActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_recipe_search, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                String new_url = MainActivity.REQUEST_URL;
-                if(query != null){
-                    new_url+="&q=" + query;
-                }
-                retrieveFromAPI(new_url);
-                searchView.clearFocus();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
-
-        searchItem.expandActionView();
-        searchView.requestFocus();
-        return super.onCreateOptionsMenu(menu);
-    }
-
-
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
     public void retrieveFromAPI(String url){
         //retrieve api
-        RequestQueue recipeQueue = Volley.newRequestQueue(this);
+        recipeQueue = Volley.newRequestQueue(getApplicationContext());
         //filter different pages
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
             @Override
             public void onResponse(JSONObject response) {
                 try {
@@ -144,7 +97,6 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     public void processResults(JSONArray response){
-
         try {
             for (int i = 0; i < response.length(); i++) {
                 //gets specific hit
@@ -163,18 +115,14 @@ public class SearchActivity extends AppCompatActivity {
                 for (int j = 0; j < ingredientList.length(); j++) {
                     ingredients.add(ingredientList.get(j).toString());
                 }
-
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 searchRecipes.add(recipe);
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
     }
-
-
 
 }

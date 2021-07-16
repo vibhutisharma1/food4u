@@ -61,6 +61,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         final ImageView ivFood;
         final TextView tvName;
         final View vPalette;
+        //search bar adapter set item view
 
         public VH(View itemView, final Context context) {
             super(itemView);
