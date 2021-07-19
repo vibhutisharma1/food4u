@@ -81,16 +81,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
                     if (recipe != null) {
                         // Fire an intent when a recipe is selected
                         Intent intent = new Intent(context, DetailsActivity.class);
-//                        intent.putExtra(DetailsActivity.EXTRA_CONTACT, contact);
-//                        Pair<View, String> p1 = Pair.create((View)ivProfile, "profile");
-//                        Pair<View, String> p2 = Pair.create(vPalette, "palette");
-//                        Pair<View, String> p3 = Pair.create((View)tvName, "text");
-//                        ActivityOptionsCompat options = ActivityOptionsCompat.
-//                                makeSceneTransitionAnimation(mContext, p1, p2, p3);
-//                        context.startActivity(intent, options.toBundle());
-
-                        //context.startActivity(intent);
-                        // Pass contact object in the bundle and populate details activity.
 
                     }
                 }

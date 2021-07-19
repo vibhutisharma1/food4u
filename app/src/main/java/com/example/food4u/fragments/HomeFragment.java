@@ -1,5 +1,7 @@
 package com.example.food4u.fragments;
 
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -38,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.zip.Inflater;
@@ -60,6 +63,18 @@ public class HomeFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        // Get the intent, verify the action and get the query
+        Intent intent = getActivity().getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            String new_url = MainActivity.REQUEST_URL;
+            if(query != null){
+                new_url+="&q=" + query;
+            }
+            Log.i(TAG, "query is " + query);
+            allRecipes.clear();
+            retrieveFromAPI(new_url);
+        }
     }
 
     @Override
@@ -133,9 +148,6 @@ public class HomeFragment extends Fragment  {
     }
 
     public void processResults(JSONArray response){
-        //get different recipes by randomizing the recipe index/page
-        Random rand = new Random();
-        int random = rand.nextInt(response.length());
         try {
             for (int i = 0; i < response.length(); i++) {
                 //gets specific hit
@@ -157,6 +169,7 @@ public class HomeFragment extends Fragment  {
 
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 allRecipes.add(recipe);
+                Collections.shuffle(allRecipes);
             }
 
 
