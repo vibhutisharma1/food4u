@@ -39,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.zip.Inflater;
 
 import okhttp3.Headers;
@@ -47,7 +48,7 @@ import okhttp3.Headers;
 public class HomeFragment extends Fragment  {
 
     FragmentHomeBinding binding;
-    public static final String TAG = "PostsFragment";
+    public static final String TAG = "HomeFragment";
     protected HomeAdapter adapter;
     protected List<Recipe> allRecipes;
 
@@ -132,7 +133,9 @@ public class HomeFragment extends Fragment  {
     }
 
     public void processResults(JSONArray response){
-
+        //get different recipes by randomizing the recipe index/page
+        Random rand = new Random();
+        int random = rand.nextInt(response.length());
         try {
             for (int i = 0; i < response.length(); i++) {
                 //gets specific hit
@@ -162,6 +165,5 @@ public class HomeFragment extends Fragment  {
         }
 
     }
-
 
 }

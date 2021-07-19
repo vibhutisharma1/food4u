@@ -19,7 +19,6 @@ public class HealthLabel {
                 "keto-friendly",
                 "kidney-friendly",
                 "kosher",
-                "low-fat-abs",
                 "low-potassium",
                 "low-sugar",
                 "lupine-free",
@@ -38,6 +37,7 @@ public class HealthLabel {
                 "vegan",
                 "vegetarian",
                 "wheat-free"};
+        //removed low-fat-abs bug in api
 
     }
 

@@ -6,12 +6,16 @@ import androidx.appcompat.widget.SearchView;
 import androidx.core.view.MenuItemCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -35,14 +39,19 @@ import java.util.List;
 public class SearchActivity extends AppCompatActivity {
 
     ActivitySearchBinding binding;
-    public static final String TAG = "PostsFragment";
+    public static final String TAG = "SearchActivity";
     protected HomeAdapter adapter;
     protected List<Recipe> searchRecipes;
     RequestQueue recipeQueue;
 
+    public SearchActivity(){
+        //empty constructor required
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //binding
         binding = ActivitySearchBinding.inflate(getLayoutInflater());
         View v = binding.getRoot();
@@ -56,7 +65,19 @@ public class SearchActivity extends AppCompatActivity {
 
         searchRecipes = new ArrayList<>();
 
-        //maybe set this info into a new string to avoid failure if crash
+        Log.i(TAG, "sets search activity ");
+
+        // Get the intent, verify the action and get the query
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            String new_url = MainActivity.REQUEST_URL;
+            if(query != null){
+                new_url+="&q=" + query;
+            }
+            Log.i(TAG, "query is " + query);
+            retrieveFromAPI(new_url);
+        }
 
         // Create an adapter
         adapter = new HomeAdapter(this, searchRecipes);
@@ -64,12 +85,14 @@ public class SearchActivity extends AppCompatActivity {
         binding.rvPosts.setAdapter(adapter);
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
-
     }
+
 
     public void retrieveFromAPI(String url){
         //retrieve api
-        recipeQueue = Volley.newRequestQueue(getApplicationContext());
+        recipeQueue = Volley.newRequestQueue(this);
+        Toast.makeText(this,"retrieve api search activity opened", Toast.LENGTH_SHORT).show();
+        Log.i(TAG, "retrieve api method");
         //filter different pages
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
             @Override

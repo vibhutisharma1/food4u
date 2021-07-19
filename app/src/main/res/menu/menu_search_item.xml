@@ -5,12 +5,13 @@
     <item android:id="@+id/action_settings" android:title="Settings"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_search"
+    <item android:id="@+id/menu_current_search"
         android:orderInCategory="5"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
         app:showAsAction="always|collapseActionView"
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
 
 </menu>
 

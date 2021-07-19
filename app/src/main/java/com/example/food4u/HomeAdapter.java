@@ -2,6 +2,7 @@ package com.example.food4u;
 
 import android.content.Context;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.core.util.Pair;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -69,6 +72,29 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
             ivFood = (ImageView) itemView.findViewById(R.id.ivFood);
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             vPalette = itemView.findViewById(R.id.vPalette);
+
+            // Navigate to contact details activity on click of card view.
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    final Recipe recipe = (Recipe) v.getTag();
+                    if (recipe != null) {
+                        // Fire an intent when a recipe is selected
+                        Intent intent = new Intent(context, DetailsActivity.class);
+//                        intent.putExtra(DetailsActivity.EXTRA_CONTACT, contact);
+//                        Pair<View, String> p1 = Pair.create((View)ivProfile, "profile");
+//                        Pair<View, String> p2 = Pair.create(vPalette, "palette");
+//                        Pair<View, String> p3 = Pair.create((View)tvName, "text");
+//                        ActivityOptionsCompat options = ActivityOptionsCompat.
+//                                makeSceneTransitionAnimation(mContext, p1, p2, p3);
+//                        context.startActivity(intent, options.toBundle());
+
+                        //context.startActivity(intent);
+                        // Pass contact object in the bundle and populate details activity.
+
+                    }
+                }
+            });
 
         }
 

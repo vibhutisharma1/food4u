@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -42,9 +45,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=f19437bb&app_key=131073dfbd2333ba6685e733f0a9ecb5";
+    public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
     public static final String TAG = "MainActivity";
-    SearchActivity current_search = new SearchActivity();
     protected List<Recipe> searchRecipes;
 
     ActivityMainBinding binding;
@@ -73,12 +75,6 @@ public class MainActivity extends AppCompatActivity {
          //Get access to the custom title view
         TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
-
-        //add the health tags to the URL if not null
-
-        //maybe set this info into a new string to avoid failure if crash
-        //remove duplicate tags
-
         binding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
@@ -99,23 +95,25 @@ public class MainActivity extends AppCompatActivity {
 
         // Set default selection
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
-    }
 
-    public boolean onCreateOptionsMenu(@NonNull Menu menu) {
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the options menu from XML
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_search_item, menu);
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener(){
+        // Get the SearchView and set the searchable configuration
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_current_search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                String new_url = MainActivity.REQUEST_URL;
-                if(query != null){
-                    new_url+="&q=" + query;
-                }
-                current_search.retrieveFromAPI(new_url);
-                searchView.clearFocus();
+
+                Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+                intent.setAction(Intent.ACTION_SEARCH);
+                intent.putExtra(SearchManager.QUERY, query);
+                startActivity(intent);
                 return true;
             }
 
@@ -124,10 +122,11 @@ public class MainActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-        searchItem.expandActionView();
-        searchView.requestFocus();
-        return super.onCreateOptionsMenu(menu);
+        // Assumes current activity is the searchable activity
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setSubmitButtonEnabled(true);
+        return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -140,105 +139,12 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+        if(id == R.id.menu_current_search){
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
-
-   // public class SearchActivity{
-
-//        ActivitySearchBinding binding;
-//        public static final String TAG = "PostsFragment";
-//        protected HomeAdapter adapter;
-//        protected List<Recipe> searchRecipes;
-//
-//        public SearchActivity(){
-//
-//        }
-//
-//        protected void onCreate(Bundle savedInstanceState) {
-//            onCreate(savedInstanceState);
-//            //binding
-//            binding = ActivitySearchBinding.inflate(getLayoutInflater());
-//            View v = binding.getRoot();
-//            setContentView(v);
-//
-//            // allows for optimizations
-//            binding.rvPosts.setHasFixedSize(true);
-//
-//            // Define 2 column grid layout
-//            final GridLayoutManager layout = new GridLayoutManager(MainActivity.this, 2);
-//
-//            searchRecipes = new ArrayList<>();
-//
-//            // Create an adapter
-//            adapter = new HomeAdapter(MainActivity.this, searchRecipes);
-//            // Bind adapter to list
-//            binding.rvPosts.setAdapter(adapter);
-//            //set layout manager
-//            binding.rvPosts.setLayoutManager(layout);
-//
-//        }
-//
-//
-//        public void retrieveFromAPI(String url){
-//            //retrieve api
-//            RequestQueue recipeQueue = Volley.newRequestQueue(MainActivity.this);
-//            //filter different pages
-//            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//                @Override
-//                public void onResponse(JSONObject response) {
-//                    try {
-//                        JSONArray results = response.getJSONArray("hits");
-//                        Log.i(TAG, "Results" + results.toString());
-//                        Log.i(TAG, "OnSuccess");
-//                        processResults(results);
-//                        adapter.notifyDataSetChanged();
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }, new Response.ErrorListener() {
-//
-//                @Override
-//                public void onErrorResponse(VolleyError error) {
-//                    Log.i(TAG, "OnFailure");
-//                    error.printStackTrace();
-//
-//                }
-//            });
-//            recipeQueue.add(jsonObjectRequest);
-//        }
-//
-//        public void processResults(JSONArray response){
-//            try {
-//                for (int i = 0; i < response.length(); i++) {
-//                    //gets specific hit
-//                    JSONObject recipeJSON = response.getJSONObject(i);
-//                    //goes into the recipe portion of hit
-//                    JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
-//                    String recipeName = currentRecipe.getString("label");
-//                    String image = currentRecipe.getString("image");
-//                    String recipeURL = currentRecipe.getString("url");
-//                    String calories = Integer.toString(currentRecipe.getInt("calories"));
-//                    String servings = Integer.toString(currentRecipe.getInt("yield"));
-//
-//                    //looks into an array of ingredients and add them to the recipe
-//                    ArrayList<String> ingredients = new ArrayList<>();
-//                    JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-//                    for (int j = 0; j < ingredientList.length(); j++) {
-//                        ingredients.add(ingredientList.get(j).toString());
-//                    }
-//                    Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-//                    searchRecipes.add(recipe);
-//                }
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
-//
-//    }
 
 }
 
