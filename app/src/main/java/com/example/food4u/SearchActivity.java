@@ -34,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class SearchActivity extends AppCompatActivity {
@@ -140,6 +141,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 searchRecipes.add(recipe);
+                //Collections.shuffle(searchRecipes);
             }
 
         } catch (JSONException e) {

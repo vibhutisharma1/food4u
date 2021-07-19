@@ -63,18 +63,7 @@ public class HomeFragment extends Fragment  {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get the intent, verify the action and get the query
-        Intent intent = getActivity().getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            String new_url = MainActivity.REQUEST_URL;
-            if(query != null){
-                new_url+="&q=" + query;
-            }
-            Log.i(TAG, "query is " + query);
-            allRecipes.clear();
-            retrieveFromAPI(new_url);
-        }
+
     }
 
     @Override
@@ -171,7 +160,6 @@ public class HomeFragment extends Fragment  {
                 allRecipes.add(recipe);
                 Collections.shuffle(allRecipes);
             }
-
 
         } catch (JSONException e) {
             e.printStackTrace();
