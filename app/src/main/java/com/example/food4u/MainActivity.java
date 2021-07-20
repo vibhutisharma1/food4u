@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                 intent.setAction(Intent.ACTION_SEARCH);
                 intent.putExtra(SearchManager.QUERY, query);
                 startActivity(intent);
+
                 return true;
             }
 

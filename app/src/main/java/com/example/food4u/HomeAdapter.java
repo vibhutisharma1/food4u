@@ -3,6 +3,7 @@ package com.example.food4u;
 import android.content.Context;
 
 import android.content.Intent;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import com.bumptech.glide.Glide;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serializable;
 import java.util.List;
 
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
@@ -81,6 +83,8 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
                     if (recipe != null) {
                         // Fire an intent when a recipe is selected
                         Intent intent = new Intent(context, DetailsActivity.class);
+                        intent.putExtra("CurrentRecipe", recipe);
+                        context.startActivity(intent);
 
                     }
                 }

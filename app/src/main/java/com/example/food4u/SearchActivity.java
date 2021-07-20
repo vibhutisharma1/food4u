@@ -141,7 +141,7 @@ public class SearchActivity extends AppCompatActivity {
                 }
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 searchRecipes.add(recipe);
-                //Collections.shuffle(searchRecipes);
+
             }
 
         } catch (JSONException e) {

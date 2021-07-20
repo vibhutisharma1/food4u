@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rldetailsContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/ivProfile"
+        android:id="@+id/ivFood"
         android:layout_width="match_parent"
         android:layout_height="195dp"
         android:scaleType="centerCrop"
@@ -14,39 +15,38 @@
 
     <RelativeLayout
         android:id="@+id/rlInfo"
-        android:layout_below="@+id/ivProfile"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ivFood"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="-2dp"
+        android:layout_marginBottom="2dp">
 
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/simpleTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="fixed"
+            app:tabGravity="fill"/>
 
-        <TextView
-            android:id="@+id/tvName"
-            android:layout_centerInParent="true"
-            android:transitionName="text"
-            android:textSize="@dimen/contact_text_size"
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:id="@+id/tvPhone"
-            android:layout_below="@+id/tvName"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/contact_details_phone_margin_top"
-            android:fontFamily="sans-serif-light"
-            android:textSize="@dimen/contact_text_size"
-            android:textColor="@android:color/black"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/white" />
 
     </RelativeLayout>
-    <FrameLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    <TextView
+        android:id="@+id/tvRecipe"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/ivProfile"
-        android:layout_marginTop="-50dp"/>
+        android:layout_alignBottom="@+id/ivFood"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="40dp" />
 </RelativeLayout>
 
