@@ -43,11 +43,13 @@
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="wrap_content"
-                android:transitionName="text"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:fontFamily="@font/open_sans"
+                android:textAlignment="center"
+                android:textColor="@android:color/black"
                 android:textSize="@dimen/contact_text_size"
-                android:textColor="@android:color/black" />
+                android:transitionName="text" />
         </RelativeLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

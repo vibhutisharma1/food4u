@@ -31,6 +31,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.food4u.databinding.ActivityMainBinding;
 import com.example.food4u.databinding.ActivitySearchBinding;
 import com.example.food4u.fragments.HomeFragment;
+import com.example.food4u.fragments.MealFragment;
+import com.example.food4u.fragments.ProfileFragment;
 import com.example.food4u.fragments.QuestionOne;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -50,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected List<Recipe> searchRecipes;
 
     ActivityMainBinding binding;
-    final FragmentManager fragmentManager  = getSupportFragmentManager();
-    //details view : nested fragments
-
+    final FragmentManager fragmentManager = getSupportFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,27 +68,24 @@ public class MainActivity extends AppCompatActivity {
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
-        //toolbar.
-        // Remove default title text
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
-         //Get access to the custom title view
-        TextView mTitle = (TextView) toolbar.findViewById(R.id.toolbar_title);
 
         binding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
             @Override
             public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
-                Fragment fragment;
+                Fragment fragment = new HomeFragment();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         fragment = new HomeFragment();
                         break;
+                    case R.id.action_meal:
+                        fragment = new MealFragment();
+                        break;
                     case R.id.action_profile:
-                    default:
-                        fragment = new HomeFragment();
+                        fragment = new ProfileFragment();
                         break;
                 }
 
-               fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
             }
         });
 
@@ -96,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
 
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the options menu from XML
@@ -138,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id == R.id.menu_current_search){
+        if (id == R.id.menu_current_search) {
             return true;
         }
         return super.onOptionsItemSelected(item);

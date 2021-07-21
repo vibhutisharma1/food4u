@@ -142,16 +142,9 @@ public class SearchActivity extends AppCompatActivity {
                     ingredients.add(ingredientList.get(j).toString());
                 }
 
-                Map<String, String> ingredientWrite = new HashMap<>();
-              //  JSONArray listIng = currentRecipe.getJSONArray("ingredients");
-//                for (int j = 0; j < listIng.length(); j++) {
-//                    JSONObject current = listIng.getJSONObject(j);
-//                    ingredientWrite.put(current.getString("food"), Integer.toString(current.getInt("quantity")) + " " +current.getString("measure"));
-//                }
-
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, ingredientWrite);
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 searchRecipes.add(recipe);
-
+                Collections.shuffle(searchRecipes);
             }
 
         } catch (JSONException e) {

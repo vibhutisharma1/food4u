@@ -1,25 +1,20 @@
 package com.example.food4u;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.PagerAdapter;
-import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
-import com.example.food4u.databinding.ActivityMainBinding;
 import com.example.food4u.fragments.DirectionFragment;
 import com.example.food4u.fragments.IngredientFragment;
 import com.example.food4u.fragments.NutritionFragment;
 import com.google.android.material.tabs.TabLayout;
 
-import org.jetbrains.annotations.NotNull;
 
 public class DetailsActivity extends AppCompatActivity {
     ActivityDetailsBinding binding;
@@ -36,21 +31,22 @@ public class DetailsActivity extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-        recipe = (Recipe)getIntent().getExtras().getSerializable("CurrentRecipe");
+        recipe = (Recipe)getIntent().getExtras().getSerializable(CURRENT_RECIPE);
 
         // tab layout to navigate btwn: ingredients and directions
         TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
 
         TabLayout.Tab ingredientsTab = tabLayout.newTab();
-        ingredientsTab.setText("Ingredients");
+        ingredientsTab.setText(R.string.Ingredients);
+
         tabLayout.addTab(ingredientsTab);
 
         TabLayout.Tab directionsTab = tabLayout.newTab();
-        directionsTab.setText("Directions");
+        directionsTab.setText(R.string.Directions);
         tabLayout.addTab(directionsTab);
 
         TabLayout.Tab nutritionTab = tabLayout.newTab();
-        nutritionTab.setText("Nutrition");
+        nutritionTab.setText(R.string.Nutrition);
         tabLayout.addTab(nutritionTab);
 
         // perform setOnTabSelectedListener event on TabLayout

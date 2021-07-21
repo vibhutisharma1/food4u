@@ -45,17 +45,10 @@ public class IngredientFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         ArrayList<String> ingredients = DetailsActivity.recipe.getIngredients();
+        //add ingredients text
         for(int i = 0; i < ingredients.size(); i++){
-            binding.tvIngredients.append(ingredients.get(i));
+            binding.tvIngredients.append(ingredients.get(i) +"\n");
         }
-//        Map<String,String> currentIngredients = DetailsActivity.recipe.getIngredientList();
-        // Get keys and values
-//        for (Map.Entry<String, String> entry : currentIngredients.entrySet()) {
-//            String k = entry.getKey();
-//            String v = entry.getValue();
-//           binding.tvIngredients.append(k);
-//           binding.tvIngredients.append(v);
-//        }
 
     }
 }

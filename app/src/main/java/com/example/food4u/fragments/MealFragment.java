@@ -1,4 +1,5 @@
 package com.example.food4u.fragments;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
+import com.example.food4u.R;
 import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentHomeBinding;
+import com.example.food4u.databinding.FragmentMealBinding;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,15 +33,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+public class MealFragment extends Fragment {
 
-public class HomeFragment extends Fragment  {
-
-    FragmentHomeBinding binding;
+    FragmentMealBinding binding;
     public static final String TAG = "HomeFragment";
     protected HomeAdapter adapter;
     protected List<Recipe> allRecipes;
 
-    public HomeFragment() {
+    public MealFragment() {
         // Required empty public constructor
     }
 
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment  {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        binding = FragmentMealBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
     }
@@ -63,10 +65,10 @@ public class HomeFragment extends Fragment  {
         // Find RecyclerView and bind to adapter
 
         // allows for optimizations
-        binding.rvPosts.setHasFixedSize(true);
+        binding.rvMeals.setHasFixedSize(true);
 
         // Define 2 column grid layout
-        final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
+        final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
 
         //add the new health tags to url
         String healthTags = QuestionOne.healthStringTags;
@@ -81,9 +83,9 @@ public class HomeFragment extends Fragment  {
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);
         // Bind adapter to list
-        binding.rvPosts.setAdapter(adapter);
+        binding.rvMeals.setAdapter(adapter);
         //set layout manager
-        binding.rvPosts.setLayoutManager(layout);
+        binding.rvMeals.setLayoutManager(layout);
 
         retrieveFromAPI(MainActivity.REQUEST_URL);
 
@@ -149,6 +151,5 @@ public class HomeFragment extends Fragment  {
         }
 
     }
-
 
 }

@@ -13,7 +13,6 @@ import java.util.Map;
 
 public class Recipe implements Serializable {
 
-    Map<String, String> ingredientList;
     String recipeName;
     String image;
     String recipeURL;
@@ -21,14 +20,13 @@ public class Recipe implements Serializable {
     String servings;
     ArrayList<String> ingredients;
 
-    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> ingredientList) {
+    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings) {
         this.recipeName = recipeName;
         this.image = image;
         this.recipeURL = recipeURL;
         this.calories = calories;
         this.servings = servings;
         this.ingredients = ingredients;
-        this.ingredientList = ingredientList;
     }
 
     public ArrayList<String> getIngredients() {
@@ -55,8 +53,5 @@ public class Recipe implements Serializable {
         return recipeName;
     }
 
-    public Map<String, String> getIngredientList() {
-        return ingredientList;
-    }
 
 }
