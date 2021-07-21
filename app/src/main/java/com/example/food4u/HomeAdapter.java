@@ -26,6 +26,8 @@ import java.util.List;
 public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
     private Context mContext;
     private List<Recipe> recipeList;
+    private static final String TAG = "HomeAdapter" ;
+
 
     public HomeAdapter(Context context, List<Recipe> recipes) {
         mContext = context;
@@ -60,13 +62,12 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         return recipeList.size();
     }
 
-    // Provide a reference to the views for each contact item
+
     public class VH extends RecyclerView.ViewHolder {
         final View rootView;
         final ImageView ivFood;
         final TextView tvName;
         final View vPalette;
-        //search bar adapter set item view
 
         public VH(View itemView, final Context context) {
             super(itemView);
@@ -75,7 +76,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
             tvName = (TextView) itemView.findViewById(R.id.tvName);
             vPalette = itemView.findViewById(R.id.vPalette);
 
-            // Navigate to contact details activity on click of card view.
+            // Navigate to recipe details activity
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -83,7 +84,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
                     if (recipe != null) {
                         // Fire an intent when a recipe is selected
                         Intent intent = new Intent(context, DetailsActivity.class);
-                        intent.putExtra("CurrentRecipe", recipe);
+                        intent.putExtra(DetailsActivity.CURRENT_RECIPE, recipe);
                         context.startActivity(intent);
 
                     }

@@ -9,9 +9,11 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Recipe implements Serializable {
 
+    Map<String, String> ingredientList;
     String recipeName;
     String image;
     String recipeURL;
@@ -19,13 +21,14 @@ public class Recipe implements Serializable {
     String servings;
     ArrayList<String> ingredients;
 
-    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings) {
+    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> ingredientList) {
         this.recipeName = recipeName;
         this.image = image;
         this.recipeURL = recipeURL;
         this.calories = calories;
         this.servings = servings;
         this.ingredients = ingredients;
+        this.ingredientList = ingredientList;
     }
 
     public ArrayList<String> getIngredients() {
@@ -51,4 +54,9 @@ public class Recipe implements Serializable {
     public String getRecipeName() {
         return recipeName;
     }
+
+    public Map<String, String> getIngredientList() {
+        return ingredientList;
+    }
+
 }

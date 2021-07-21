@@ -35,7 +35,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SearchActivity extends AppCompatActivity {
 
@@ -139,7 +141,15 @@ public class SearchActivity extends AppCompatActivity {
                 for (int j = 0; j < ingredientList.length(); j++) {
                     ingredients.add(ingredientList.get(j).toString());
                 }
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
+
+                Map<String, String> ingredientWrite = new HashMap<>();
+              //  JSONArray listIng = currentRecipe.getJSONArray("ingredients");
+//                for (int j = 0; j < listIng.length(); j++) {
+//                    JSONObject current = listIng.getJSONObject(j);
+//                    ingredientWrite.put(current.getString("food"), Integer.toString(current.getInt("quantity")) + " " +current.getString("measure"));
+//                }
+
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, ingredientWrite);
                 searchRecipes.add(recipe);
 
             }

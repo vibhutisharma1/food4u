@@ -41,7 +41,9 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.zip.Inflater;
 
@@ -156,7 +158,18 @@ public class HomeFragment extends Fragment  {
                     ingredients.add(ingredientList.get(j).toString());
                 }
 
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
+                Map<String, String> ingredientWrite = new HashMap<>();
+
+               // JSONArray listIng = currentRecipe.getJSONArray("ingredients");
+               // Log.e(TAG, listIng.getJSONObject(0).getString("food"));
+//                for (int j = 0; j < listIng.length(); j++) {
+//                    JSONObject current = listIng.getJSONObject(j);
+//                    String food = current.getString("food");
+//                    Log.e(TAG,food);
+//                    ingredientWrite.put(food, Integer.toString(current.getInt("quantity")) + " " +current.getString("measure"));
+//                }
+
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, ingredientWrite);
                 allRecipes.add(recipe);
                 Collections.shuffle(allRecipes);
             }
@@ -165,6 +178,24 @@ public class HomeFragment extends Fragment  {
             e.printStackTrace();
         }
 
+    }
+
+    static private String convertDecimalToFraction(double x){
+        if (x < 0){
+            return "-" + convertDecimalToFraction(-x);
+        }
+        double tolerance = 1.0E-6;
+        double h1=1; double h2=0;
+        double k1=0; double k2=1;
+        double b = x;
+        do {
+            double a = Math.floor(b);
+            double aux = h1; h1 = a*h1+h2; h2 = aux;
+            aux = k1; k1 = a*k1+k2; k2 = aux;
+            b = 1/(b-a);
+        } while (Math.abs(x-h1/k1) > x*tolerance);
+
+        return h1+"/"+k1;
     }
 
 }
