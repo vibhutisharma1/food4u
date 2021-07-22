@@ -37,7 +37,7 @@ public class Recipe implements Serializable {
     Map<String, String> nutrientMap;
 
 
-    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> nutrients) {
+    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> nutrientMap) {
         this.recipeName = recipeName;
         this.image = image;
         this.recipeURL = recipeURL;
@@ -130,7 +130,7 @@ public class Recipe implements Serializable {
                 nutrientMap.put("ENERC_KCAL", "0");
                 nutrientMap.put("FAT", "0");
                 nutrientMap.put("FASAT", "0");
-                nutrientMap.put("FASAT", "0");
+                nutrientMap.put("FAMS", "0");
                 nutrientMap.put("FAPU", "0");
                 nutrientMap.put("CHOCDF", "0");
                 nutrientMap.put("FIBTG", "0");
@@ -143,8 +143,6 @@ public class Recipe implements Serializable {
                     nutrientMap.put(currentKey, Integer.toString(totalNutrients.getInt("quantity")));
                 }
 
-
-
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, nutrientMap);
                 allRecipes.add(recipe);
                 //randomize order
@@ -155,6 +153,9 @@ public class Recipe implements Serializable {
             e.printStackTrace();
         }
 
+    }
+    public Map<String, String> getNutrientMap() {
+        return nutrientMap;
     }
 
 
