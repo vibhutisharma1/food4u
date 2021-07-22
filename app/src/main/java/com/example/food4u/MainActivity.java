@@ -37,6 +37,7 @@ import com.example.food4u.fragments.QuestionOne;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -69,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        binding.bottomNavigation.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+        binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment = new HomeFragment();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ProfileFragment();
                         break;
                 }
-
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                return true;
             }
         });
 
@@ -141,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

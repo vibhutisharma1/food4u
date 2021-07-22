@@ -6,15 +6,18 @@
         android:id="@+id/action_meal"
         android:icon="@drawable/meal"
         android:title="meal plan"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:labelVisibilityMode="labeled"/>
     <item
         android:id="@+id/action_home"
         android:icon="@drawable/home"
         android:title="home"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:labelVisibilityMode="labeled"/>
     <item
         android:id="@+id/action_profile"
         android:icon="@drawable/profile"
         android:title="profile"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:labelVisibilityMode="labeled"/>
 </menu>

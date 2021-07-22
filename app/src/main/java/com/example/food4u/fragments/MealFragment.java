@@ -64,6 +64,7 @@ public class MealFragment extends HomeFragment {
 
         allMeals = new ArrayList<>();
 
+        //algorithm
         //add calorie limit= age,gender, height, and activity
         //cuisine type
         //specific food limit = no onion
