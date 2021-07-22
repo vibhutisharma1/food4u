@@ -32,7 +32,6 @@
             app:tabMode="fixed" />
 
 
-
         <FrameLayout
             android:id="@+id/simpleFrameLayout"
             android:layout_width="match_parent"

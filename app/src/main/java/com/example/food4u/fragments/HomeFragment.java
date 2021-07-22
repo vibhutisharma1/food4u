@@ -44,7 +44,6 @@ public class HomeFragment extends Fragment {
         // Required empty public constructor
     }
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,19 +101,19 @@ public class HomeFragment extends Fragment {
         LocalTime myObj = LocalTime.now();
         int currentHour = myObj.getHour();
 
-        if (6 <= currentHour  && currentHour <= 10) {
+        if (6 <= currentHour && currentHour <= 10)
             //6am to 10am breakfast
             return "Breakfast";
-        } else if (11 <= currentHour && currentHour <= 15){
+        else if (11 <= currentHour && currentHour <= 15)
             //11am to 3pm lunch
             return "Lunch";
-        }else if(18 <= currentHour && currentHour <= 21 ){
+        else if (18 <= currentHour && currentHour <= 21)
             //6pm to 9pm dinner
             return "Dinner";
-        }else {
+        else
             //otherwise late evening and midnight snack
             return "Snack";
-        }
+
     }
 
 

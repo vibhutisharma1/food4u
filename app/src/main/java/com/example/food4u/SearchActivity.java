@@ -46,7 +46,7 @@ public class SearchActivity extends AppCompatActivity {
     protected HomeAdapter adapter;
     protected List<Recipe> searchRecipes;
 
-    public SearchActivity(){
+    public SearchActivity() {
         //empty constructor required
     }
 
@@ -80,15 +80,13 @@ public class SearchActivity extends AppCompatActivity {
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             String new_url = MainActivity.REQUEST_URL;
-            if(query != null){
-                new_url+="&q=" + query;
+            if (query != null) {
+                new_url += "&q=" + query;
             }
             Log.i(TAG, "query is " + query);
             //retrieve the new recipes with the search query
-            Recipe.retrieveFromAPI(new_url, this, searchRecipes ,adapter);
+            Recipe.retrieveFromAPI(new_url, this, searchRecipes, adapter);
         }
     }
-
-
 
 }

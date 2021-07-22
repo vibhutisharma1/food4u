@@ -33,10 +33,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MealFragment extends Fragment {
+public class MealFragment extends HomeFragment {
 
     FragmentMealBinding binding;
-    public static final String TAG = "MealFragment";
     protected HomeAdapter adapter;
     protected List<Recipe> allMeals;
 
@@ -44,12 +43,6 @@ public class MealFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -78,7 +71,6 @@ public class MealFragment extends Fragment {
         //current pantry list based on items to finalize=
         //based on your current time it will give you suggestions to eat
 
-
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allMeals);
         // Bind adapter to list
@@ -86,69 +78,9 @@ public class MealFragment extends Fragment {
         //set layout manager
         binding.rvMeals.setLayoutManager(layout);
 
-        retrieveFromAPI(MainActivity.REQUEST_URL);
+        Recipe.retrieveFromAPI(MainActivity.REQUEST_URL, getContext(), allMeals, adapter);
 
     }
 
-    public void retrieveFromAPI(String url){
-        //retrieve api
-        RequestQueue recipeQueue = Volley.newRequestQueue(getContext());
-        //filter different pages
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("hits");
-                    Log.i(TAG, "Results" + results.toString());
-                    Log.i(TAG, "OnSuccess");
-                    processResults(results);
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "OnFailure");
-                error.printStackTrace();
-
-            }
-        });
-        recipeQueue.add(jsonObjectRequest);
-    }
-
-    public void processResults(JSONArray response){
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                //gets specific hit
-                JSONObject recipeJSON = response.getJSONObject(i);
-                //goes into the recipe portion of hit
-                JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
-                String recipeName = currentRecipe.getString("label");
-                String image = currentRecipe.getString("image");
-                String recipeURL = currentRecipe.getString("url");
-                String calories = Integer.toString(currentRecipe.getInt("calories"));
-                String servings = Integer.toString(currentRecipe.getInt("yield"));
-
-                //looks into an array of ingredients and add them to the recipe
-                ArrayList<String> ingredients = new ArrayList<>();
-                JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-                for (int j = 0; j < ingredientList.length(); j++) {
-                    ingredients.add(ingredientList.get(j).toString());
-                }
-
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                allMeals.add(recipe);
-                Collections.shuffle(allMeals);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }

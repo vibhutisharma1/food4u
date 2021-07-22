@@ -29,7 +29,6 @@ public class Recipe implements Serializable {
     String calories;
     String servings;
     ArrayList<String> ingredients;
-    RequestQueue recipeQueue;
 
 
     public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings) {
@@ -66,9 +65,8 @@ public class Recipe implements Serializable {
     }
 
     public static void retrieveFromAPI(String url, Context context, List<Recipe> allRecipes, HomeAdapter adapter) {
-        //retrieve api
+        //call api with current url
         RequestQueue recipeQueue = Volley.newRequestQueue(context);
-        //filter different pages
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
 
             @Override
@@ -109,7 +107,7 @@ public class Recipe implements Serializable {
                 String calories = Integer.toString(currentRecipe.getInt("calories"));
                 String servings = Integer.toString(currentRecipe.getInt("yield"));
 
-                //looks into an array of ingredients and add them to the recipe
+                //retrieves an array of ingredients and add them to the recipe
                 ArrayList<String> ingredients = new ArrayList<>();
                 JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
                 for (int j = 0; j < ingredientList.length(); j++) {
@@ -118,6 +116,7 @@ public class Recipe implements Serializable {
 
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
                 allRecipes.add(recipe);
+                //randomize order
                 Collections.shuffle(allRecipes);
             }
 

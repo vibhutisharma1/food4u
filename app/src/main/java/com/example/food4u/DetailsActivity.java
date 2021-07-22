@@ -31,7 +31,7 @@ public class DetailsActivity extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-        recipe = (Recipe)getIntent().getExtras().getSerializable(CURRENT_RECIPE);
+        recipe = (Recipe) getIntent().getExtras().getSerializable(CURRENT_RECIPE);
 
         // tab layout to navigate btwn: ingredients and directions
         TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
