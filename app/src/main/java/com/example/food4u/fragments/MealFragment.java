@@ -36,9 +36,9 @@ import java.util.List;
 public class MealFragment extends Fragment {
 
     FragmentMealBinding binding;
-    public static final String TAG = "HomeFragment";
+    public static final String TAG = "MealFragment";
     protected HomeAdapter adapter;
-    protected List<Recipe> allRecipes;
+    protected List<Recipe> allMeals;
 
     public MealFragment() {
         // Required empty public constructor
@@ -63,25 +63,24 @@ public class MealFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Find RecyclerView and bind to adapter
-
         // allows for optimizations
         binding.rvMeals.setHasFixedSize(true);
 
-        // Define 2 column grid layout
+        // Define 1 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
 
-        //add the new health tags to url
-        String healthTags = QuestionOne.healthStringTags;
+        allMeals = new ArrayList<>();
 
-        allRecipes = new ArrayList<>();
+        //add calorie limit= age,gender, height, and activity
+        //cuisine type
+        //specific food limit = no onion
+        //time restriction = min and max 30 min -1hr
+        //current pantry list based on items to finalize=
+        //based on your current time it will give you suggestions to eat
 
-        //maybe set this info into a new string to avoid failure if crash
-        //remove duplicate tags
-        if(healthTags != null){
-            MainActivity.REQUEST_URL+=healthTags;
-        }
+
         // Create an adapter
-        adapter = new HomeAdapter(getContext(), allRecipes);
+        adapter = new HomeAdapter(getContext(), allMeals);
         // Bind adapter to list
         binding.rvMeals.setAdapter(adapter);
         //set layout manager
@@ -142,8 +141,8 @@ public class MealFragment extends Fragment {
                 }
 
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                allRecipes.add(recipe);
-                Collections.shuffle(allRecipes);
+                allMeals.add(recipe);
+                Collections.shuffle(allMeals);
             }
 
         } catch (JSONException e) {

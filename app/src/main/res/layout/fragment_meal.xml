@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,28 +9,29 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMeals"
-        android:layout_width="413dp"
-        android:layout_height="671dp"
+        android:layout_width="match_parent"
+        android:layout_height="674dp"
         android:layout_below="@+id/tvMenu"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="-2dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp" />
 
     <TextView
         android:id="@+id/tvMenu"
-        android:layout_width="123dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="139dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="96dp"
+        android:layout_marginTop="4dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="Daily Menu"
-        android:textSize="20sp" />
+        android:textSize="34sp"
+        app:lineHeight="46sp" />
 </RelativeLayout>

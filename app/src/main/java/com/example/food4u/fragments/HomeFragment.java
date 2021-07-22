@@ -1,8 +1,11 @@
 package com.example.food4u.fragments;
+
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -26,12 +29,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 
-public class HomeFragment extends Fragment  {
+public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
     public static final String TAG = "HomeFragment";
@@ -58,6 +62,7 @@ public class HomeFragment extends Fragment  {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Find RecyclerView and bind to adapter
@@ -75,9 +80,10 @@ public class HomeFragment extends Fragment  {
 
         //maybe set this info into a new string to avoid failure if crash
         //remove duplicate tags
-        if(healthTags != null){
-            MainActivity.REQUEST_URL+=healthTags;
+        if (healthTags != null) {
+            MainActivity.REQUEST_URL += healthTags + "&mealType=" + mealType();
         }
+
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);
         // Bind adapter to list
@@ -89,7 +95,7 @@ public class HomeFragment extends Fragment  {
 
     }
 
-    public void retrieveFromAPI(String url){
+    public void retrieveFromAPI(String url) {
         //retrieve api
         RequestQueue recipeQueue = Volley.newRequestQueue(getContext());
         //filter different pages
@@ -119,7 +125,7 @@ public class HomeFragment extends Fragment  {
         recipeQueue.add(jsonObjectRequest);
     }
 
-    public void processResults(JSONArray response){
+    public void processResults(JSONArray response) {
         try {
             for (int i = 0; i < response.length(); i++) {
                 //gets specific hit
@@ -148,6 +154,28 @@ public class HomeFragment extends Fragment  {
             e.printStackTrace();
         }
 
+    }
+
+    //displays recipes based on current time to get accurate mealTypes(breakfast, lunch, dinner)
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public String mealType() {
+        //gets local time
+        LocalTime myObj = LocalTime.now();
+        int currentHour = myObj.getHour();
+
+        if (6 <= currentHour  && currentHour <= 10) {
+            //6am to 10am breakfast
+            return "Breakfast";
+        } else if (11 <= currentHour && currentHour <= 15){
+            //11am to 3pm lunch
+            return "Lunch";
+        }else if(18 <= currentHour && currentHour <= 21 ){
+            //6pm to 9pm dinner
+            return "Dinner";
+        }else {
+            //otherwise late evening and midnight snack
+            return "Snack";
+        }
     }
 
 
