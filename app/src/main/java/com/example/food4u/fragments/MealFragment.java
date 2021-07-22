@@ -69,6 +69,7 @@ public class MealFragment extends HomeFragment {
         //cuisine type
         //specific food limit = no onion
         //time restriction = min and max 30 min -1hr
+
         //current pantry list based on items to finalize=
         //based on your current time it will give you suggestions to eat
 

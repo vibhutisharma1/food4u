@@ -52,7 +52,7 @@ public class NutritionFragment extends Fragment {
         //TODO: change font and size
       Map<String, String> nutrition = DetailsActivity.recipe.getNutrientMap();
         //get nutrition label : unsaturated fat, sugar
-        //nutrition: sat, unsat, sugar, calories, fiber, cholestrol
+        //nutrition: sat, unsat, sugar, calories, fiber, cholesterol
         for (Map.Entry<String,String> entry : nutrition.entrySet()){
             TextView tv = new TextView(getActivity());
             //get nutrition label : unsaturated fat, sugar

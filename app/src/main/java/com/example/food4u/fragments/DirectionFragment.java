@@ -45,5 +45,7 @@ public class DirectionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
         binding.wvRecipe.loadUrl(DetailsActivity.recipe.getRecipeURL());
         binding.tvServing.setText(DetailsActivity.recipe.getServings());
+        //override show in this view
+        //logcat whats going on maybe pdf
     }
 }

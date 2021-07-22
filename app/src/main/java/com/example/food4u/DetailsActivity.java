@@ -80,7 +80,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             }
         });
-
+       //set initial fragment
         binding.tvRecipe.setText(recipe.getRecipeName());
         Glide.with(this).load(recipe.getImage()).circleCrop().fitCenter().into(binding.ivFood);
 

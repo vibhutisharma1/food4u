@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.example.food4u.MainActivity;
 import com.example.food4u.R;
@@ -40,6 +41,12 @@ public class QuestionTwo extends Fragment {
                 goMainActivity();
             }
         });
+
+        //dropdown menu items
+        String[] items = new String[]{"Sedentary", "Light ", "Moderate", "Active"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, items);
+        //set the spinners adapter to the previously created one
+        binding.activityDropdown.setAdapter(adapter);
 
     }
     private void goMainActivity() {

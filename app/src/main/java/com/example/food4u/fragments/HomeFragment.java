@@ -75,7 +75,6 @@ public class HomeFragment extends Fragment {
 
         allRecipes = new ArrayList<>();
 
-
         if (healthTags != null) {
             MainActivity.REQUEST_URL += healthTags;
         }
