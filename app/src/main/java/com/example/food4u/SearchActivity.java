@@ -45,7 +45,6 @@ public class SearchActivity extends AppCompatActivity {
     public static final String TAG = "SearchActivity";
     protected HomeAdapter adapter;
     protected List<Recipe> searchRecipes;
-    RequestQueue recipeQueue;
 
     public SearchActivity(){
         //empty constructor required
@@ -68,9 +67,15 @@ public class SearchActivity extends AppCompatActivity {
 
         searchRecipes = new ArrayList<>();
 
-        Log.i(TAG, "sets search activity ");
+        // Create an adapter
+        adapter = new HomeAdapter(this, searchRecipes);
 
-        // Get the intent, verify the action and get the query
+        // Bind adapter to list
+        binding.rvPosts.setAdapter(adapter);
+        //set layout manager
+        binding.rvPosts.setLayoutManager(layout);
+
+        // Get the intent, verify the action and get the search query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
@@ -79,78 +84,11 @@ public class SearchActivity extends AppCompatActivity {
                 new_url+="&q=" + query;
             }
             Log.i(TAG, "query is " + query);
-            retrieveFromAPI(new_url);
+            //retrieve the new recipes with the search query
+            Recipe.retrieveFromAPI(new_url, this, searchRecipes ,adapter);
         }
-
-        // Create an adapter
-        adapter = new HomeAdapter(this, searchRecipes);
-        // Bind adapter to list
-        binding.rvPosts.setAdapter(adapter);
-        //set layout manager
-        binding.rvPosts.setLayoutManager(layout);
     }
 
 
-    public void retrieveFromAPI(String url){
-        //retrieve api
-        recipeQueue = Volley.newRequestQueue(this);
-        Toast.makeText(this,"retrieve api search activity opened", Toast.LENGTH_SHORT).show();
-        Log.i(TAG, "retrieve api method");
-        //filter different pages
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("hits");
-                    Log.i(TAG, "Results" + results.toString());
-                    Log.i(TAG, "OnSuccess");
-                    processResults(results);
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "OnFailure");
-                error.printStackTrace();
-
-            }
-        });
-        recipeQueue.add(jsonObjectRequest);
-    }
-
-    public void processResults(JSONArray response){
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                //gets specific hit
-                JSONObject recipeJSON = response.getJSONObject(i);
-                //goes into the recipe portion of hit
-                JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
-                String recipeName = currentRecipe.getString("label");
-                String image = currentRecipe.getString("image");
-                String recipeURL = currentRecipe.getString("url");
-                String calories = Integer.toString(currentRecipe.getInt("calories"));
-                String servings = Integer.toString(currentRecipe.getInt("yield"));
-
-                //looks into an array of ingredients and add them to the recipe
-                ArrayList<String> ingredients = new ArrayList<>();
-                JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-                for (int j = 0; j < ingredientList.length(); j++) {
-                    ingredients.add(ingredientList.get(j).toString());
-                }
-
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                searchRecipes.add(recipe);
-                Collections.shuffle(searchRecipes);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
 }

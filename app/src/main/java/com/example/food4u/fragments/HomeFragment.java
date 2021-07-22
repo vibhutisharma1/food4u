@@ -31,14 +31,12 @@ import org.json.JSONObject;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
 public class HomeFragment extends Fragment {
 
     FragmentHomeBinding binding;
-    public static final String TAG = "HomeFragment";
     protected HomeAdapter adapter;
     protected List<Recipe> allRecipes;
 
@@ -91,70 +89,11 @@ public class HomeFragment extends Fragment {
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
 
-        retrieveFromAPI(MainActivity.REQUEST_URL);
+        //get recipes based on health tags
+        Recipe.retrieveFromAPI(MainActivity.REQUEST_URL, getContext(), allRecipes, adapter);
 
     }
 
-    public void retrieveFromAPI(String url) {
-        //retrieve api
-        RequestQueue recipeQueue = Volley.newRequestQueue(getContext());
-        //filter different pages
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    JSONArray results = response.getJSONArray("hits");
-                    Log.i(TAG, "Results" + results.toString());
-                    Log.i(TAG, "OnSuccess");
-                    processResults(results);
-                    adapter.notifyDataSetChanged();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i(TAG, "OnFailure");
-                error.printStackTrace();
-
-            }
-        });
-        recipeQueue.add(jsonObjectRequest);
-    }
-
-    public void processResults(JSONArray response) {
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                //gets specific hit
-                JSONObject recipeJSON = response.getJSONObject(i);
-                //goes into the recipe portion of hit
-                JSONObject currentRecipe = recipeJSON.getJSONObject("recipe");
-                String recipeName = currentRecipe.getString("label");
-                String image = currentRecipe.getString("image");
-                String recipeURL = currentRecipe.getString("url");
-                String calories = Integer.toString(currentRecipe.getInt("calories"));
-                String servings = Integer.toString(currentRecipe.getInt("yield"));
-
-                //looks into an array of ingredients and add them to the recipe
-                ArrayList<String> ingredients = new ArrayList<>();
-                JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-                for (int j = 0; j < ingredientList.length(); j++) {
-                    ingredients.add(ingredientList.get(j).toString());
-                }
-
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings);
-                allRecipes.add(recipe);
-                Collections.shuffle(allRecipes);
-            }
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     //displays recipes based on current time to get accurate mealTypes(breakfast, lunch, dinner)
     @RequiresApi(api = Build.VERSION_CODES.O)
