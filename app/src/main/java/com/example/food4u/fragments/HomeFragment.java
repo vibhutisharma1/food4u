@@ -75,11 +75,14 @@ public class HomeFragment extends Fragment {
 
         allRecipes = new ArrayList<>();
 
-        //maybe set this info into a new string to avoid failure if crash
-        //remove duplicate tags
+
         if (healthTags != null) {
-            MainActivity.REQUEST_URL += healthTags + "&mealType=" + mealType();
+            MainActivity.REQUEST_URL += healthTags;
         }
+
+        //another url to hold mealType to keep separate from main request url for search
+        String mealAddition = MainActivity.REQUEST_URL;
+        mealAddition+=  "&mealType=" + mealType();
 
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);
@@ -89,7 +92,7 @@ public class HomeFragment extends Fragment {
         binding.rvPosts.setLayoutManager(layout);
 
         //get recipes based on health tags
-        Recipe.retrieveFromAPI(MainActivity.REQUEST_URL, getContext(), allRecipes, adapter);
+        Recipe.retrieveFromAPI(mealAddition, getContext(), allRecipes, adapter);
 
     }
 

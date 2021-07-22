@@ -54,16 +54,13 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position and replace the fragment accordingly
-                Fragment fragment = null;
+                Fragment fragment = new IngredientFragment();
                 switch (tab.getPosition()) {
                     case 2:
                         fragment = new NutritionFragment();
                         break;
                     case 1:
                         fragment = new DirectionFragment();
-                        break;
-                    default:
-                        fragment = new IngredientFragment();
                         break;
                 }
                 FragmentManager fm = getSupportFragmentManager();

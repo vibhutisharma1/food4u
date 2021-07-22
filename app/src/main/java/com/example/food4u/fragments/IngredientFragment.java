@@ -9,6 +9,9 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.R;
@@ -44,11 +47,16 @@ public class IngredientFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        //display ingredients
         ArrayList<String> ingredients = DetailsActivity.recipe.getIngredients();
-        //add ingredients text
         for(int i = 0; i < ingredients.size(); i++){
-            binding.tvIngredients.append(ingredients.get(i) +"\n");
+            // Create Checkbox Dynamically
+            CheckBox checkBox = new CheckBox(getContext());
+            checkBox.setText(ingredients.get(i));
+            //add to linear list
+            binding.ingredientList.addView(checkBox);
         }
+        //TODO: change font to open sans and text size
 
     }
 }

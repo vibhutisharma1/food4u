@@ -46,5 +46,6 @@ public class NutritionFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
        String nutrition = DetailsActivity.recipe.getCalories();
        binding.tvNutrition.append(nutrition);
+       //nutrition: sat, unsat, sugar, calories, fiber, cholestrol
     }
 }
