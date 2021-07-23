@@ -63,5 +63,9 @@ dependencies {
     //parse user
     implementation "com.github.parse-community.Parse-SDK-Android:parse:1.18.5"
 
+    //floating button
+    implementation 'com.google.android.material:material:1.1.0'
+
+
 
 }
