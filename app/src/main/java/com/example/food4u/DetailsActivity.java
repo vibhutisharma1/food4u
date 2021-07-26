@@ -27,6 +27,8 @@ import com.example.food4u.fragments.ProfileFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 
 public class DetailsActivity extends AppCompatActivity implements Serializable {
@@ -34,6 +36,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
     public static Recipe recipe;
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
+    public static ArrayList<Recipe> mealPlan = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,6 +102,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             public void onClick(View v) {
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                 intent.putExtra("FROM", "DetailsActivty");
+                mealPlan.add(recipe);
                 startActivity(intent);
 
             }

@@ -78,7 +78,11 @@ public class MealFragment extends Fragment implements Serializable {
         meal = DetailsActivity.recipe;
         allMeals = new ArrayList<>();
 
-        allMeals.add(meal);
+
+        if(DetailsActivity.mealPlan!= null){
+            allMeals.addAll(DetailsActivity.mealPlan);
+
+        }
 
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allMeals);
@@ -89,7 +93,6 @@ public class MealFragment extends Fragment implements Serializable {
 
         //get recipes based on health tags
 
-       // allMeals.add(meal);
 
     }
 
