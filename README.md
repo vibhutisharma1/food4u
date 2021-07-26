@@ -12,9 +12,11 @@ turn your health goals into a reality! this app creates specific recipes for you
  - [X] User can select health tags to filter recipes
  - [x] User can view displayed recipes and different meal types (breakfast, lunch, dinner) based on time of day
  - [ ] User is able to add meals to Meal Plan
- - [ ] User sees calorie and macro nutrient goal
+ - [ ] User gets persoanlized calorie and macro calculation 
+ - [ ] User gets a visual representation of calorie and macro nutrient goal
  - [ ] User can view their favorite meals in their profile 
- - [ ] User can visually see calorie and macro addition  
+ - [ ] User can share their favorite recipe to Instagram and Facebook
+ - [ ] User can edit their profile to change preferences 
 
 **Optional Nice-to-have Stories**
 
