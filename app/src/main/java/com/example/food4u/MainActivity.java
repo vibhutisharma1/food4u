@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
     public static final String TAG = "MainActivity";
     protected List<Recipe> searchRecipes;
+    String fromDetails;
 
     ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -66,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(v);
 
 
+        fromDetails = getIntent().getStringExtra("FROM");
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
@@ -78,24 +81,35 @@ public class MainActivity extends AppCompatActivity {
                 Fragment fragment = new HomeFragment();
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
-                        fragment = new HomeFragment();
+                        toHomeFragment();
+                        //fragment = new HomeFragment();
                         break;
                     case R.id.action_meal:
-                        fragment = new MealFragment();
+                        toMealFragment();
+                       // fragment = new MealFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ProfileFragment();
+                        toProfileFragment();
+                        //fragment = new ProfileFragment();
+                        break;
+                    default:
+                        toHomeFragment();
                         break;
                 }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
+        
 
-        // Set default selection
-        binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+        if(fromDetails == null){
+            binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+        }else{
+            binding.bottomNavigation.setSelectedItemId(R.id.action_meal);
+        }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -144,6 +158,22 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+   // @Override
+    public void toMealFragment() {
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment()).commit();
+    }
+
+    public void toHomeFragment() {
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new HomeFragment()).commit();
+    }
+
+    public void toProfileFragment() {
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new ProfileFragment()).commit();
+    }
+
+
+
 
 
 }

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.food4u.fragments.HomeFragment;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -28,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         if(ParseUser.getCurrentUser() != null){
-            goQuestionActivity();
+            goMainActivity();
         }
 
         loginBtn = findViewById(R.id.login);
@@ -57,15 +58,15 @@ public class LoginActivity extends AppCompatActivity {
                     return;
 
                 }
-                goQuestionActivity();
+                goMainActivity();
                 Toast.makeText(LoginActivity.this,"login success", Toast.LENGTH_SHORT).show();
             }
 
         });
     }
 
-    private void goQuestionActivity() {
-        Intent i = new Intent(this, QuestionActivity.class);
+    private void goMainActivity() {
+        Intent i = new Intent(this, MainActivity.class);
         startActivity(i);
         finish();
 

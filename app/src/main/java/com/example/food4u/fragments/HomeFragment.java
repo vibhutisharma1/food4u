@@ -24,6 +24,7 @@ import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
 import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentHomeBinding;
+import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +37,7 @@ import java.util.List;
 
 public class HomeFragment extends Fragment {
 
+    private static final String TAG = "HomeFragment";
     FragmentHomeBinding binding;
     protected HomeAdapter adapter;
     protected List<Recipe> allRecipes;
@@ -66,6 +68,7 @@ public class HomeFragment extends Fragment {
 
         // allows for optimizations
         binding.rvPosts.setHasFixedSize(true);
+        binding.tvEnter.append(ParseUser.getCurrentUser().getUsername() + ",");
 
         // Define 2 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
@@ -78,6 +81,7 @@ public class HomeFragment extends Fragment {
         if (healthTags != null) {
             MainActivity.REQUEST_URL += healthTags;
         }
+        Log.e(TAG, healthTags);
 
         //another url to hold mealType to keep separate from main request url for search
         String mealAddition = MainActivity.REQUEST_URL;
@@ -92,7 +96,6 @@ public class HomeFragment extends Fragment {
 
         //get recipes based on health tags
         Recipe.retrieveFromAPI(mealAddition, getContext(), allRecipes, adapter);
-
     }
 
 
@@ -117,6 +120,5 @@ public class HomeFragment extends Fragment {
             return "Snack";
 
     }
-
 
 }

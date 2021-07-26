@@ -21,6 +21,7 @@ public class SignupPage extends AppCompatActivity {
     TextView emailTxt;
     TextView usernameTxt;
     TextView passwordTxt;
+    public static boolean SignupActivity = false;
     public static final String TAG = "SignupPage";
 
     @Override
@@ -36,7 +37,8 @@ public class SignupPage extends AppCompatActivity {
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i(TAG, "login click success");
+                Log.i(TAG, "signup click success");
+                SignupActivity = true;
                 String username = usernameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
                 String email = emailTxt.getText().toString();
