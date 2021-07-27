@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.TranslateAnimation;
 
 
 import com.example.food4u.DetailsActivity;
@@ -34,7 +37,7 @@ import java.util.List;
 
 public class MealFragment extends Fragment implements Serializable {
 
-    FragmentMealBinding binding;
+    public static FragmentMealBinding binding;
     protected HomeAdapter adapter;
     protected List<Recipe> allMeals;
     public static final String TAG = "MealFragment";
@@ -101,12 +104,62 @@ public class MealFragment extends Fragment implements Serializable {
         //display progress for calories
         binding.progressBar.setProgressPercentage(getPercentage(), true);
 
+        if(DetailsActivity.mealAdded){
+            startCarbAnimation();
+        }
+
+
+
     }
 
     //calculate the percentage of calories eaten
     public Double getPercentage() {
         return (currentCalories / totalCalories) * 100;
     }
+
+    public void startCarbAnimation(){
+        binding.ivCarbs.clearAnimation();
+        TranslateAnimation transAnim = new TranslateAnimation(0, 0, 0, getDisplayHeight()/2);
+        transAnim.setStartOffset(500);
+        transAnim.setDuration(3000);
+        transAnim.setFillAfter(true);
+        transAnim.setInterpolator(new BounceInterpolator());
+        transAnim.setAnimationListener(new Animation.AnimationListener() {
+
+            @Override
+            public void onAnimationStart(Animation animation) {
+                Log.i(TAG, "Starting button dropdown animation");
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                // TODO Auto-generated method stub
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                Log.i(TAG,
+                        "Ending button dropdown animation. Clearing animation and setting layout");
+                binding.ivCarbs.clearAnimation();
+                final int left = binding.ivCarbs.getLeft();
+                final int top = binding.ivCarbs.getTop();
+                final int right = binding.ivCarbs.getRight();
+                final int bottom = binding.ivCarbs.getBottom();
+                binding.ivCarbs.layout(left, top, right, bottom);
+
+            }
+        });
+        binding.ivCarbs.startAnimation(transAnim);
+
+    }
+
+    private int getDisplayHeight() {
+        return this.getResources().getDisplayMetrics().heightPixels;
+    }
+
+
 
 
 }

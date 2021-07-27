@@ -27,6 +27,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
     public static ArrayList<Recipe> mealPlan = new ArrayList<>();
+    public static boolean mealAdded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +60,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
         tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                // get the current selected tab's position and replace the fragment accordingly
+                // get the current selected tab's position
                 Fragment fragment = new IngredientFragment();
                 switch (tab.getPosition()) {
                     case 2:
@@ -69,6 +70,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                         fragment = new DirectionFragment();
                         break;
                 }
+                //replace the fragment accordingly
                 FragmentManager fm = getSupportFragmentManager();
                 FragmentTransaction ft = fm.beginTransaction();
                 ft.replace(R.id.simpleFrameLayout, fragment);
@@ -92,13 +94,17 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             public void onClick(View v) {
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                 intent.putExtra(MainActivity.TO_MEAL, "DetailsActivity");
+                //add recipe to the meal tab
+                mealAdded = true;
                 mealPlan.add(recipe);
+                //add current calories of meal
                 MealFragment.currentCalories += Double.parseDouble(recipe.getCalories())/ Integer.parseInt(recipe.getServings());
                 startActivity(intent);
 
             }
         });
 
+        //set details view image and recipe name
         binding.tvRecipe.setText(recipe.getRecipeName());
         Glide.with(this).load(recipe.getImage()).circleCrop().fitCenter().into(binding.ivFood);
 

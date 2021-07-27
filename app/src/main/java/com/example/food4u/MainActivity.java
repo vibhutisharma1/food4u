@@ -83,21 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (menuItem.getItemId()) {
                     case R.id.action_home:
                         toHomeFragment();
-                        //fragment = new HomeFragment();
                         break;
                     case R.id.action_meal:
                         toMealFragment();
-                       // fragment = new MealFragment();
                         break;
                     case R.id.action_profile:
                         toProfileFragment();
-                        //fragment = new ProfileFragment();
                         break;
                     default:
                         toHomeFragment();
                         break;
                 }
-                //fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
         });
@@ -150,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //no inspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
