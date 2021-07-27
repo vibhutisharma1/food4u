@@ -52,7 +52,6 @@ public class MainActivity extends AppCompatActivity {
     public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
     public static final String TAG = "MainActivity";
     public static final String TO_MEAL = TAG + "TO_MEAL";
-    protected List<Recipe> searchRecipes;
     String fromDetails;
 
     ActivityMainBinding binding;
@@ -68,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(v);
 
 
-        fromDetails = getIntent().getStringExtra("TO_MEAL");
+        fromDetails = getIntent().getStringExtra(TO_MEAL);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -135,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
         });
         // Assumes current activity is the searchable activity
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+        searchView.setIconifiedByDefault(false);
         searchView.setSubmitButtonEnabled(true);
         return true;
     }
@@ -156,7 +155,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-   // @Override
     public void toMealFragment() {
         fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment()).commit();
     }
