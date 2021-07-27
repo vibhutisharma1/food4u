@@ -2,10 +2,8 @@ package com.example.food4u;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
 
-import java.io.Serializable;
+import com.parse.ParseUser;
 
 @ParseClassName("personalInfo")
 public class PersonalInfo extends ParseObject {
@@ -17,6 +15,8 @@ public class PersonalInfo extends ParseObject {
     public static final String KEY_AGE = "age";
     public static final String KEY_USER = "user";
     public static final String KEY_HEALTH = "health";
+    public static final String KEY_GENDER = "gender";
+    public static final String KEY_CALORIE = "calories";
 
     //getters
     public int getWeight() {
@@ -34,12 +34,21 @@ public class PersonalInfo extends ParseObject {
     public double getHeight() {
         return getDouble(KEY_HEIGHT);
     }
+
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
     }
-    public String getHealth() {
-        return getString(KEY_HEALTH);
+
+    public String getHealth() { return getString(KEY_HEALTH); }
+
+    public String getGender() {
+        return getString(KEY_GENDER);
     }
+
+    public String getCalorie() {
+        return getString(KEY_CALORIE);
+    }
+
 
     //setters
     public void setUser(ParseUser user) {
@@ -64,5 +73,13 @@ public class PersonalInfo extends ParseObject {
 
     public void setHealth(String health){
         put(KEY_HEALTH, health);
+    }
+
+    public void setGender(String gender){
+        put(KEY_GENDER, gender);
+    }
+
+    public void setCalorie(double calorie){
+        put(KEY_CALORIE, calorie);
     }
 }

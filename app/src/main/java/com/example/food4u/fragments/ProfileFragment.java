@@ -10,17 +10,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.food4u.FrontActivity;
 import com.example.food4u.MainActivity;
-import com.example.food4u.PersonalInfo;
 import com.example.food4u.QuestionActivity;
-import com.example.food4u.R;
-import com.example.food4u.databinding.FragmentHomeBinding;
 import com.example.food4u.databinding.FragmentProfileBinding;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +64,7 @@ public class ProfileFragment extends Fragment {
                 Intent intent = new Intent(getContext(), QuestionActivity.class);
                 //reset request url to original
                 MainActivity.REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
-
+                QuestionOne.healthStringTags = "";
                 startActivity(intent);
             }
         });

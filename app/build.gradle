@@ -66,6 +66,9 @@ dependencies {
     //floating button
     implementation 'com.google.android.material:material:1.1.0'
 
+    //external library
+    implementation 'com.github.MackHartley:RoundedProgressBar:2.1.0'
+
 
 
 }

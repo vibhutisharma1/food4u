@@ -125,8 +125,8 @@ public class Recipe implements Serializable {
                 }
 
                 //create hash map of key-nutrient labels and value-quantity
-               Map<String, String> nutrientMap = new HashMap<>();
-               //set the keys to the JSON labels
+                Map<String, String> nutrientMap = new HashMap<>();
+                //set the keys to the JSON labels
                 nutrientMap.put("ENERC_KCAL", "0");
                 nutrientMap.put("FAT", "0");
                 nutrientMap.put("FASAT", "0");
@@ -135,7 +135,7 @@ public class Recipe implements Serializable {
                 nutrientMap.put("CHOCDF", "0");
                 nutrientMap.put("FIBTG", "0");
                 nutrientMap.put("SUGAR", "0");
-                for (Map.Entry<String,String> entry : nutrientMap.entrySet()){
+                for (Map.Entry<String, String> entry : nutrientMap.entrySet()) {
                     String currentKey = entry.getKey();
                     //get the json object of nutrient label
                     JSONObject totalNutrients = currentRecipe.getJSONObject("totalNutrients").getJSONObject(currentKey);
@@ -154,6 +154,7 @@ public class Recipe implements Serializable {
         }
 
     }
+
     public Map<String, String> getNutrientMap() {
         return nutrientMap;
     }

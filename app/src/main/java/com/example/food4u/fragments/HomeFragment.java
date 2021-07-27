@@ -22,8 +22,12 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
+import com.example.food4u.PersonalInfo;
 import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentHomeBinding;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -78,14 +82,24 @@ public class HomeFragment extends Fragment {
 
         allRecipes = new ArrayList<>();
 
+        //get their health tag
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("personalInfo");
+
+        query.include(PersonalInfo.KEY_USER);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+
         if (healthTags != null) {
-            MainActivity.REQUEST_URL += healthTags;
+            try {
+                MainActivity.REQUEST_URL += query.getFirst().getString("health");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
         Log.e(TAG, healthTags);
 
         //another url to hold mealType to keep separate from main request url for search
         String mealAddition = MainActivity.REQUEST_URL;
-        mealAddition+=  "&mealType=" + mealType();
+        mealAddition += "&mealType=" + mealType();
 
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);

@@ -22,13 +22,12 @@ public class LoginActivity extends AppCompatActivity {
     TextView passwordBtn;
     public static final String TAG = "LoginActivity";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        if(ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
 
@@ -49,17 +48,17 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser(String username, String password) {
         Log.i(TAG, "Attemping to login user" + username);
-        ParseUser.logInInBackground(username, password, new LogInCallback(){
+        ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if(e != null) {
+                if (e != null) {
                     Log.e(TAG, "issue with login", e);
-                    Toast.makeText(LoginActivity.this,"issue with login", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this, "issue with login", Toast.LENGTH_SHORT).show();
                     return;
 
                 }
                 goMainActivity();
-                Toast.makeText(LoginActivity.this,"login success", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "login success", Toast.LENGTH_SHORT).show();
             }
 
         });

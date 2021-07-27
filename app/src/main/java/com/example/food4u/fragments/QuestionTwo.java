@@ -16,10 +16,9 @@ import android.widget.Toast;
 
 import com.example.food4u.MainActivity;
 import com.example.food4u.PersonalInfo;
-import com.example.food4u.R;
+
 import com.example.food4u.SignupPage;
 import com.example.food4u.databinding.FragmentQuestionTwoBinding;
-import com.parse.FindCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -27,14 +26,10 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.List;
 
 public class QuestionTwo extends Fragment {
     FragmentQuestionTwoBinding binding;
     public static final String TAG = "QuestionTwo";
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -56,27 +51,34 @@ public class QuestionTwo extends Fragment {
         //set the spinners adapter to the previously created one
         binding.activityDropdown.setAdapter(adapter);
 
+        String[] options = new String[]{"Female", "Male"};
+        ArrayAdapter<String> gAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, options);
+        //set the spinners adapter to the previously created one
+        binding.genderDropdown.setAdapter(gAdapter);
+
         binding.btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //set the parse object variables
-
                 //retrieve object values
                 int feet = Integer.parseInt(binding.etFeet.getText().toString());
                 int inches = Integer.parseInt(binding.etInch.getText().toString());
-                double height =  convertFtToCm(feet, inches);
+                double height = convertFtToIn(feet, inches);
                 int age = Integer.parseInt(binding.etAge.getText().toString());
-                int weight =  Integer.parseInt(binding.etLbs.getText().toString());
+                int weight = Integer.parseInt(binding.etLbs.getText().toString());
                 String activity = binding.activityDropdown.getSelectedItem().toString();
                 String health = QuestionOne.healthStringTags;
+                String gender = binding.genderDropdown.getSelectedItem().toString();
+                Double calories = totalCalories(weight, height, age, gender, activity);
+                Log.e(TAG, "the total calories here are " + calories);
 
-                if(SignupPage.SignupActivity){
+                if (SignupPage.SignupActivity) {
                     //creating personalInfo for the first time when sign up
-                    setObject(health, weight, activity, height, age);
-                }else {
+                    setObject(health, weight, activity, height, age, gender, calories);
+                } else {
                     //update personalInfo object
-                    updateObject(health, weight, activity, height, age);
+                    updateObject(health, weight, activity, height, age, gender, calories);
                 }
+
                 goMainActivity();
 
             }
@@ -84,7 +86,7 @@ public class QuestionTwo extends Fragment {
 
     }
 
-    public void setObject(String health, int weight, String activity, double height, int age){
+    public void setObject(String health, int weight, String activity, double height, int age, String gender, double calories) {
         PersonalInfo info = new PersonalInfo();
         Log.e(TAG, " inside set object");
         info.setAge(age);
@@ -93,19 +95,22 @@ public class QuestionTwo extends Fragment {
         info.setUser(ParseUser.getCurrentUser());
         info.setWeight(weight);
         info.setActivity(activity);
+        info.setActivity(gender);
+        info.setCalorie(calories);
+
         info.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
-                if(e != null){
+                if (e != null) {
                     Log.e(TAG, "Error while saving", e);
-                    Toast.makeText(getContext(),"Error while saving!",
+                    Toast.makeText(getContext(), "Error while saving!",
                             Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
-    public void updateObject(String health, int weight, String activity, double height, int age){
+    public void updateObject(String health, int weight, String activity, double height, int age, String gender, double calories) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("personalInfo");
 
         query.include(PersonalInfo.KEY_USER);
@@ -121,6 +126,8 @@ public class QuestionTwo extends Fragment {
                 object.put("activity", activity);
                 object.put("height", height);
                 object.put("age", age);
+                object.put("gender", gender);
+                object.put("calories", calories);
                 object.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
@@ -139,8 +146,31 @@ public class QuestionTwo extends Fragment {
     }
 
     //convert user ft and inches to cm
-    public double convertFtToCm(int feet, int inches){
-        return (2.54 * inches) + (30.48 * feet);
+    public double convertFtToIn(int feet, int inches) {
+        return ((2.54 * inches) + (30.48 * feet)) / 2.54;
+    }
+    //calculates total calories to maintain weight based on user's information
+    public double totalCalories(int weight, double height, int age, String gender, String activity) {
+        double calories;
+
+        //calculate based on personal factors
+        if (gender == "male") {
+            calories = 66.47 + (6.24 * weight) + (12.7 * height) - (6.755 * age);
+        } else {
+            calories = 655.1 + (4.35 * weight) + (4.7 * height) - (4.7 * age);
+        }
+
+        //multiply by factor based on level of activity
+        if (activity.equals("Sedentary")) {
+            calories *= 1.2;
+        } else if (activity.equals("Light")) {
+            calories *= 1.375;
+        } else if (activity.equals("Moderate")) {
+            calories *= 1.55;
+        } else if (activity.equals("Active")) {
+            calories *= 1.725;
+        }
+        return calories;
     }
 
     private void goMainActivity() {

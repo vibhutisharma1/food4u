@@ -9,17 +9,35 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMeals"
-        android:layout_width="match_parent"
-        android:layout_height="674dp"
-        android:layout_below="@+id/tvMenu"
+        android:layout_width="412dp"
+        android:layout_height="617dp"
+        android:layout_below="@+id/progressBar"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="7dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginBottom="-2dp" />
+
+    <com.mackhartley.roundedprogressbar.RoundedProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_below="@+id/tvMenu"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp"
+        app:rpbBackgroundColor="#F1E8B8"
+        app:rpbBackgroundTextColor="#252925"
+        app:rpbCornerRadiusBottomLeft="6dp"
+        app:rpbCornerRadiusBottomRight="20dp"
+        app:rpbCornerRadiusTopLeft="20dp"
+        app:rpbCornerRadiusTopRight="6dp"
+        app:rpbIsRadiusRestricted="false"
+        app:rpbProgressColor="#A0CA92"
+        app:rpbProgressTextColor="#F28969"
+        app:rpbTextPadding="12dp" />
 
     <TextView
         android:id="@+id/tvMenu"
@@ -28,10 +46,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="Daily Menu"
         android:textSize="30sp"
         app:lineHeight="46sp" />
+
 </RelativeLayout>

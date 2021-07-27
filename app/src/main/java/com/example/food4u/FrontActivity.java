@@ -23,7 +23,7 @@ public class FrontActivity extends AppCompatActivity {
         setContentView(R.layout.activity_front);
 
 
-        if(ParseUser.getCurrentUser() != null){
+        if (ParseUser.getCurrentUser() != null) {
             goMainActivity();
         }
 
@@ -35,7 +35,6 @@ public class FrontActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent i = new Intent(FrontActivity.this, LoginActivity.class);
                 startActivity(i);
-                //finish();
             }
         });
 
@@ -46,8 +45,6 @@ public class FrontActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
-
 
     }
 

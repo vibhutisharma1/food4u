@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
     public static final String TAG = "MainActivity";
+    public static final String TO_MEAL = TAG + "TO_MEAL";
     protected List<Recipe> searchRecipes;
     String fromDetails;
 
@@ -67,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(v);
 
 
-        fromDetails = getIntent().getStringExtra("FROM");
+        fromDetails = getIntent().getStringExtra("TO_MEAL");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.

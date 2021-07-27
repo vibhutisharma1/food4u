@@ -1,46 +1,36 @@
 package com.example.food4u.fragments;
 
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.os.Parcelable;
-import android.telecom.Call;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
+
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.HomeAdapter;
-import com.example.food4u.MainActivity;
-import com.example.food4u.R;
-import com.example.food4u.Recipe;
-import com.example.food4u.databinding.FragmentHomeBinding;
-import com.example.food4u.databinding.FragmentMealBinding;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
+import com.example.food4u.PersonalInfo;
+import com.example.food4u.Recipe;
+
+import com.example.food4u.databinding.FragmentMealBinding;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
+
 
 public class MealFragment extends Fragment implements Serializable {
 
@@ -50,6 +40,8 @@ public class MealFragment extends Fragment implements Serializable {
     public static final String TAG = "MealFragment";
     public static final String CURRENT_MEAL = TAG + "currentMeal";
     Recipe meal;
+    Double totalCalories;
+    public static double currentCalories;
 
 
     public MealFragment() {
@@ -78,12 +70,6 @@ public class MealFragment extends Fragment implements Serializable {
         meal = DetailsActivity.recipe;
         allMeals = new ArrayList<>();
 
-
-        if(DetailsActivity.mealPlan!= null){
-            allMeals.addAll(DetailsActivity.mealPlan);
-
-        }
-
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allMeals);
         // Bind adapter to list
@@ -91,13 +77,36 @@ public class MealFragment extends Fragment implements Serializable {
         //set layout manager
         binding.rvMeals.setLayoutManager(layout);
 
-        //get recipes based on health tags
+        //add the current recipe to the meal tab
+        if (DetailsActivity.mealPlan != null) {
+            allMeals.addAll(DetailsActivity.mealPlan);
+        }
 
+        //gets user's total calories
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("personalInfo");
+        query.include(PersonalInfo.KEY_USER);
+        query.include(PersonalInfo.KEY_CALORIE);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+
+        //store calories into local variable
+        try {
+
+            totalCalories = Double.parseDouble(query.getFirst().get("calories").toString());
+            Log.e(TAG, "total calories " + totalCalories);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            Log.e(TAG, "did not retrieve calories");
+        }
+
+        //display progress for calories
+        binding.progressBar.setProgressPercentage(getPercentage(), true);
 
     }
 
-
-
+    //calculate the percentage of calories eaten
+    public Double getPercentage() {
+        return (currentCalories / totalCalories) * 100;
+    }
 
 
 }

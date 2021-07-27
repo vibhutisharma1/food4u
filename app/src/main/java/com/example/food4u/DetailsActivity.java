@@ -5,17 +5,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.text.Html;
-import android.text.SpannableStringBuilder;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.UnderlineSpan;
 import android.view.View;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
@@ -23,11 +15,9 @@ import com.example.food4u.fragments.DirectionFragment;
 import com.example.food4u.fragments.IngredientFragment;
 import com.example.food4u.fragments.MealFragment;
 import com.example.food4u.fragments.NutritionFragment;
-import com.example.food4u.fragments.ProfileFragment;
 import com.google.android.material.tabs.TabLayout;
 
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 
@@ -101,8 +91,9 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
-                intent.putExtra("FROM", "DetailsActivty");
+                intent.putExtra(MainActivity.TO_MEAL, "DetailsActivity");
                 mealPlan.add(recipe);
+                MealFragment.currentCalories += Double.parseDouble(recipe.getCalories())/ Integer.parseInt(recipe.getServings());
                 startActivity(intent);
 
             }
