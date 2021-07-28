@@ -5,13 +5,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/btnMeal"
+    <ImageView
+        android:id="@+id/likeStar"
         android:layout_width="57dp"
         android:layout_height="54dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="128dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="9dp"
+        app:srcCompat="@android:drawable/btn_star" />
+
+    <Button
+        android:id="@+id/btnMeal"
+        android:layout_width="57dp"
+        android:layout_height="54dp"
+        android:layout_below="@+id/likeStar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="19dp"
         android:layout_marginEnd="6dp"
         android:background="@drawable/icons8_meal_100" />
 
@@ -22,6 +32,8 @@
         android:layout_height="195dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="2dp"
         android:scaleType="centerCrop"
         android:transitionName="profile" />
 
@@ -67,5 +79,6 @@
         android:layout_marginStart="158dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="48dp" />
+
 </RelativeLayout>
 

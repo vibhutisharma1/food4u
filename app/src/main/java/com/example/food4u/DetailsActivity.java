@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
@@ -89,6 +90,14 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             }
         });
 
+        binding.likeStar.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return false;
+            }
+        });
+
         binding.btnMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -99,7 +108,13 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                 mealPlan.add(recipe);
 
                 //Calories and Macros added
-                MealFragment.currentCalories += Double.parseDouble(recipe.getCalories())/ Integer.parseInt(recipe.getServings());
+                //set previous values before adding them
+                MealFragment.carbs = MealFragment.currentCarbs;
+                MealFragment.protein = MealFragment.currentProtein;
+                MealFragment.fat = MealFragment.currentFat;
+
+                //add current recipe nutrition
+                MealFragment.currentCalories += Double.parseDouble(recipe.getCalories()) / Integer.parseInt(recipe.getServings());
                 MealFragment.currentProtein += Integer.parseInt(recipe.getProtein());
                 MealFragment.currentCarbs += Integer.parseInt(recipe.getCarb());
                 MealFragment.currentFat += Integer.parseInt(recipe.getFat());

@@ -77,18 +77,6 @@
         android:textSize="30sp"
         app:lineHeight="46sp" />
 
-    <!--    <ImageView-->
-<!--        android:id="@+id/ivProtein"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/tvMenu"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_marginStart="42dp"-->
-<!--        android:layout_marginTop="7dp"-->
-<!--        android:src="@drawable/protein"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.dinuscxj.progressbar.CircleProgressBar
         android:id="@+id/proteinProgress"
@@ -136,6 +124,7 @@
         android:layout_marginTop="7dp"
         android:layout_toEndOf="@+id/carbProgress"
         app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="5dp"
         app:progress_background_color="@color/holo_darker_gray"
         app:progress_blur_radius="5dp"
         app:progress_blur_style="solid"
