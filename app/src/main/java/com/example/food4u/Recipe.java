@@ -135,6 +135,7 @@ public class Recipe implements Serializable {
                 nutrientMap.put("CHOCDF", "0");
                 nutrientMap.put("FIBTG", "0");
                 nutrientMap.put("SUGAR", "0");
+                nutrientMap.put("PROCNT", "0");
                 for (Map.Entry<String, String> entry : nutrientMap.entrySet()) {
                     String currentKey = entry.getKey();
                     //get the json object of nutrient label
@@ -158,6 +159,17 @@ public class Recipe implements Serializable {
     public Map<String, String> getNutrientMap() {
         return nutrientMap;
     }
+
+    public String getFat(){
+        return nutrientMap.get("FAT");
+    }
+    public String getProtein(){
+        return nutrientMap.get("PROCNT");
+    }
+    public String getCarb(){
+        return nutrientMap.get("CHOCDF");
+    }
+
 
 
 }

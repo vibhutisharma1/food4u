@@ -95,11 +95,12 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-        Log.e(TAG, healthTags);
+
 
         //another url to hold mealType to keep separate from main request url for search
         String mealAddition = MainActivity.REQUEST_URL;
         mealAddition += "&mealType=" + mealType();
+        Log.e(TAG,mealAddition);
 
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);

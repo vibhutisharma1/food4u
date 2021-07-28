@@ -7,29 +7,17 @@
     tools:context=".fragments.MealFragment">
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvMeals"
-        android:layout_width="match_parent"
-        android:layout_height="556dp"
-        android:layout_below="@+id/ivProtein"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="-2dp" />
-
     <com.mackhartley.roundedprogressbar.RoundedProgressBar
         android:id="@+id/progressBar"
         android:layout_width="382dp"
         android:layout_height="30dp"
         android:layout_below="@+id/tvMenu"
         android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="9dp"
+        android:layout_marginEnd="9dp"
         app:rpbBackgroundColor="#F1E8B8"
         app:rpbBackgroundTextColor="#252925"
         app:rpbCornerRadiusBottomLeft="6dp"
@@ -41,6 +29,40 @@
         app:rpbProgressTextColor="#F28969"
         app:rpbTextPadding="12dp" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMeals"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/proteinProgress"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_carb"
+        android:id="@+id/addCarb"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_fat"
+        android:id="@+id/addFat"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_protein"
+        android:id="@+id/addProtein"/>
+
+
     <TextView
         android:id="@+id/tvMenu"
         android:layout_width="wrap_content"
@@ -48,47 +70,80 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="129dp"
         android:layout_marginTop="6dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="Daily Menu"
         android:textSize="30sp"
         app:lineHeight="46sp" />
 
-    <ImageView
-        android:id="@+id/ivCarbs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <!--    <ImageView-->
+<!--        android:id="@+id/ivProtein"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/tvMenu"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_marginStart="42dp"-->
+<!--        android:layout_marginTop="7dp"-->
+<!--        android:src="@drawable/protein"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/proteinProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/progressBar"
         android:layout_alignParentStart="true"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="12dp"
-        android:src="@drawable/carbs"
+        android:layout_marginStart="38dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:progress_background_color="@color/holo_darker_gray"
+        app:progress_blur_radius="5dp"
+        app:progress_blur_style="solid"
+        app:progress_end_color="@color/holo_green_light"
+        app:progress_start_color="@color/holo_green_light"
+        app:progress_stroke_width="3dp"
+        app:progress_style="solid_line"
+        app:progress_text_color="@color/holo_green_light" />
 
-    <ImageView
-        android:id="@+id/ivProtein"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/carbProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/progressBar"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="15dp"
-        android:layout_toEndOf="@+id/ivCarbs"
-        android:src="@drawable/protein"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/proteinProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progress_background_color="@color/holo_darker_gray"
+        app:progress_blur_radius="5dp"
+        app:progress_blur_style="solid"
+        app:progress_end_color="#FFC107"
+        app:progress_start_color="#FFC107"
+        app:progress_stroke_width="3dp"
+        app:progress_style="solid_line"
+        app:progress_text_color="#FFC107" />
 
-    <ImageView
-        android:id="@+id/ivFat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <com.dinuscxj.progressbar.CircleProgressBar
+        android:id="@+id/fatProgress"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/progressBar"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="97dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="45dp"
-        android:layout_toEndOf="@+id/ivProtein"
-        android:src="@drawable/fat"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="7dp"
+        android:layout_toEndOf="@+id/carbProgress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:progress_background_color="@color/holo_darker_gray"
+        app:progress_blur_radius="5dp"
+        app:progress_blur_style="solid"
+        app:progress_end_color="#673AB7"
+        app:progress_start_color="#673AB7"
+        app:progress_stroke_width="3dp"
+        app:progress_style="solid_line"
+        app:progress_text_color="#673AB7" />
+
 
 </RelativeLayout>

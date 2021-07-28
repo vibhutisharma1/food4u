@@ -97,8 +97,12 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                 //add recipe to the meal tab
                 mealAdded = true;
                 mealPlan.add(recipe);
-                //add current calories of meal
+
+                //Calories and Macros added
                 MealFragment.currentCalories += Double.parseDouble(recipe.getCalories())/ Integer.parseInt(recipe.getServings());
+                MealFragment.currentProtein += Integer.parseInt(recipe.getProtein());
+                MealFragment.currentCarbs += Integer.parseInt(recipe.getCarb());
+                MealFragment.currentFat += Integer.parseInt(recipe.getFat());
                 startActivity(intent);
 
             }
