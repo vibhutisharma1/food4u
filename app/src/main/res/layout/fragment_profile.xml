@@ -52,18 +52,5 @@
         android:background="#59E7ECE2"
         android:text="Log out" />
 
-    <View
-        android:id="@+id/rectangle_3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
-        android:layout_marginStart="-1dp"
-        android:layout_marginTop="-32dp"
-        android:layout_marginEnd="-2dp"
-        android:layout_marginBottom="-40dp"
-        android:background="@drawable/gradient_q1" />
-
 
 </RelativeLayout>

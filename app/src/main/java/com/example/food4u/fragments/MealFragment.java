@@ -1,11 +1,13 @@
 package com.example.food4u.fragments;
 
+import android.graphics.Color;
 import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -25,6 +27,7 @@ import com.example.food4u.DetailsActivity;
 import com.example.food4u.HomeAdapter;
 
 import com.example.food4u.PersonalInfo;
+import com.example.food4u.R;
 import com.example.food4u.Recipe;
 
 import com.example.food4u.databinding.FragmentMealBinding;
@@ -115,11 +118,7 @@ public class MealFragment extends Fragment implements Serializable {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        //Bundle bundle = this.getArguments();
-//        if (bundle != null) {
-//            Log.e(TAG, "gets bundle ");
-//            meal = (Recipe) bundle.getSerializable(SEND_RECIPE);
-//        }
+
         // Inflate the layout for this fragment
         binding = FragmentMealBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -141,6 +140,9 @@ public class MealFragment extends Fragment implements Serializable {
 
         getScreenSize();
         setCirclesOutOfScreen();
+
+        // Sets the Toolbar to act as the ActionBar for this Activity window.
+        // Make sure the toolbar exists in the activity and is not null
 
         //add the current recipe to the meal tab
         if (meal != null) {
@@ -215,6 +217,7 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     public void updateProgressBars(){
+        binding.progressBar.setProgressPercentage(getPercentage(), true);
         binding.proteinProgress.setProgress(currentProtein);
         binding.fatProgress.setProgress(currentFat);
         binding.carbProgress.setProgress(currentCarbs);

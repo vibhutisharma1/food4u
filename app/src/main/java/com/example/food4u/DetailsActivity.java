@@ -107,16 +107,6 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                 startActivity(intent);
                 mealPlan.add(recipe);
                 mealAdded = true;
-
-//                //send recipe to meal fragment
-//                Bundle bundle = new Bundle();
-//                bundle.putSerializable(MealFragment.SEND_RECIPE, recipe);
-//
-//                MealFragment mealFragment = new MealFragment();
-//                mealFragment.setArguments(bundle);
-
-                //add recipe to the meal tab
-
             }
         });
 

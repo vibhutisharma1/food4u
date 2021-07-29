@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        toolbar.setTitleTextColor(Color.parseColor("#46C6E9"));
+        toolbar.setTitleTextColor(Color.parseColor("#FFD23F"));
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {

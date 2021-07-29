@@ -1,50 +1,49 @@
-<?xml version="1.0" encoding="utf-8"?>
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:aapt="http://schemas.android.com/aapt"
-    android:width="414dp"
-    android:height="920dp"
-    android:viewportWidth="414"
-    android:viewportHeight="920"
+    android:width="465dp"
+    android:height="1071dp"
+    android:viewportWidth="465"
+    android:viewportHeight="1071"
     >
 
     <group>
 
         <clip-path
-            android:pathData="M0 0H414V920H0V0Z"
+            android:pathData="M0 0H465V1071H0V0Z"
             />
 
         <group
-            android:translateX="2.088"
-            android:translateY="-0.217"
-            android:pivotX="207"
-            android:pivotY="460"
+            android:translateX="2.075"
+            android:translateY="-0.038"
+            android:pivotX="232.5"
+            android:pivotY="535.5"
             android:scaleX="2"
-            android:scaleY="1.95"
+            android:scaleY="2"
             android:rotation="90"
             >
 
             <path
-                android:pathData="M0 0V920H414V0"
+                android:pathData="M0 0V1071H465V0"
                 >
 
                 <aapt:attr name="android:fillColor">
 
                     <gradient
                         android:type="linear"
-                        android:startX="101.5"
-                        android:startY="460"
-                        android:endX="310.5"
-                        android:endY="500"
+                        android:startX="116.25"
+                        android:startY="535.5"
+                        android:endX="348.75"
+                        android:endY="535.5"
                         >
 
                         <item
-                            android:color="#F1E8B8"
+                            android:color="#74CAA5"
                             android:offset="0"
                             />
 
                         <item
-                            android:color="#E29578"
+                            android:color="#E8C449"
                             android:offset="1"
                             />
 
