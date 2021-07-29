@@ -1,14 +1,20 @@
 package com.example.food4u;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
@@ -23,13 +29,16 @@ import java.util.ArrayList;
 
 
 public class DetailsActivity extends AppCompatActivity implements Serializable {
+
     ActivityDetailsBinding binding;
     public static Recipe recipe;
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
-    public static ArrayList<Recipe> mealPlan = new ArrayList<>();
     public static boolean mealAdded = false;
+    public static ArrayList<Recipe> mealPlan = new ArrayList<>();
+    GestureDetector gestureDetector;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +55,6 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
 
         TabLayout.Tab ingredientsTab = tabLayout.newTab();
         ingredientsTab.setText(R.string.Ingredients);
-
         tabLayout.addTab(ingredientsTab);
 
         TabLayout.Tab directionsTab = tabLayout.newTab();
@@ -90,37 +98,53 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        binding.likeStar.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return false;
-            }
-        });
 
         binding.btnMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
-                intent.putExtra(MainActivity.TO_MEAL, "DetailsActivity");
-                //add recipe to the meal tab
-                mealAdded = true;
-                mealPlan.add(recipe);
-
-                //Calories and Macros added
-                //set previous values before adding them
-                MealFragment.carbs = MealFragment.currentCarbs;
-                MealFragment.protein = MealFragment.currentProtein;
-                MealFragment.fat = MealFragment.currentFat;
-
-                //add current recipe nutrition
-                MealFragment.currentCalories += Double.parseDouble(recipe.getCalories()) / Integer.parseInt(recipe.getServings());
-                MealFragment.currentProtein += Integer.parseInt(recipe.getProtein());
-                MealFragment.currentCarbs += Integer.parseInt(recipe.getCarb());
-                MealFragment.currentFat += Integer.parseInt(recipe.getFat());
+                intent.putExtra(MainActivity.TO_MEAL, "MealFragment");
                 startActivity(intent);
+                mealPlan.add(recipe);
+                mealAdded = true;
+
+//                //send recipe to meal fragment
+//                Bundle bundle = new Bundle();
+//                bundle.putSerializable(MealFragment.SEND_RECIPE, recipe);
+//
+//                MealFragment mealFragment = new MealFragment();
+//                mealFragment.setArguments(bundle);
+
+                //add recipe to the meal tab
 
             }
+        });
+
+        binding.likeStar.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Log.e(TAG, "Inside touch method");
+                gestureDetector = new GestureDetector(DetailsActivity.this, new GestureListener());
+
+                return gestureDetector.onTouchEvent(event);
+            }
+
+            class GestureListener extends GestureDetector.SimpleOnGestureListener {
+
+                @Override
+                public boolean onDown(MotionEvent e) {
+                    return true;
+                }
+
+                // event when double tap occurs
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    binding.likeStar.setPressed(true);
+                    binding.likeStar.setActivated(true);
+                    return true;
+                }
+            }
+
         });
 
         //set details view image and recipe name
@@ -129,6 +153,8 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
 
     }
 
+
 }
+
 
 

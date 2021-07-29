@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <ImageView
-        android:id="@+id/likeStar"
-        android:layout_width="57dp"
-        android:layout_height="54dp"
+        android:id="@+id/ivFood"
+        android:layout_width="match_parent"
+        android:layout_height="195dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="9dp"
-        app:srcCompat="@android:drawable/btn_star" />
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="3dp"
+        android:scaleType="centerCrop"
+        android:transitionName="profile" />
 
     <Button
         android:id="@+id/btnMeal"
@@ -24,18 +26,16 @@
         android:layout_marginTop="19dp"
         android:layout_marginEnd="6dp"
         android:background="@drawable/icons8_meal_100" />
-
-
     <ImageView
-        android:id="@+id/ivFood"
-        android:layout_width="match_parent"
-        android:layout_height="195dp"
-        android:layout_alignParentStart="true"
+        android:id="@+id/likeStar"
+        android:layout_width="57dp"
+        android:layout_height="54dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="2dp"
-        android:scaleType="centerCrop"
-        android:transitionName="profile" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="9dp"
+        app:srcCompat="@android:drawable/btn_star" />
+
 
     <RelativeLayout
         android:id="@+id/rlInfo"

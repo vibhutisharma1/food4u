@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         View v = binding.getRoot();
         setContentView(v);
 
-
         fromDetails = getIntent().getStringExtra(TO_MEAL);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -166,10 +165,6 @@ public class MainActivity extends AppCompatActivity {
     public void toProfileFragment() {
         fragmentManager.beginTransaction().replace(R.id.flContainer, new ProfileFragment()).commit();
     }
-
-
-
-
 
 }
 

@@ -9,21 +9,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
-import android.os.FileUtils;
 import android.os.Handler;
 import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 
 import com.dinuscxj.progressbar.CircleProgressBar;
-import com.example.food4u.Ball;
+import com.example.food4u.Circle;
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.HomeAdapter;
 
@@ -36,15 +33,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
 import java.util.List;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -57,13 +49,9 @@ public class MealFragment extends Fragment implements Serializable {
     protected HomeAdapter adapter;
     protected List<Recipe> allMeals;
     public static final String TAG = "MealFragment";
-    public static final String ADD_PROGRESS = TAG + "ADD_PROGRESS";
+    public static final String SEND_RECIPE = TAG + "SEND_RECIPE";
 
-    //shared variables
-    public static double currentCalories;
-    public static int currentProtein;
-    public static int currentCarbs;
-    public static int currentFat;
+
     public static FragmentMealBinding binding;
     float xPositionProtein;
     float xPositionFat;
@@ -89,6 +77,11 @@ public class MealFragment extends Fragment implements Serializable {
     ImageView addCarb;
     ImageView addProtein;
 
+    //Circles
+    Circle proteinCircle;
+    Circle fatCircle;
+    Circle carbCircle;
+
     //Position
     private float proteinX;
     private float proteinY;
@@ -97,6 +90,11 @@ public class MealFragment extends Fragment implements Serializable {
     private float fatX;
     private float fatY;
 
+    //Nutrition values
+    public static double currentCalories;
+    public static int currentProtein;
+    public static int currentCarbs;
+    public static int currentFat;
     public static int protein;
     public static int fat;
     public static int carbs;
@@ -106,9 +104,22 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            Log.e(TAG, "gets bundle ");
+            meal = (Recipe) savedInstanceState.getSerializable(SEND_RECIPE);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        //Bundle bundle = this.getArguments();
+//        if (bundle != null) {
+//            Log.e(TAG, "gets bundle ");
+//            meal = (Recipe) bundle.getSerializable(SEND_RECIPE);
+//        }
         // Inflate the layout for this fragment
         binding = FragmentMealBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -119,46 +130,26 @@ public class MealFragment extends Fragment implements Serializable {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Find RecyclerView and bind to adapter
         binding.rvMeals.setHasFixedSize(true);
-
-        // Define 1 column grid layout
-        final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
-
-        meal = DetailsActivity.recipe;
         allMeals = new ArrayList<>();
+        meal = DetailsActivity.recipe;
         getCalories();
 
+        //set circles aka image views
         addCarb = binding.addCarb;
         addFat = binding.addFat;
         addProtein = binding.addProtein;
 
-        //set screen size coordinates
-        Display currentWindow = getActivity().getWindowManager().getDefaultDisplay();
-        Point coordinate = new Point();
-        currentWindow.getSize(coordinate);
-        screenWidth = coordinate.x;
-        screenHeight = coordinate.y;
-
-        // start from bottom of screen
-        addCarb.setX(-80.0f);
-        addCarb.setY(-80.0f);
-        addProtein.setX(-80.0f);
-        addProtein.setY(-80.0f);
-        addFat.setX(-80.0f);
-        addFat.setY(-80.0f);
-
-        // Create and bind an adapter & set layout manager
-        adapter = new HomeAdapter(getContext(), allMeals);
-        binding.rvMeals.setAdapter(adapter);
-        binding.rvMeals.setLayoutManager(layout);
-
-        binding.proteinProgress.setProgress(protein);
-        binding.fatProgress.setProgress(fat);
-        binding.carbProgress.setProgress(carbs);
+        getScreenSize();
+        setCirclesOutOfScreen();
 
         //add the current recipe to the meal tab
-        if (DetailsActivity.mealPlan != null) {
+        if (meal != null) {
             allMeals.addAll(DetailsActivity.mealPlan);
             if (mealAdded) {
+                setNutritionFacts();
+                binding.proteinProgress.setProgress(protein);
+                binding.fatProgress.setProgress(fat);
+                binding.carbProgress.setProgress(carbs);
                 //set x positions
                 xPositionProtein = addProtein.getX();
                 xPositionFat = addFat.getX();
@@ -177,22 +168,56 @@ public class MealFragment extends Fragment implements Serializable {
                 }, 0, 20);
 
                 mealAdded = false;
-            }else{
-                binding.proteinProgress.setProgress(currentProtein);
-                binding.fatProgress.setProgress(currentFat);
-                binding.carbProgress.setProgress(currentCarbs);
+            } else {
+               updateProgressBars();
             }
         }
-
-
-        //display progress for calories
-        binding.progressBar.setProgressPercentage(getPercentage(), true);
 
         //set max nutrient
         binding.proteinProgress.setMax((int) (.25 * totalCalories) / 4);
         binding.carbProgress.setMax((int) (.50 * totalCalories) / 4);
         binding.fatProgress.setMax((int) (.25 * totalCalories) / 4);
 
+        //remove recipe on long click
+        HomeAdapter.OnLongClickListener onLongClickListener = new HomeAdapter.OnLongClickListener() {
+            @Override
+            public void onItemLongClicked(int position) {
+                Recipe current = allMeals.get(position);
+                //subtract nutrition
+                totalCalories -= Integer.parseInt(current.getCalories());
+                protein -= Integer.parseInt(current.getProtein());
+                currentProtein -= Integer.parseInt(current.getProtein());
+                fat -= Integer.parseInt(current.getFat());
+                currentFat -= Integer.parseInt(current.getFat());
+                carbs -= Integer.parseInt(current.getCarb());
+                currentCarbs -= Integer.parseInt(current.getCarb());
+
+                //update progress
+                updateProgressBars();
+
+                allMeals.remove(current);
+                adapter.notifyItemRemoved(position);
+                Toast.makeText(getContext(), "Item was removed", Toast.LENGTH_SHORT).show();
+
+            }
+        };
+
+        //display progress for calories
+        binding.progressBar.setProgressPercentage(getPercentage(), true);
+
+
+        // Define 1 column grid layout
+        final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
+        // Create and bind an adapter & set layout manager
+        adapter = new HomeAdapter(getContext(), allMeals, onLongClickListener);
+        binding.rvMeals.setAdapter(adapter);
+        binding.rvMeals.setLayoutManager(layout);
+    }
+
+    public void updateProgressBars(){
+        binding.proteinProgress.setProgress(currentProtein);
+        binding.fatProgress.setProgress(currentFat);
+        binding.carbProgress.setProgress(currentCarbs);
     }
 
 
@@ -220,85 +245,12 @@ public class MealFragment extends Fragment implements Serializable {
 
 
     public void bounce() {
-        Random random = new Random();
+        proteinMovement();
+        carbMovement();
+        fatMovement();
 
-        //calculate a random x position between the start and end of image (within boundaries)
-        int max = (Math.round(binding.proteinProgress.getX()) + (binding.proteinProgress.getWidth() / 2));
-        int min = Math.round(binding.proteinProgress.getX());
-
-
-        int initialProteinX = random.nextInt((max - min + 1) + min);
-        xPositionProtein = getMotionProteinX(xPositionProtein, binding.proteinProgress, bounceProteinLeft);
-
-
-        //protein movement
-        proteinY -= 10;
-        if (addProtein.getY() + addProtein.getHeight() < 0) {
-            proteinX = initialProteinX;
-            proteinY = screenHeight + 100.0f;
-        }
-        addProtein.setX(proteinX);
-        addProtein.setY(proteinY);
-
-        proteinX = (float) Math.ceil(xPositionProtein);
-        addProtein.setX(proteinX);
-
-        int initialCarbX = random.nextInt((Math.round(binding.carbProgress.getX())
-                + (binding.carbProgress.getWidth() / 2)) - Math.round(binding.carbProgress.getX()) + 1)
-                + Math.round(binding.carbProgress.getX());
-
-        //carb movement
-        carbY -= 10;
-        if (addCarb.getY() + addCarb.getHeight() < 0) {
-            carbX = initialCarbX;
-            carbY = screenHeight + 100.0f;
-        }
-       ;
-        addCarb.setX(carbX);
-        addCarb.setY(carbY);
-
-        xPositionCarbs = getMotionCarbX(xPositionCarbs, binding.carbProgress, bounceCarbLeft);
-
-        carbX = (float) Math.ceil(xPositionCarbs);
-        addCarb.setX(carbX);
-
-        //fat movement
-        int initialFatX = random.nextInt((Math.round(binding.fatProgress.getX())
-                + (binding.fatProgress.getWidth() / 2)) - Math.round(binding.fatProgress.getX()) + 1)
-                + Math.round(binding.fatProgress.getX());
-
-        Log.e(TAG,  xPositionFat== xPositionCarbs? "true and" + xPositionFat : "false");
-
-
-        fatY -= 10;
-
-        if (addFat.getY() + addFat.getHeight() < 0) {
-            fatX = initialFatX;
-            Log.e(TAG, "intiial fat " + initialFatX);
-            fatY = screenHeight + 100.0f;
-        }
-        addFat.setX(fatX);
-        addFat.setY(fatY);
-
-        if (bounceFatLeft) {
-            xPositionFat -= 15;
-        } else {
-            xPositionFat += 15;
-        }
-
-        if (xPositionFat > (binding.fatProgress.getX() + binding.fatProgress.getWidth()) - 15) {
-            bounceFatLeft = true;
-        } else if (xPositionFat < binding.fatProgress.getX() + 15) {
-            bounceFatLeft = false;
-        }
-        fatX = (float) Math.ceil(xPositionFat);
-        addFat.setX(fatX);
-
-
-
-        //checks if they collided
-        if (collide(binding.proteinProgress, addProtein) || collide(binding.carbProgress, addCarb) || collide(binding.fatProgress, addFat)) {
-            //update progress percent
+        //checks if they collided/overlap
+        if (isCollision(binding.proteinProgress, addProtein) || isCollision(binding.carbProgress, addCarb) || isCollision(binding.fatProgress, addFat)) {
             binding.proteinProgress.setProgress(currentProtein);
             binding.fatProgress.setProgress(currentFat);
             binding.carbProgress.setProgress(currentCarbs);
@@ -314,30 +266,108 @@ public class MealFragment extends Fragment implements Serializable {
         }
 
     }
-    public float getMotionProteinX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft){
 
+    public void proteinMovement(){
+        //set initial x to stay within diameter of circle
+        proteinCircle = new Circle();
+        proteinCircle.setInitialX(binding.proteinProgress.getX(), binding.proteinProgress.getWidth() / 2);
+
+        proteinY -= 10;
+        if (addProtein.getY() + addProtein.getHeight() < 0) {
+            //when out of screen set x boundary and move y up in screen
+            proteinX = proteinCircle.getInitialX();
+            proteinY = screenHeight + 100.0f;
+        }
+        addProtein.setX(proteinX);
+        addProtein.setY(proteinY);
+
+        //bounce left and right
+        xPositionProtein = getMotionProteinX(xPositionProtein, binding.proteinProgress, bounceProteinLeft);
+        proteinX = (float) Math.ceil(xPositionProtein);
+        addProtein.setX(proteinX);
+
+    }
+    public void fatMovement(){
+        //set initial x to stay within diameter of cirlce
+        fatCircle = new Circle();
+        fatCircle.setInitialX(binding.fatProgress.getX(), binding.fatProgress.getWidth() / 2);
+
+        fatY -= 10;
+        if (addFat.getY() + addFat.getHeight() < 0) {
+            //when out of screen set x boundary to start and end of circle and move ball upwards
+            fatX = fatCircle.getInitialX();
+            fatY = screenHeight + 100.0f;
+        }
+        addFat.setX(fatX);
+        addFat.setY(fatY);
+
+        //bounce left and right
+        if (bounceFatLeft) {
+            xPositionFat -= 15;
+        } else {
+            xPositionFat += 15;
+        }
+
+        if (xPositionFat > (binding.fatProgress.getX() + binding.fatProgress.getWidth()) - 15) {
+            //when x coordinate is greater than the circles subtract 15 next time
+            bounceFatLeft = true;
+        } else if (xPositionFat < binding.fatProgress.getX() + 15) {
+            //add 15 next time because to make ball stay to the right
+            bounceFatLeft = false;
+        }
+        fatX = (float) Math.ceil(xPositionFat);
+        addFat.setX(fatX);
+
+    }
+    public void carbMovement(){
+        //set initial x to stay within diameter of cirlce
+        carbCircle = new Circle();
+        carbCircle.setInitialX(binding.carbProgress.getX(), binding.carbProgress.getWidth() / 2);
+
+        carbY -= 10;
+        if (addCarb.getY() + addCarb.getHeight() < 0) {
+            //when out of screen set x boundary and move y up in screen by -10
+            carbX = carbCircle.getInitialX();
+            carbY = screenHeight + 100.0f;
+        }
+
+        addCarb.setX(carbX);
+        addCarb.setY(carbY);
+
+        //bounce ball left and right
+        xPositionCarbs = getMotionCarbX(xPositionCarbs, binding.carbProgress, bounceCarbLeft);
+        carbX = (float) Math.ceil(xPositionCarbs);
+        addCarb.setX(carbX);
+    }
+
+    //based on bounceLeft boolean alter x position +10 or -10
+    public float getMotionProteinX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
         if (bounceLeft) {
             xPosition -= 10;
         } else {
             xPosition += 10;
         }
         if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 10) {
+            //when x coordinate is greater than the circles subtract 10 next time
             bounceProteinLeft = true;
         } else if (xPosition < currentProgressBar.getX() + 10) {
+            //add 10 next time because to make ball stay to the right
             bounceProteinLeft = false;
         }
         return xPosition;
     }
-    public float getMotionCarbX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft){
 
+    public float getMotionCarbX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
         if (bounceLeft) {
             xPosition -= 10;
         } else {
             xPosition += 10;
         }
         if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 10) {
+            //when x coordinate is greater than the circles subtract 10 next time
             bounceCarbLeft = true;
         } else if (xPosition < currentProgressBar.getX() + 10) {
+            //add 10 next time because to make ball stay to the right
             bounceCarbLeft = false;
         }
 
@@ -347,7 +377,7 @@ public class MealFragment extends Fragment implements Serializable {
 
     //calculates distance between two circles then checks if it is less than or equal to
     // half the circle to qualify it as being collided
-    public boolean collide(CircleProgressBar circle, ImageView smallCircle) {
+    public boolean isCollision(CircleProgressBar circle, ImageView smallCircle) {
         return distance(circle.getX(), smallCircle.getX(), circle.getY(), smallCircle.getY())
                 <= (circle.getWidth() / 2);
     }
@@ -355,6 +385,38 @@ public class MealFragment extends Fragment implements Serializable {
     //distance formula
     public double distance(float x1, float x2, float y1, float y2) {
         return Math.sqrt(Math.abs(Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2)));
+    }
+
+    public void setCirclesOutOfScreen(){
+        // start from bottom of screen
+        addCarb.setX(-80.0f);
+        addCarb.setY(-80.0f);
+        addProtein.setX(-80.0f);
+        addProtein.setY(-80.0f);
+        addFat.setX(-80.0f);
+        addFat.setY(-80.0f);
+    }
+
+    public void getScreenSize(){
+        //get screen size coordinates
+        Display currentWindow = getActivity().getWindowManager().getDefaultDisplay();
+        Point coordinate = new Point();
+        currentWindow.getSize(coordinate);
+        screenWidth = coordinate.x;
+        screenHeight = coordinate.y;
+    }
+
+    public void setNutritionFacts() {
+        //update previous to current
+        carbs = currentCarbs;
+        protein = currentProtein;
+        fat = currentFat;
+
+        //add new nutrition
+        currentCalories += Double.parseDouble(meal.getCalories()) / Integer.parseInt(meal.getServings());
+        currentProtein += Integer.parseInt(meal.getProtein());
+        currentCarbs += Integer.parseInt(meal.getCarb());
+        currentFat += Integer.parseInt(meal.getFat());
     }
 
 }

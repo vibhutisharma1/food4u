@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.R;
+import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentHomeBinding;
 import com.example.food4u.databinding.FragmentIngredientBinding;
 
@@ -25,17 +26,10 @@ import java.util.Map;
 
 public class IngredientFragment extends Fragment {
     FragmentIngredientBinding binding;
-
     public IngredientFragment() {
         // Required empty public constructor
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

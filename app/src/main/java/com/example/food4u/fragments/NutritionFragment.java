@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.R;
+import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentIngredientBinding;
 import com.example.food4u.databinding.FragmentNutritionBinding;
 
@@ -33,15 +34,10 @@ public class NutritionFragment extends Fragment {
         // Required empty public constructor
     }
 
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         binding = FragmentNutritionBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;

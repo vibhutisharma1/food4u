@@ -27,8 +27,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
     private Context mContext;
     private List<Recipe> recipeList;
     private static final String TAG = "HomeAdapter" ;
+    OnLongClickListener longClickListener;
 
-
+    public interface OnLongClickListener{
+        void onItemLongClicked(int position);
+    }
     public HomeAdapter(Context context, List<Recipe> recipes) {
         mContext = context;
         if (recipes == null) {
@@ -36,6 +39,16 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         }
         recipeList = recipes;
     }
+
+    public HomeAdapter(Context context, List<Recipe> recipes,  OnLongClickListener longClickListener) {
+        mContext = context;
+        this.longClickListener = longClickListener;
+        if (recipes == null) {
+            throw new IllegalArgumentException("recipes must not be null");
+        }
+        recipeList = recipes;
+    }
+
 
     // Inflate the view based on the viewType provided.
     @NotNull
@@ -90,9 +103,18 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
                     }
                 }
             });
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    //notify listener which position was long pressed
+                    longClickListener.onItemLongClicked(getAdapterPosition());
+                    return true;
+                }
+            });
 
         }
 
     }
+
 
 }
