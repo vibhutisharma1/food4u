@@ -115,10 +115,10 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             public boolean onTouch(View v, MotionEvent event) {
                 Log.e(TAG, "Inside touch method");
                 gestureDetector = new GestureDetector(DetailsActivity.this, new GestureListener());
-
+                binding.likeStar.setPressed(true);
+                binding.likeStar.setActivated(true);
                 return gestureDetector.onTouchEvent(event);
             }
-
             class GestureListener extends GestureDetector.SimpleOnGestureListener {
 
                 @Override

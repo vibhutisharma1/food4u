@@ -95,8 +95,6 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }
-
-
         //another url to hold mealType to keep separate from main request url for search
         String mealAddition = MainActivity.REQUEST_URL;
         mealAddition += "&mealType=" + mealType();
@@ -121,10 +119,10 @@ public class HomeFragment extends Fragment {
         LocalTime myObj = LocalTime.now();
         int currentHour = myObj.getHour();
 
-        if (6 <= currentHour && currentHour <= 10)
-            //6am to 10am breakfast
+        if (6 <= currentHour && currentHour <= 11)
+            //6am to 12pm breakfast
             return "Breakfast";
-        else if (11 <= currentHour && currentHour <= 15)
+        else if (12 <= currentHour && currentHour <= 15)
             //11am to 3pm lunch
             return "Lunch";
         else if (18 <= currentHour && currentHour <= 21)

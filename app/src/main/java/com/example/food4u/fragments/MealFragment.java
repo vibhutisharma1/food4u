@@ -94,6 +94,7 @@ public class MealFragment extends Fragment implements Serializable {
     private float fatY;
 
     //Nutrition values
+    public static double caloriesBefore;
     public static double currentCalories;
     public static int currentProtein;
     public static int currentCarbs;
@@ -149,6 +150,7 @@ public class MealFragment extends Fragment implements Serializable {
             allMeals.addAll(DetailsActivity.mealPlan);
             if (mealAdded) {
                 setNutritionFacts();
+                binding.progressBar.setProgressPercentage(getPercentage(caloriesBefore), true);
                 binding.proteinProgress.setProgress(protein);
                 binding.fatProgress.setProgress(fat);
                 binding.carbProgress.setProgress(carbs);
@@ -186,7 +188,8 @@ public class MealFragment extends Fragment implements Serializable {
             public void onItemLongClicked(int position) {
                 Recipe current = allMeals.get(position);
                 //subtract nutrition
-                totalCalories -= Integer.parseInt(current.getCalories());
+                currentCalories -= Integer.parseInt(current.getCalories());
+                caloriesBefore -= Integer.parseInt(current.getCalories());
                 protein -= Integer.parseInt(current.getProtein());
                 currentProtein -= Integer.parseInt(current.getProtein());
                 fat -= Integer.parseInt(current.getFat());
@@ -204,10 +207,6 @@ public class MealFragment extends Fragment implements Serializable {
             }
         };
 
-        //display progress for calories
-        binding.progressBar.setProgressPercentage(getPercentage(), true);
-
-
         // Define 1 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
         // Create and bind an adapter & set layout manager
@@ -217,7 +216,7 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     public void updateProgressBars(){
-        binding.progressBar.setProgressPercentage(getPercentage(), true);
+        binding.progressBar.setProgressPercentage(getPercentage(currentCalories), true);
         binding.proteinProgress.setProgress(currentProtein);
         binding.fatProgress.setProgress(currentFat);
         binding.carbProgress.setProgress(currentCarbs);
@@ -242,10 +241,9 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     //calculate the percentage of calories eaten
-    public Double getPercentage() {
+    public Double getPercentage(double currentCalories) {
         return (currentCalories / totalCalories) * 100;
     }
-
 
     public void bounce() {
         proteinMovement();
@@ -257,6 +255,8 @@ public class MealFragment extends Fragment implements Serializable {
             binding.proteinProgress.setProgress(currentProtein);
             binding.fatProgress.setProgress(currentFat);
             binding.carbProgress.setProgress(currentCarbs);
+            //display progress for calories
+            binding.progressBar.setProgressPercentage(getPercentage(currentCalories), true);
 
             //stop movement
             timer.cancel();
@@ -411,6 +411,7 @@ public class MealFragment extends Fragment implements Serializable {
 
     public void setNutritionFacts() {
         //update previous to current
+        caloriesBefore = currentCalories;
         carbs = currentCarbs;
         protein = currentProtein;
         fat = currentFat;
