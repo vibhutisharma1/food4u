@@ -1,8 +1,10 @@
 package com.example.food4u;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
@@ -12,6 +14,9 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.parse.ParseClassName;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class Recipe implements Serializable {
 
     private static final String TAG = "Recipe";
@@ -36,6 +40,11 @@ public class Recipe implements Serializable {
     ArrayList<String> ingredients;
     Map<String, String> nutrientMap;
 
+    public Recipe(String recipeName, String image, String recipeURL){
+        this.recipeName = recipeName;
+        this.image = image;
+        this.recipeURL = recipeURL;
+    }
 
     public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> nutrientMap) {
         this.recipeName = recipeName;
@@ -45,7 +54,6 @@ public class Recipe implements Serializable {
         this.servings = servings;
         this.ingredients = ingredients;
         this.nutrientMap = nutrientMap;
-
     }
 
     public ArrayList<String> getIngredients() {
@@ -120,31 +128,17 @@ public class Recipe implements Serializable {
                 //retrieves an array of ingredients and add them to the recipe
                 ArrayList<String> ingredients = new ArrayList<>();
                 JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
+
                 for (int j = 0; j < ingredientList.length(); j++) {
                     ingredients.add(ingredientList.get(j).toString());
                 }
-
                 //create hash map of key-nutrient labels and value-quantity
-                Map<String, String> nutrientMap = new HashMap<>();
-                //set the keys to the JSON labels
-                nutrientMap.put("ENERC_KCAL", "0");
-                nutrientMap.put("FAT", "0");
-                nutrientMap.put("FASAT", "0");
-                nutrientMap.put("FAMS", "0");
-                nutrientMap.put("FAPU", "0");
-                nutrientMap.put("CHOCDF", "0");
-                nutrientMap.put("FIBTG", "0");
-                nutrientMap.put("SUGAR", "0");
-                nutrientMap.put("PROCNT", "0");
-                for (Map.Entry<String, String> entry : nutrientMap.entrySet()) {
-                    String currentKey = entry.getKey();
-                    //get the json object of nutrient label
-                    JSONObject totalNutrients = currentRecipe.getJSONObject("totalNutrients").getJSONObject(currentKey);
-                    //retrieve the nutrient quantity and put in hashmap
-                    nutrientMap.put(currentKey, Integer.toString(totalNutrients.getInt("quantity")));
-                }
+                JSONObject totalNutrients = currentRecipe.getJSONObject("totalNutrients");
 
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, nutrientMap);
+                Map<String, String> nutrients = parseNutrition(totalNutrients);
+                Log.e(TAG, " current value" + nutrients.get("SUGAR"));
+
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, nutrients);
                 allRecipes.add(recipe);
                 //randomize order
                 Collections.shuffle(allRecipes);
@@ -155,20 +149,48 @@ public class Recipe implements Serializable {
         }
 
     }
+    public static Map<String,String> parseNutrition(JSONObject nutrition) throws JSONException {
+        Map<String, String> nutrientMap = new HashMap<>();
+        //set the keys to the JSON labels
+        nutrientMap.put("ENERC_KCAL", "0");
+        nutrientMap.put("FAT", "0");
+        nutrientMap.put("FASAT", "0");
+        nutrientMap.put("FAMS", "0");
+        nutrientMap.put("FAPU", "0");
+        nutrientMap.put("CHOCDF", "0");
+        nutrientMap.put("FIBTG", "0");
+        nutrientMap.put("SUGAR", "0");
+        nutrientMap.put("PROCNT", "0");
+
+        for (Map.Entry<String, String> entry : nutrientMap.entrySet()) {
+            String currentKey = entry.getKey();
+            //get the json object of nutrient label
+            JSONObject nutrientObject = nutrition.getJSONObject(currentKey);
+            //retrieve the nutrient quantity and put in hashmap
+            nutrientMap.put(currentKey, Integer.toString(nutrientObject.getInt("quantity")));
+        }
+        return nutrientMap;
+    }
 
     public Map<String, String> getNutrientMap() {
         return nutrientMap;
     }
 
-    public String getFat(){
+    public String getFat() {
         return nutrientMap.get("FAT");
     }
-    public String getProtein(){
+
+    public String getProtein() {
         return nutrientMap.get("PROCNT");
     }
-    public String getCarb(){
+
+    public String getCarb() {
         return nutrientMap.get("CHOCDF");
     }
+
+
+
+
 
 
 

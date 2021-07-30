@@ -26,10 +26,11 @@ import java.util.Map;
 
 public class IngredientFragment extends Fragment {
     FragmentIngredientBinding binding;
-    public IngredientFragment() {
-        // Required empty public constructor
-    }
+    Recipe recipe;
 
+    public IngredientFragment(Recipe recipe) {
+        this.recipe = recipe;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +43,7 @@ public class IngredientFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //display ingredients
-        ArrayList<String> ingredients = DetailsActivity.recipe.getIngredients();
+        ArrayList<String> ingredients = recipe.getIngredients();
         for(int i = 0; i < ingredients.size(); i++){
             // Create Checkbox Dynamically
             CheckBox checkBox = new CheckBox(getContext());

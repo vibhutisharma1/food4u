@@ -31,7 +31,7 @@ import java.util.ArrayList;
 public class DetailsActivity extends AppCompatActivity implements Serializable {
 
     ActivityDetailsBinding binding;
-    public static Recipe recipe;
+    private Recipe recipe;
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
     public static boolean mealAdded = false;
@@ -70,13 +70,13 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 // get the current selected tab's position
-                Fragment fragment = new IngredientFragment();
+                Fragment fragment = new IngredientFragment(recipe);
                 switch (tab.getPosition()) {
                     case 2:
-                        fragment = new NutritionFragment();
+                        fragment = new NutritionFragment(recipe);
                         break;
                     case 1:
-                        fragment = new DirectionFragment();
+                        fragment = new DirectionFragment(recipe);
                         break;
                 }
                 //replace the fragment accordingly
@@ -98,18 +98,24 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-
+        //add recipe to meal tab
         binding.btnMeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                 intent.putExtra(MainActivity.TO_MEAL, "MealFragment");
+                intent.putExtra("RECIPE", recipe);
                 startActivity(intent);
                 mealPlan.add(recipe);
                 mealAdded = true;
+                Meal meal = new Meal();
+                meal.createObject(recipe.getRecipeName(), recipe.getRecipeURL(), recipe.getImage(),
+                        recipe.getProtein(), recipe.getFat(), recipe.getCarb(), recipe.getCalories());
+
             }
         });
 
+        //like double click
         binding.likeStar.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {

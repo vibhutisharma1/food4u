@@ -29,9 +29,13 @@ import java.util.Map;
 public class NutritionFragment extends Fragment {
 
     FragmentNutritionBinding binding;
+    Recipe recipe;
 
     public NutritionFragment() {
-        // Required empty public constructor
+        this.recipe = null;
+    }
+    public NutritionFragment(Recipe recipe) {
+        this.recipe = recipe;
     }
 
     @Override
@@ -46,7 +50,7 @@ public class NutritionFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         //TODO: change font and size
-      Map<String, String> nutrition = DetailsActivity.recipe.getNutrientMap();
+      Map<String, String> nutrition = recipe.getNutrientMap();
         //get nutrition label : unsaturated fat, sugar
         //nutrition: sat, unsat, sugar, calories, fiber, cholesterol
         for (Map.Entry<String,String> entry : nutrition.entrySet()){

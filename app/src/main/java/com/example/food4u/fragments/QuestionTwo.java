@@ -38,7 +38,6 @@ public class QuestionTwo extends Fragment {
         binding = FragmentQuestionTwoBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
         return view;
-
     }
 
     @Override
@@ -95,7 +94,7 @@ public class QuestionTwo extends Fragment {
         info.setUser(ParseUser.getCurrentUser());
         info.setWeight(weight);
         info.setActivity(activity);
-        info.setActivity(gender);
+        info.setGender(gender);
         info.setCalorie(calories);
 
         info.saveInBackground(new SaveCallback() {

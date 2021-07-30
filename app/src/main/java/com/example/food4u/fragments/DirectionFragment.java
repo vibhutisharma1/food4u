@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.R;
+import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentDirectionBinding;
 import com.example.food4u.databinding.FragmentIngredientBinding;
 
@@ -21,9 +22,10 @@ import org.jetbrains.annotations.NotNull;
 public class DirectionFragment extends Fragment {
 
     FragmentDirectionBinding binding;
+    Recipe recipe;
 
-    public DirectionFragment() {
-        // Required empty public constructor
+    public DirectionFragment(Recipe recipe) {
+        this.recipe = recipe;
     }
 
 
@@ -43,9 +45,6 @@ public class DirectionFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable  Bundle savedInstanceState) {
-        binding.wvRecipe.loadUrl(DetailsActivity.recipe.getRecipeURL());
-        binding.tvServing.setText(DetailsActivity.recipe.getServings());
-        //override show in this view
-        //logcat whats going on maybe pdf
+        binding.wvRecipe.loadUrl(recipe.getRecipeURL());
     }
 }

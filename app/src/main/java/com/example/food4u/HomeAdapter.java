@@ -97,7 +97,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
                     if (recipe != null) {
                         // Fire an intent when a recipe is selected
                         Intent intent = new Intent(context, DetailsActivity.class);
-                        intent.putExtra(DetailsActivity.CURRENT_RECIPE, recipe);
+                        intent.putExtra(DetailsActivity.CURRENT_RECIPE, (Serializable) recipe);
                         context.startActivity(intent);
 
                     }

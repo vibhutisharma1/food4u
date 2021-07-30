@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     public static final String TO_MEAL = TAG + "TO_MEAL";
     String fromDetails;
+    private Recipe recipe;
 
     ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -67,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(v);
 
         fromDetails = getIntent().getStringExtra(TO_MEAL);
+        recipe = (Recipe) getIntent().getSerializableExtra("RECIPE");
+        setIntent(null);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
@@ -155,7 +158,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toMealFragment() {
-        fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment(this.recipe)).commit();
     }
 
     public void toHomeFragment() {

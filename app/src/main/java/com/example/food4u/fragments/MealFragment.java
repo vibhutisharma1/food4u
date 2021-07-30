@@ -26,15 +26,19 @@ import com.example.food4u.Circle;
 import com.example.food4u.DetailsActivity;
 import com.example.food4u.HomeAdapter;
 
+import com.example.food4u.Meal;
 import com.example.food4u.PersonalInfo;
 import com.example.food4u.R;
 import com.example.food4u.Recipe;
 
 import com.example.food4u.databinding.FragmentMealBinding;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -54,7 +58,6 @@ public class MealFragment extends Fragment implements Serializable {
     public static final String TAG = "MealFragment";
     public static final String SEND_RECIPE = TAG + "SEND_RECIPE";
 
-
     public static FragmentMealBinding binding;
     float xPositionProtein;
     float xPositionFat;
@@ -62,7 +65,6 @@ public class MealFragment extends Fragment implements Serializable {
     boolean bounceProteinLeft = false;
     boolean bounceCarbLeft = false;
     boolean bounceFatLeft = false;
-
 
     //local variables
     Recipe meal;
@@ -94,17 +96,20 @@ public class MealFragment extends Fragment implements Serializable {
     private float fatY;
 
     //Nutrition values
-    public static double caloriesBefore;
-    public static double currentCalories;
-    public static int currentProtein;
-    public static int currentCarbs;
-    public static int currentFat;
-    public static int protein;
-    public static int fat;
-    public static int carbs;
+    private double caloriesBefore;
+    private double currentCalories;
+    private int currentProtein;
+    private int currentCarbs;
+    private int currentFat;
+    private int protein;
+    private int fat;
+    private int carbs;
 
     public MealFragment() {
         // Required empty public constructor
+    }
+    public MealFragment(Recipe recipe){
+        this.meal = recipe;
     }
 
     @Override
@@ -131,7 +136,6 @@ public class MealFragment extends Fragment implements Serializable {
         // Find RecyclerView and bind to adapter
         binding.rvMeals.setHasFixedSize(true);
         allMeals = new ArrayList<>();
-        meal = DetailsActivity.recipe;
         getCalories();
 
         //set circles aka image views
@@ -142,12 +146,9 @@ public class MealFragment extends Fragment implements Serializable {
         getScreenSize();
         setCirclesOutOfScreen();
 
-        // Sets the Toolbar to act as the ActionBar for this Activity window.
-        // Make sure the toolbar exists in the activity and is not null
-
         //add the current recipe to the meal tab
         if (meal != null) {
-            allMeals.addAll(DetailsActivity.mealPlan);
+            allMeals.add(meal);
             if (mealAdded) {
                 setNutritionFacts();
                 binding.progressBar.setProgressPercentage(getPercentage(caloriesBefore), true);
@@ -173,7 +174,7 @@ public class MealFragment extends Fragment implements Serializable {
 
                 mealAdded = false;
             } else {
-               updateProgressBars();
+                updateProgressBars();
             }
         }
 
@@ -207,6 +208,11 @@ public class MealFragment extends Fragment implements Serializable {
             }
         };
 
+        try {
+            loadOldRecipes();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         // Define 1 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
         // Create and bind an adapter & set layout manager
@@ -215,12 +221,13 @@ public class MealFragment extends Fragment implements Serializable {
         binding.rvMeals.setLayoutManager(layout);
     }
 
-    public void updateProgressBars(){
+    public void updateProgressBars() {
         binding.progressBar.setProgressPercentage(getPercentage(currentCalories), true);
         binding.proteinProgress.setProgress(currentProtein);
         binding.fatProgress.setProgress(currentFat);
         binding.carbProgress.setProgress(currentCarbs);
     }
+    //create update counter
 
 
     //retrieve total calories from parse server
@@ -270,7 +277,7 @@ public class MealFragment extends Fragment implements Serializable {
 
     }
 
-    public void proteinMovement(){
+    public void proteinMovement() {
         //set initial x to stay within diameter of circle
         proteinCircle = new Circle();
         proteinCircle.setInitialX(binding.proteinProgress.getX(), binding.proteinProgress.getWidth() / 2);
@@ -290,7 +297,8 @@ public class MealFragment extends Fragment implements Serializable {
         addProtein.setX(proteinX);
 
     }
-    public void fatMovement(){
+
+    public void fatMovement() {
         //set initial x to stay within diameter of cirlce
         fatCircle = new Circle();
         fatCircle.setInitialX(binding.fatProgress.getX(), binding.fatProgress.getWidth() / 2);
@@ -322,7 +330,8 @@ public class MealFragment extends Fragment implements Serializable {
         addFat.setX(fatX);
 
     }
-    public void carbMovement(){
+
+    public void carbMovement() {
         //set initial x to stay within diameter of cirlce
         carbCircle = new Circle();
         carbCircle.setInitialX(binding.carbProgress.getX(), binding.carbProgress.getWidth() / 2);
@@ -390,7 +399,7 @@ public class MealFragment extends Fragment implements Serializable {
         return Math.sqrt(Math.abs(Math.pow((x1 - x2), 2)) + (Math.pow((y1 - y2), 2)));
     }
 
-    public void setCirclesOutOfScreen(){
+    public void setCirclesOutOfScreen() {
         // start from bottom of screen
         addCarb.setX(-80.0f);
         addCarb.setY(-80.0f);
@@ -400,7 +409,7 @@ public class MealFragment extends Fragment implements Serializable {
         addFat.setY(-80.0f);
     }
 
-    public void getScreenSize(){
+    public void getScreenSize() {
         //get screen size coordinates
         Display currentWindow = getActivity().getWindowManager().getDefaultDisplay();
         Point coordinate = new Point();
@@ -422,5 +431,46 @@ public class MealFragment extends Fragment implements Serializable {
         currentCarbs += Integer.parseInt(meal.getCarb());
         currentFat += Integer.parseInt(meal.getFat());
     }
+
+    public void loadOldRecipes() throws ParseException {
+        //get old meals for this user
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
+        query.include(PersonalInfo.KEY_USER);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
+
+        //add to the arraylist and display
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> objects, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "problem with loading recipes");
+                } else {
+                    List<Recipe> oldRecipes = new ArrayList();
+                    for (int i = 0; i < objects.size(); i++) {
+                        //get all attributes
+                        String label = objects.get(i).get("label").toString();
+                        String recipe = objects.get(i).get("recipeUrl").toString();
+                        String image = objects.get(i).get("image").toString();
+                        //update nutrition information
+                        currentCalories += Double.parseDouble(objects.get(i).get("calories").toString());
+                        currentProtein += Integer.parseInt(objects.get(i).get("protein").toString());
+                        currentCarbs += Integer.parseInt(objects.get(i).get("carbs").toString());
+                        currentFat += Integer.parseInt(objects.get(i).get("fat").toString());
+
+                        Log.e(TAG, "" +  currentCalories);
+                        Recipe current = new Recipe(label, image, recipe);
+                        oldRecipes.add(current);
+                    }
+                    //update adapter and allMeals
+                    allMeals.addAll(oldRecipes);
+                    updateProgressBars();
+                    adapter.notifyDataSetChanged();
+
+                }
+
+            }
+        });
+    }
+
 
 }
