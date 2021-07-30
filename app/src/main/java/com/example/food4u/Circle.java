@@ -8,7 +8,9 @@ public class Circle {
     public float y;
     public float initialX;
 
-    public Circle() {
+    public Circle(float x, float y) {
+        this.x = x;
+        this.y = y;
     }
 
     public float getX() {
@@ -19,6 +21,12 @@ public class Circle {
         return y;
     }
 
+    public void updateX(float x) {
+        this.x += x;
+    }
+    public void updateY(float y){
+        this.y+=y;
+    }
 
     public void setX(float x) {
         this.x = x;

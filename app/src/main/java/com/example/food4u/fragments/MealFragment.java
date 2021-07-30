@@ -87,14 +87,6 @@ public class MealFragment extends Fragment implements Serializable {
     Circle fatCircle;
     Circle carbCircle;
 
-    //Position
-    private float proteinX;
-    private float proteinY;
-    private float carbX;
-    private float carbY;
-    private float fatX;
-    private float fatY;
-
     //Nutrition values
     private double caloriesBefore;
     private double currentCalories;
@@ -108,7 +100,8 @@ public class MealFragment extends Fragment implements Serializable {
     public MealFragment() {
         // Required empty public constructor
     }
-    public MealFragment(Recipe recipe){
+
+    public MealFragment(Recipe recipe) {
         this.meal = recipe;
     }
 
@@ -227,8 +220,6 @@ public class MealFragment extends Fragment implements Serializable {
         binding.fatProgress.setProgress(currentFat);
         binding.carbProgress.setProgress(currentCarbs);
     }
-    //create update counter
-
 
     //retrieve total calories from parse server
     public void getCalories() {
@@ -279,38 +270,41 @@ public class MealFragment extends Fragment implements Serializable {
 
     public void proteinMovement() {
         //set initial x to stay within diameter of circle
-        proteinCircle = new Circle();
+        proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
         proteinCircle.setInitialX(binding.proteinProgress.getX(), binding.proteinProgress.getWidth() / 2);
 
-        proteinY -= 10;
+        //move ball up 10 pixels
+        proteinCircle.updateY(-10);
         if (addProtein.getY() + addProtein.getHeight() < 0) {
             //when out of screen set x boundary and move y up in screen
-            proteinX = proteinCircle.getInitialX();
-            proteinY = screenHeight + 100.0f;
+            proteinCircle.setX(proteinCircle.getInitialX());
+            proteinCircle.setY(screenHeight + 100.0f);
         }
-        addProtein.setX(proteinX);
-        addProtein.setY(proteinY);
+        addProtein.setX(proteinCircle.getX());
+        addProtein.setY(proteinCircle.getY());
 
-        //bounce left and right
+        //change x pos to left or right
         xPositionProtein = getMotionProteinX(xPositionProtein, binding.proteinProgress, bounceProteinLeft);
-        proteinX = (float) Math.ceil(xPositionProtein);
-        addProtein.setX(proteinX);
+        //update x position
+        proteinCircle.setX((float) Math.ceil(xPositionProtein));
+        addProtein.setX(proteinCircle.getX());
 
     }
 
     public void fatMovement() {
         //set initial x to stay within diameter of cirlce
-        fatCircle = new Circle();
+        fatCircle = new Circle(addFat.getX(), addFat.getY());
         fatCircle.setInitialX(binding.fatProgress.getX(), binding.fatProgress.getWidth() / 2);
 
-        fatY -= 10;
+        //move ball up the screen
+        fatCircle.updateY(-10);
         if (addFat.getY() + addFat.getHeight() < 0) {
             //when out of screen set x boundary to start and end of circle and move ball upwards
-            fatX = fatCircle.getInitialX();
-            fatY = screenHeight + 100.0f;
+            fatCircle.setX(fatCircle.getInitialX());
+            fatCircle.setY(screenHeight + 100.0f);
         }
-        addFat.setX(fatX);
-        addFat.setY(fatY);
+        addFat.setX(fatCircle.getX());
+        addFat.setY(fatCircle.getY());
 
         //bounce left and right
         if (bounceFatLeft) {
@@ -326,30 +320,30 @@ public class MealFragment extends Fragment implements Serializable {
             //add 15 next time because to make ball stay to the right
             bounceFatLeft = false;
         }
-        fatX = (float) Math.ceil(xPositionFat);
-        addFat.setX(fatX);
+        fatCircle.setX((float) Math.ceil(xPositionFat));
+        addFat.setX(fatCircle.getX());
 
     }
 
     public void carbMovement() {
         //set initial x to stay within diameter of cirlce
-        carbCircle = new Circle();
+        carbCircle = new Circle(addCarb.getX(), addCarb.getY());
         carbCircle.setInitialX(binding.carbProgress.getX(), binding.carbProgress.getWidth() / 2);
 
-        carbY -= 10;
+        carbCircle.updateY(-10);
         if (addCarb.getY() + addCarb.getHeight() < 0) {
             //when out of screen set x boundary and move y up in screen by -10
-            carbX = carbCircle.getInitialX();
-            carbY = screenHeight + 100.0f;
+            carbCircle.setX(carbCircle.getInitialX());
+            carbCircle.setY(screenHeight + 100.0f);
         }
 
-        addCarb.setX(carbX);
-        addCarb.setY(carbY);
+        addCarb.setX(carbCircle.getX());
+        addCarb.setY(carbCircle.getY());
 
         //bounce ball left and right
         xPositionCarbs = getMotionCarbX(xPositionCarbs, binding.carbProgress, bounceCarbLeft);
-        carbX = (float) Math.ceil(xPositionCarbs);
-        addCarb.setX(carbX);
+        carbCircle.setX((float) Math.ceil(xPositionCarbs));
+        addCarb.setX(carbCircle.getX());
     }
 
     //based on bounceLeft boolean alter x position +10 or -10
@@ -385,7 +379,6 @@ public class MealFragment extends Fragment implements Serializable {
 
         return xPosition;
     }
-
 
     //calculates distance between two circles then checks if it is less than or equal to
     // half the circle to qualify it as being collided
@@ -457,7 +450,7 @@ public class MealFragment extends Fragment implements Serializable {
                         currentCarbs += Integer.parseInt(objects.get(i).get("carbs").toString());
                         currentFat += Integer.parseInt(objects.get(i).get("fat").toString());
 
-                        Log.e(TAG, "" +  currentCalories);
+                        Log.e(TAG, "" + currentCalories);
                         Recipe current = new Recipe(label, image, recipe);
                         oldRecipes.add(current);
                     }
