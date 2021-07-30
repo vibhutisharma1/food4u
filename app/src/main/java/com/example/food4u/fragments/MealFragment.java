@@ -202,7 +202,7 @@ public class MealFragment extends Fragment implements Serializable {
         };
 
         try {
-            loadOldRecipes();
+            loadOldMeals();
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -244,9 +244,14 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     public void bounce() {
-        proteinMovement();
-        carbMovement();
-        fatMovement();
+        proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
+        circleMovement(proteinCircle, addProtein, binding.proteinProgress);
+
+        carbCircle = new Circle(addCarb.getX(), addCarb.getY());
+        circleMovement(carbCircle, addCarb, binding.carbProgress);
+
+        fatCircle = new Circle(addFat.getX(), addFat.getY());
+        circleMovement(fatCircle, addFat, binding.fatProgress);
 
         //checks if they collided/overlap
         if (isCollision(binding.proteinProgress, addProtein) || isCollision(binding.carbProgress, addCarb) || isCollision(binding.fatProgress, addFat)) {
@@ -268,101 +273,40 @@ public class MealFragment extends Fragment implements Serializable {
 
     }
 
-    public void proteinMovement() {
+    public void circleMovement(Circle current, ImageView ball, CircleProgressBar progressBar) {
         //set initial x to stay within diameter of circle
-        proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
-        proteinCircle.setInitialX(binding.proteinProgress.getX(), binding.proteinProgress.getWidth() / 2);
+        current.setInitialX(progressBar.getX(), progressBar.getWidth() / 2);
 
         //move ball up 10 pixels
-        proteinCircle.updateY(-10);
-        if (addProtein.getY() + addProtein.getHeight() < 0) {
+        current.updateY(-10);
+        if (ball.getY() + ball.getHeight() < 0) {
             //when out of screen set x boundary and move y up in screen
-            proteinCircle.setX(proteinCircle.getInitialX());
-            proteinCircle.setY(screenHeight + 100.0f);
+            current.setX(current.getInitialX());
+            current.setY(screenHeight + 100.0f);
         }
-        addProtein.setX(proteinCircle.getX());
-        addProtein.setY(proteinCircle.getY());
+        ball.setX(current.getX());
+        ball.setY(current.getY());
 
         //change x pos to left or right
-        xPositionProtein = getMotionProteinX(xPositionProtein, binding.proteinProgress, bounceProteinLeft);
-        //update x position
-        proteinCircle.setX((float) Math.ceil(xPositionProtein));
-        addProtein.setX(proteinCircle.getX());
+        if(ball.equals(addCarb)){
+            xPositionCarbs = getMotionCarbX(xPositionCarbs, progressBar, bounceCarbLeft);
+            //update x position
+            current.setX((float) Math.ceil(xPositionCarbs));
+        }else if(ball.equals(addProtein)){
+            xPositionProtein = getMotionProteinX(xPositionProtein, progressBar, bounceProteinLeft);
+            //update x position
+            current.setX((float) Math.ceil(xPositionProtein));
+        }else{
+            xPositionFat = getMotionFatX(xPositionFat, progressBar, bounceFatLeft);
+            fatCircle.setX((float) Math.ceil(xPositionFat));
+        }
+
+        ball.setX(current.getX());
 
     }
 
-    public void fatMovement() {
-        //set initial x to stay within diameter of cirlce
-        fatCircle = new Circle(addFat.getX(), addFat.getY());
-        fatCircle.setInitialX(binding.fatProgress.getX(), binding.fatProgress.getWidth() / 2);
-
-        //move ball up the screen
-        fatCircle.updateY(-10);
-        if (addFat.getY() + addFat.getHeight() < 0) {
-            //when out of screen set x boundary to start and end of circle and move ball upwards
-            fatCircle.setX(fatCircle.getInitialX());
-            fatCircle.setY(screenHeight + 100.0f);
-        }
-        addFat.setX(fatCircle.getX());
-        addFat.setY(fatCircle.getY());
-
-        //bounce left and right
-        if (bounceFatLeft) {
-            xPositionFat -= 15;
-        } else {
-            xPositionFat += 15;
-        }
-
-        if (xPositionFat > (binding.fatProgress.getX() + binding.fatProgress.getWidth()) - 15) {
-            //when x coordinate is greater than the circles subtract 15 next time
-            bounceFatLeft = true;
-        } else if (xPositionFat < binding.fatProgress.getX() + 15) {
-            //add 15 next time because to make ball stay to the right
-            bounceFatLeft = false;
-        }
-        fatCircle.setX((float) Math.ceil(xPositionFat));
-        addFat.setX(fatCircle.getX());
-
-    }
-
-    public void carbMovement() {
-        //set initial x to stay within diameter of cirlce
-        carbCircle = new Circle(addCarb.getX(), addCarb.getY());
-        carbCircle.setInitialX(binding.carbProgress.getX(), binding.carbProgress.getWidth() / 2);
-
-        carbCircle.updateY(-10);
-        if (addCarb.getY() + addCarb.getHeight() < 0) {
-            //when out of screen set x boundary and move y up in screen by -10
-            carbCircle.setX(carbCircle.getInitialX());
-            carbCircle.setY(screenHeight + 100.0f);
-        }
-
-        addCarb.setX(carbCircle.getX());
-        addCarb.setY(carbCircle.getY());
-
-        //bounce ball left and right
-        xPositionCarbs = getMotionCarbX(xPositionCarbs, binding.carbProgress, bounceCarbLeft);
-        carbCircle.setX((float) Math.ceil(xPositionCarbs));
-        addCarb.setX(carbCircle.getX());
-    }
 
     //based on bounceLeft boolean alter x position +10 or -10
-    public float getMotionProteinX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
-        if (bounceLeft) {
-            xPosition -= 10;
-        } else {
-            xPosition += 10;
-        }
-        if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 10) {
-            //when x coordinate is greater than the circles subtract 10 next time
-            bounceProteinLeft = true;
-        } else if (xPosition < currentProgressBar.getX() + 10) {
-            //add 10 next time because to make ball stay to the right
-            bounceProteinLeft = false;
-        }
-        return xPosition;
-    }
-
     public float getMotionCarbX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
         if (bounceLeft) {
             xPosition -= 10;
@@ -375,6 +319,42 @@ public class MealFragment extends Fragment implements Serializable {
         } else if (xPosition < currentProgressBar.getX() + 10) {
             //add 10 next time because to make ball stay to the right
             bounceCarbLeft = false;
+        }
+
+        return xPosition;
+    }
+
+    public float getMotionProteinX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
+        if (bounceLeft) {
+            xPosition -= 10;
+        } else {
+            xPosition += 10;
+        }
+        if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 10) {
+            //when x coordinate is greater than the circles subtract 10 next time
+                bounceProteinLeft = true;
+        } else if (xPosition < currentProgressBar.getX() + 10) {
+            //add 10 next time because to make ball stay to the right
+                bounceProteinLeft = false;
+        }
+
+        return xPosition;
+    }
+
+    public float getMotionFatX(float xPosition, CircleProgressBar currentProgressBar, boolean bounceLeft) {
+        //bounce left and right
+        if (bounceLeft) {
+            xPosition -= 15;
+        } else {
+            xPosition += 15;
+        }
+
+        if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 15) {
+            //when x coordinate is greater than the circles subtract 15 next time
+            bounceFatLeft = true;
+        } else if (xPosition < currentProgressBar.getX() + 15) {
+            //add 15 next time because to make ball stay to the right
+            bounceFatLeft = false;
         }
 
         return xPosition;
@@ -425,7 +405,8 @@ public class MealFragment extends Fragment implements Serializable {
         currentFat += Integer.parseInt(meal.getFat());
     }
 
-    public void loadOldRecipes() throws ParseException {
+    //uses the parse server to get any added meals on their profile
+    public void loadOldMeals() throws ParseException {
         //get old meals for this user
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Recipe");
         query.include(PersonalInfo.KEY_USER);
