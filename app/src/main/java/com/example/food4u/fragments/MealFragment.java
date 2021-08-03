@@ -1,13 +1,13 @@
 package com.example.food4u.fragments;
 
-import android.graphics.Color;
 import android.graphics.Point;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import androidx.appcompat.widget.Toolbar;
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 
@@ -23,12 +23,11 @@ import android.widget.Toast;
 
 import com.dinuscxj.progressbar.CircleProgressBar;
 import com.example.food4u.Circle;
-import com.example.food4u.DetailsActivity;
 import com.example.food4u.HomeAdapter;
+
 
 import com.example.food4u.Meal;
 import com.example.food4u.PersonalInfo;
-import com.example.food4u.R;
 import com.example.food4u.Recipe;
 
 import com.example.food4u.databinding.FragmentMealBinding;
@@ -38,17 +37,14 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import static com.example.food4u.DetailsActivity.mealAdded;
-
 
 public class MealFragment extends Fragment implements Serializable {
 
@@ -58,13 +54,17 @@ public class MealFragment extends Fragment implements Serializable {
     public static final String TAG = "MealFragment";
     public static final String SEND_RECIPE = TAG + "SEND_RECIPE";
 
-    public static FragmentMealBinding binding;
+    private FragmentMealBinding binding;
     float xPositionProtein;
     float xPositionFat;
     float xPositionCarbs;
     boolean bounceProteinLeft = false;
     boolean bounceCarbLeft = false;
     boolean bounceFatLeft = false;
+    private String currentDate;
+    private boolean mealAdded;
+    private List<String> oldNames;
+    private boolean nextDay;
 
     //local variables
     Recipe meal;
@@ -101,8 +101,10 @@ public class MealFragment extends Fragment implements Serializable {
         // Required empty public constructor
     }
 
-    public MealFragment(Recipe recipe) {
+    public MealFragment(Recipe recipe, boolean mealAdded) {
         this.meal = recipe;
+        this.mealAdded = mealAdded;
+
     }
 
     @Override
@@ -124,11 +126,13 @@ public class MealFragment extends Fragment implements Serializable {
         return view;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         // Find RecyclerView and bind to adapter
         binding.rvMeals.setHasFixedSize(true);
         allMeals = new ArrayList<>();
+        oldNames = new ArrayList<>();
         getCalories();
 
         //set circles aka image views
@@ -139,15 +143,28 @@ public class MealFragment extends Fragment implements Serializable {
         getScreenSize();
         setCirclesOutOfScreen();
 
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
+        LocalDate localDate = LocalDate.now();
+        currentDate = dtf.format(localDate);
+
+        try {
+            loadOldMeals();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        //clear calories and macro info when its a new day
+        if (nextDay) {
+            resetValues();
+        }
         //add the current recipe to the meal tab
         if (meal != null) {
-            allMeals.add(meal);
             if (mealAdded) {
-                setNutritionFacts();
-                binding.progressBar.setProgressPercentage(getPercentage(caloriesBefore), true);
-                binding.proteinProgress.setProgress(protein);
-                binding.fatProgress.setProgress(fat);
-                binding.carbProgress.setProgress(carbs);
+                allMeals.add(meal);
+                String currentName = meal.getRecipeName();
+                oldNames.add(currentName);
+                Log.e(TAG, currentName);
+                updateNewProgressBars();
                 //set x positions
                 xPositionProtein = addProtein.getX();
                 xPositionFat = addFat.getX();
@@ -165,11 +182,16 @@ public class MealFragment extends Fragment implements Serializable {
                     }
                 }, 0, 20);
 
+                // send to meal to store in parse server
+                Meal newMeal = new Meal();
+                newMeal.createObject(meal.getRecipeName(), meal.getRecipeURL(), meal.getImage(),
+                        meal.getProtein(), meal.getFat(), meal.getCarb(), meal.getCalories());
                 mealAdded = false;
             } else {
                 updateProgressBars();
             }
         }
+
 
         //set max nutrient
         binding.proteinProgress.setMax((int) (.25 * totalCalories) / 4);
@@ -201,17 +223,20 @@ public class MealFragment extends Fragment implements Serializable {
             }
         };
 
-        try {
-            loadOldMeals();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         // Define 1 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 1);
         // Create and bind an adapter & set layout manager
         adapter = new HomeAdapter(getContext(), allMeals, onLongClickListener);
         binding.rvMeals.setAdapter(adapter);
         binding.rvMeals.setLayoutManager(layout);
+    }
+
+    public void updateNewProgressBars() {
+        binding.progressBar.setProgressPercentage(getPercentage(caloriesBefore), true);
+        binding.proteinProgress.setProgress(protein);
+        binding.fatProgress.setProgress(fat);
+        binding.carbProgress.setProgress(carbs);
     }
 
     public void updateProgressBars() {
@@ -243,6 +268,7 @@ public class MealFragment extends Fragment implements Serializable {
         return (currentCalories / totalCalories) * 100;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void bounce() {
         proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
         circleMovement(proteinCircle, addProtein, binding.proteinProgress);
@@ -255,11 +281,8 @@ public class MealFragment extends Fragment implements Serializable {
 
         //checks if they collided/overlap
         if (isCollision(binding.proteinProgress, addProtein) || isCollision(binding.carbProgress, addCarb) || isCollision(binding.fatProgress, addFat)) {
-            binding.proteinProgress.setProgress(currentProtein);
-            binding.fatProgress.setProgress(currentFat);
-            binding.carbProgress.setProgress(currentCarbs);
-            //display progress for calories
-            binding.progressBar.setProgressPercentage(getPercentage(currentCalories), true);
+            setNutritionFacts();
+            updateProgressBars();
 
             //stop movement
             timer.cancel();
@@ -288,15 +311,15 @@ public class MealFragment extends Fragment implements Serializable {
         ball.setY(current.getY());
 
         //change x pos to left or right
-        if(ball.equals(addCarb)){
+        if (ball.equals(addCarb)) {
             xPositionCarbs = getMotionCarbX(xPositionCarbs, progressBar, bounceCarbLeft);
             //update x position
             current.setX((float) Math.ceil(xPositionCarbs));
-        }else if(ball.equals(addProtein)){
+        } else if (ball.equals(addProtein)) {
             xPositionProtein = getMotionProteinX(xPositionProtein, progressBar, bounceProteinLeft);
             //update x position
             current.setX((float) Math.ceil(xPositionProtein));
-        }else{
+        } else {
             xPositionFat = getMotionFatX(xPositionFat, progressBar, bounceFatLeft);
             fatCircle.setX((float) Math.ceil(xPositionFat));
         }
@@ -332,10 +355,10 @@ public class MealFragment extends Fragment implements Serializable {
         }
         if (xPosition > (currentProgressBar.getX() + currentProgressBar.getWidth()) - 10) {
             //when x coordinate is greater than the circles subtract 10 next time
-                bounceProteinLeft = true;
+            bounceProteinLeft = true;
         } else if (xPosition < currentProgressBar.getX() + 10) {
             //add 10 next time because to make ball stay to the right
-                bounceProteinLeft = false;
+            bounceProteinLeft = false;
         }
 
         return xPosition;
@@ -421,19 +444,25 @@ public class MealFragment extends Fragment implements Serializable {
                 } else {
                     List<Recipe> oldRecipes = new ArrayList();
                     for (int i = 0; i < objects.size(); i++) {
-                        //get all attributes
+                        String date = objects.get(i).get("date").toString();
                         String label = objects.get(i).get("label").toString();
-                        String recipe = objects.get(i).get("recipeUrl").toString();
-                        String image = objects.get(i).get("image").toString();
-                        //update nutrition information
-                        currentCalories += Double.parseDouble(objects.get(i).get("calories").toString());
-                        currentProtein += Integer.parseInt(objects.get(i).get("protein").toString());
-                        currentCarbs += Integer.parseInt(objects.get(i).get("carbs").toString());
-                        currentFat += Integer.parseInt(objects.get(i).get("fat").toString());
+                        Log.e(TAG, "old recipes label" + label);
+                        if (date.equals(currentDate) && !oldNames.contains(label)) {
+                            //get all attributes
+                            String recipe = objects.get(i).get("recipeUrl").toString();
+                            String image = objects.get(i).get("image").toString();
 
-                        Log.e(TAG, "" + currentCalories);
-                        Recipe current = new Recipe(label, image, recipe);
-                        oldRecipes.add(current);
+                            //update nutrition information
+                            currentCalories += Double.parseDouble(objects.get(i).get("calories").toString());
+                            currentProtein += Integer.parseInt(objects.get(i).get("protein").toString());
+                            currentCarbs += Integer.parseInt(objects.get(i).get("carbs").toString());
+                            currentFat += Integer.parseInt(objects.get(i).get("fat").toString());
+
+                            Recipe current = new Recipe(label, image, recipe);
+                            oldRecipes.add(current);
+                        } else {
+                            nextDay = true;
+                        }
                     }
                     //update adapter and allMeals
                     allMeals.addAll(oldRecipes);
@@ -444,6 +473,19 @@ public class MealFragment extends Fragment implements Serializable {
 
             }
         });
+    }
+
+
+    //at the end of the days clear values
+    public void resetValues() {
+        currentFat = 0;
+        caloriesBefore = 0.0;
+        currentCalories = 0.0;
+        currentProtein = 0;
+        currentCarbs = 0;
+        protein = 0;
+        fat = 0;
+        carbs = 0;
     }
 
 

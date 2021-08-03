@@ -1,42 +1,39 @@
 package com.example.food4u;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.view.GestureDetectorCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
 import com.example.food4u.fragments.DirectionFragment;
 import com.example.food4u.fragments.IngredientFragment;
-import com.example.food4u.fragments.MealFragment;
 import com.example.food4u.fragments.NutritionFragment;
 import com.google.android.material.tabs.TabLayout;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-
 
 public class DetailsActivity extends AppCompatActivity implements Serializable {
 
-    ActivityDetailsBinding binding;
+    private ActivityDetailsBinding binding;
     private Recipe recipe;
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
-    public static boolean mealAdded = false;
-    public static ArrayList<Recipe> mealPlan = new ArrayList<>();
-    GestureDetector gestureDetector;
+    private GestureDetector gestureDetector;
+    private TabLayout tabLayout;
+    private FragmentManager fm;
+    private FragmentTransaction ft;
+    private boolean mealAdded;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -51,7 +48,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
         recipe = (Recipe) getIntent().getExtras().getSerializable(CURRENT_RECIPE);
 
         // tab layout to navigate btwn: ingredients and directions
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
+        tabLayout = (TabLayout) findViewById(R.id.simpleTabLayout);
 
         TabLayout.Tab ingredientsTab = tabLayout.newTab();
         ingredientsTab.setText(R.string.Ingredients);
@@ -80,11 +77,9 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                         break;
                 }
                 //replace the fragment accordingly
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentTransaction ft = fm.beginTransaction();
-                ft.replace(R.id.simpleFrameLayout, fragment);
-                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
-                ft.commit();
+                fm = getSupportFragmentManager();
+                ft = fm.beginTransaction();
+                ft.replace(R.id.simpleFrameLayout, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
             }
 
             @Override
@@ -100,18 +95,16 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
 
         //add recipe to meal tab
         binding.btnMeal.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
+                //send recipe information to mealFragment via MainActivity
                 Intent intent = new Intent(DetailsActivity.this, MainActivity.class);
                 intent.putExtra(MainActivity.TO_MEAL, "MealFragment");
                 intent.putExtra("RECIPE", recipe);
-                startActivity(intent);
-                mealPlan.add(recipe);
                 mealAdded = true;
-                Meal meal = new Meal();
-                meal.createObject(recipe.getRecipeName(), recipe.getRecipeURL(), recipe.getImage(),
-                        recipe.getProtein(), recipe.getFat(), recipe.getCarb(), recipe.getCalories());
-
+                intent.putExtra("MEAL_ADDED", mealAdded);
+                startActivity(intent);
             }
         });
 
@@ -148,9 +141,18 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
         Glide.with(this).load(recipe.getImage()).circleCrop().fitCenter().into(binding.ivFood);
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //select ingredients tab
+        tabLayout.getTabAt(0).select();
+        Fragment fragment = new IngredientFragment(recipe);
+        //set up fragments
+        fm = getSupportFragmentManager();
+        ft = fm.beginTransaction();
+        //go to ingredients fragment
+        ft.replace(R.id.simpleFrameLayout, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
 
+    }
 
 }
-
-
-

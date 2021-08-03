@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.MenuItemCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.app.SearchManager;
 import android.content.Context;
@@ -20,31 +18,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import com.example.food4u.databinding.ActivityMainBinding;
-import com.example.food4u.databinding.ActivitySearchBinding;
 import com.example.food4u.fragments.HomeFragment;
 import com.example.food4u.fragments.MealFragment;
 import com.example.food4u.fragments.ProfileFragment;
-import com.example.food4u.fragments.QuestionOne;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-
-import org.jetbrains.annotations.NotNull;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -54,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TO_MEAL = TAG + "TO_MEAL";
     String fromDetails;
     private Recipe recipe;
+    private boolean mealAdded;
 
     ActivityMainBinding binding;
     final FragmentManager fragmentManager = getSupportFragmentManager();
@@ -69,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
         fromDetails = getIntent().getStringExtra(TO_MEAL);
         recipe = (Recipe) getIntent().getSerializableExtra("RECIPE");
+        mealAdded = getIntent().getBooleanExtra("MEAL_ADDED", false);
+        Log.e(TAG, "mealadded value" + mealAdded);
         setIntent(null);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -76,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        toolbar.setTitleTextColor(Color.parseColor("#FFD23F"));
+        toolbar.setTitleTextColor(Color.parseColor("#FD9122"));
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -98,11 +80,11 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        
 
-        if(fromDetails == null){
+
+        if (fromDetails == null) {
             binding.bottomNavigation.setSelectedItemId(R.id.action_home);
-        }else{
+        } else {
             binding.bottomNavigation.setSelectedItemId(R.id.action_meal);
         }
 
@@ -158,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void toMealFragment() {
-        fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment(this.recipe)).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new MealFragment(this.recipe, mealAdded)).commit();
+        mealAdded = false;
     }
 
     public void toHomeFragment() {

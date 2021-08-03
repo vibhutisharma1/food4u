@@ -63,7 +63,8 @@ public class ProfileFragment extends Fragment {
                 //go to Question Activity
                 Intent intent = new Intent(getContext(), QuestionActivity.class);
                 //reset request url to original
-                MainActivity.REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
+                MainActivity main = new MainActivity();
+                main.REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
                 QuestionOne.healthStringTags = "";
                 startActivity(intent);
             }

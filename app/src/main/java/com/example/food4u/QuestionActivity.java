@@ -1,18 +1,14 @@
 package com.example.food4u;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
-import com.example.food4u.databinding.ActivityQuestionBinding;
-import com.example.food4u.databinding.FragmentQuestionTwoBinding;
 import com.example.food4u.fragments.QuestionOne;
 import com.example.food4u.fragments.QuestionTwo;
 
@@ -51,11 +47,10 @@ public class QuestionActivity extends FragmentActivity {
         viewPager.setPageTransformer(new DepthPageTransformer());
 
 
-
     }
 
-    @Override
-    public void onBackPressed() {
+
+    public void onBackPressed(View v) {
         if (viewPager.getCurrentItem() == 0) {
             // If the user is currently looking at the first step, allow the system to handle the
             // Back button. This calls finish() on this activity and pops the back stack.
@@ -65,11 +60,18 @@ public class QuestionActivity extends FragmentActivity {
             viewPager.setCurrentItem(viewPager.getCurrentItem() - 1);
         }
     }
+
+    public void onNextPressed(View v) {
+        if (viewPager.getCurrentItem() == 0) {
+            // Otherwise, select the previous step.
+            viewPager.setCurrentItem(viewPager.getCurrentItem() + 1);
+        }
+    }
+
     public void buttonClicked(View v) {
         Fragment q1 = new QuestionOne();
         ((QuestionOne) q1).buttonClicked(v);
     }
-
 
 
     /**
@@ -85,9 +87,9 @@ public class QuestionActivity extends FragmentActivity {
         @Override
         public Fragment createFragment(int position) {
             if (position == 0) {
+                Toast.makeText(QuestionActivity.this, "Slide page to continue", Toast.LENGTH_SHORT).show();
                 return new QuestionOne();
-            }
-            else
+            } else
                 return new QuestionTwo();
         }
 
@@ -97,8 +99,6 @@ public class QuestionActivity extends FragmentActivity {
         }
 
     }
-
-
 
 
 }

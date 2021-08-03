@@ -75,11 +75,13 @@ public class SearchActivity extends AppCompatActivity {
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
 
+        MainActivity main = new MainActivity();
+
         // Get the intent, verify the action and get the search query
         Intent intent = getIntent();
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
-            String new_url = MainActivity.REQUEST_URL;
+            String new_url = main.REQUEST_URL;
             if (query != null) {
                 new_url += "&q=" + query;
             }

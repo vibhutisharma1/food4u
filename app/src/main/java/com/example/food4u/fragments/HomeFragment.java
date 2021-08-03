@@ -14,12 +14,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
 import com.example.food4u.PersonalInfo;
@@ -29,10 +23,6 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -87,16 +77,17 @@ public class HomeFragment extends Fragment {
 
         query.include(PersonalInfo.KEY_USER);
         query.whereEqualTo("user", ParseUser.getCurrentUser());
+        MainActivity main = new MainActivity();
 
         if (healthTags != null) {
             try {
-                MainActivity.REQUEST_URL += query.getFirst().getString("health");
+                main.REQUEST_URL += query.getFirst().getString("health");
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
         //another url to hold mealType to keep separate from main request url for search
-        String mealAddition = MainActivity.REQUEST_URL;
+        String mealAddition = main.REQUEST_URL;
         mealAddition += "&mealType=" + mealType();
         Log.e(TAG,mealAddition);
 

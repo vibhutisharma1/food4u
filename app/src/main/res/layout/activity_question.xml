@@ -13,21 +13,45 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="1dp">
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="1dp">
 
     </androidx.viewpager2.widget.ViewPager2>
 
+    <Button
+        android:id="@+id/nextBtn"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="13dp"
+        android:background="@drawable/next"
+        android:onClick="onNextPressed" />
+
+    <Button
+        android:id="@+id/backBtn"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="13dp"
+        android:layout_marginBottom="-1dp"
+        android:background="@drawable/back"
+        android:onClick="onBackPressed" />
+
 
     <!--    <ImageButton-->
-<!--        android:id="@+id/imageButton4"-->
-<!--        android:layout_width="103dp"-->
-<!--        android:layout_height="91dp"-->
-<!--        android:layout_alignParentEnd="true"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:layout_marginEnd="12dp"-->
-<!--        android:layout_marginBottom="18dp"-->
-<!--        app:srcCompat="@drawable/next2" />-->
+    <!--        android:id="@+id/imageButton4"-->
+    <!--        android:layout_width="103dp"-->
+    <!--        android:layout_height="91dp"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_marginEnd="12dp"-->
+    <!--        android:layout_marginBottom="18dp"-->
+    <!--        app:srcCompat="@drawable/next2" />-->
 
 
 </RelativeLayout>

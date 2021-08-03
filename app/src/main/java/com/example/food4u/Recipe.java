@@ -136,7 +136,6 @@ public class Recipe implements Serializable {
                 JSONObject totalNutrients = currentRecipe.getJSONObject("totalNutrients");
 
                 Map<String, String> nutrients = parseNutrition(totalNutrients);
-                Log.e(TAG, " current value" + nutrients.get("SUGAR"));
 
                 Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, nutrients);
                 allRecipes.add(recipe);

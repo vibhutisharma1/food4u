@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class HealthLabel {
 
-    String  [] health_tags;
+    String [] health_tags;
 
     public HealthLabel(){
         health_tags = new String[]{
