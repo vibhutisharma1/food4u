@@ -13,10 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_marginStart="0dp"
-        android:background="#E65E7A"
+        android:background="@color/white"
         android:minHeight="?attr/actionBarSize"
+        android:iconTint="@color/red"
         app:titleTextColor="@android:color/white">
-
     </androidx.appcompat.widget.Toolbar>
 
 
@@ -38,7 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="#2EAE77"
+        app:itemIconTint="@drawable/icon_selected"
+        app:itemTextColor="@drawable/icon_selected"
+        android:background="#FFFFFF"
         app:menu="@menu/menu_bottom_navigation">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>

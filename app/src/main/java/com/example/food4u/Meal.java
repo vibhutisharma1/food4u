@@ -18,23 +18,23 @@ import java.time.format.DateTimeFormatter;
 @ParseClassName("Recipe")
 public class Meal extends ParseObject {
 
-    private static final String TAG = "Meal" ;
+    private static final String TAG = "Meal";
     JSONObject nutritionObject;
     JSONArray ingredientsArray;
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void createObject(String label, String recipeURL, String image, String protein, String fat, String carbs, String calories ) {
+    public void createObject(String label, String recipeURL, String image, String protein, String fat, String carbs, String calories) {
         Meal entity = new Meal();
-        if(nutritionObject == null && ingredientsArray == null){
+        if (nutritionObject == null && ingredientsArray == null) {
             Log.e(TAG, "Something is null");
         }
         entity.put("label", label);
         entity.put("recipeUrl", recipeURL);
         entity.put("image", image);
         entity.put("user", ParseUser.getCurrentUser());
-        entity.put("calories",calories );
-        entity.put("carbs",carbs );
-        entity.put("protein", protein );
+        entity.put("calories", calories);
+        entity.put("carbs", carbs);
+        entity.put("protein", protein);
         entity.put("fat", fat);
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd");
@@ -43,16 +43,17 @@ public class Meal extends ParseObject {
 
         // Saves the new object.
         entity.saveInBackground(e -> {
-            if (e==null){
+            if (e == null) {
                 //Save was done
-            }else{
+            } else {
                 //Something went wrong
                 Log.e(TAG, "did not save");
             }
         });
 
     }
-    public void setIngredientsArray(JSONArray ingredients){
+
+    public void setIngredientsArray(JSONArray ingredients) {
         this.ingredientsArray = ingredients;
 
     }

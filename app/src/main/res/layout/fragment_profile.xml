@@ -4,42 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentTop="true"
+    android:background="#E7EDAC"
     tools:context=".fragments.ProfileFragment">
+
 
     <Button
         android:id="@+id/btnProfile"
         android:layout_width="wrap_content"
-        android:layout_height="77dp"
+        android:layout_height="62dp"
+        android:layout_alignTop="@+id/ivBackground"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="13dp"
-        android:layout_marginTop="269dp"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="61dp"
+        android:layout_marginTop="111dp"
         android:background="@drawable/background_button"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@drawable/edit"
+        android:fontFamily="@font/open_sans"
         android:text="Edit Profile" />
 
     <Button
         android:id="@+id/btFavorite"
         android:layout_width="wrap_content"
-        android:layout_height="79dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="17dp"
-        android:layout_marginTop="269dp"
+        android:layout_height="62dp"
+        android:layout_alignTop="@+id/ivBackground"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="111dp"
         android:layout_toEndOf="@+id/btnProfile"
         android:background="@drawable/background_button"
+        android:drawableTop="@drawable/past_recipes"
+        android:fontFamily="@font/open_sans"
         android:text="Favorite Recipes" />
 
     <Button
         android:id="@+id/btConnect"
-        android:layout_width="wrap_content"
-        android:layout_height="77dp"
-        android:layout_below="@+id/logoutBtn"
+        android:layout_width="130dp"
+        android:layout_height="61dp"
+        android:layout_below="@+id/btnProfile"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="170dp"
-        android:layout_marginEnd="17dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="-214dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="132dp"
         android:layout_toEndOf="@+id/btFavorite"
         android:background="@drawable/background_button"
+        android:drawableTop="@drawable/people"
+        android:fontFamily="@font/open_sans"
         android:text="Connect" />
 
     <Button
@@ -48,10 +61,65 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="4dp"
         android:background="#59E7ECE2"
         android:text="Log out" />
+
+    <ImageView
+        android:id="@+id/ivBackground"
+        android:layout_width="391dp"
+        android:layout_height="550dp"
+        android:layout_below="@+id/ivProfile"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="2dp"
+        android:layout_marginBottom="83dp"
+        android:background="@color/white"
+        android:backgroundTint="#E7EDAC"
+        android:src="@drawable/roundedback" />
+
+    <ImageView
+        android:id="@+id/ivProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="91dp"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/tvProfileName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivBackground"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="26dp"
+        android:fontFamily="@font/open_sans"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="#090808"
+        android:textSize="24sp"
+        tools:text="Vibhuti Sharma" />
+
+    <Button
+        android:id="@+id/btEditPicture"
+        android:layout_width="96dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/logoutBtn"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="27dp"
+        android:layout_toEndOf="@+id/ivProfile"
+        android:background="@drawable/background_button"
+        android:text="Edit Picture" />
 
 
 </RelativeLayout>

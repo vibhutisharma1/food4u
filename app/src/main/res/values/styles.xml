@@ -2,9 +2,14 @@
 <resources>
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="colorPrimary">#FFFCF0</item>
-        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/red</item>
         <item name="colorAccent">#46C6E9</item>
+    </style>
+
+    <style name="myRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:progressDrawable">@drawable/michelin</item>
+        <item name="android:indeterminateDrawable">@drawable/michelin</item>
     </style>
 
     <style name="what_age_ra">

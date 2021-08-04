@@ -21,6 +21,8 @@ public class SignupPage extends AppCompatActivity {
     TextView emailTxt;
     TextView usernameTxt;
     TextView passwordTxt;
+    TextView first;
+    TextView last;
     public static boolean SignupActivity = false;
     public static final String TAG = "SignupPage";
 
@@ -33,6 +35,8 @@ public class SignupPage extends AppCompatActivity {
         usernameTxt = findViewById(R.id.username);
         passwordTxt = findViewById(R.id.password);
         emailTxt = findViewById(R.id.email);
+        first = findViewById(R.id.etFirstName);
+        last = findViewById(R.id.etLastName);
 
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,19 +46,24 @@ public class SignupPage extends AppCompatActivity {
                 String username = usernameTxt.getText().toString();
                 String password = passwordTxt.getText().toString();
                 String email = emailTxt.getText().toString();
-                signupUser(username, password, email);
+                String firstName = first.getText().toString();
+                String lastName = last.getText().toString();
+                signupUser(username, password, email, firstName, lastName);
             }
         });
 
     }
 
-    private void signupUser(String username, String password, String email) {
+    private void signupUser(String username, String password, String email, String firstName,
+                            String lastName) {
         ParseUser user = new ParseUser();
 
         // Set core properties
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
+        user.put("firstName", firstName);
+        user.put("lastName", lastName);
 
         // Invoke signUpInBackground
         user.signUpInBackground(new SignUpCallback() {
@@ -68,7 +77,7 @@ public class SignupPage extends AppCompatActivity {
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
                     Log.e(TAG, "issue with login", e);
-                    Toast.makeText(SignupPage.this,"issue with signup", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupPage.this, "issue with signup", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
@@ -76,6 +85,7 @@ public class SignupPage extends AppCompatActivity {
 
 
     }
+
     private void goQuestionActivity() {
         Intent i = new Intent(this, QuestionActivity.class);
         startActivity(i);

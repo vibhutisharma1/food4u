@@ -9,5 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="holo_green_light">#ff99cc00</color>
     <color name="holo_darker_gray">#ffaaaaaa</color>
+    <color name="red">#CD2512</color>
 <!--    <color name="tint">"#FEFBDE"</color>-->
 </resources>
