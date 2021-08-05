@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +23,7 @@ import com.example.food4u.fragments.HomeFragment;
 import com.example.food4u.fragments.MealFragment;
 import com.example.food4u.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.parse.ParseUser;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -131,7 +131,12 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //no inspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_logout) {
+            ParseUser.logOut();
+            //this will now be null
+            ParseUser currentUser = ParseUser.getCurrentUser();
+            Intent i = new Intent(MainActivity.this, FrontActivity.class);
+            startActivity(i);
             return true;
         }
         if (id == R.id.menu_current_search) {

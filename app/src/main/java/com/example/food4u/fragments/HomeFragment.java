@@ -14,12 +14,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
 import com.example.food4u.PersonalInfo;
 import com.example.food4u.Recipe;
 import com.example.food4u.databinding.FragmentHomeBinding;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
@@ -62,7 +64,12 @@ public class HomeFragment extends Fragment {
 
         // allows for optimizations
         binding.rvPosts.setHasFixedSize(true);
-        binding.tvEnter.append(ParseUser.getCurrentUser().getUsername() + ",");
+        //set profile pic if there is one
+        ParseFile profileImage = ParseUser.getCurrentUser().getParseFile("profile_image");
+        if (profileImage != null) {
+            Glide.with(requireContext()).load(profileImage.getUrl()).circleCrop().into(binding.ivPfp);
+        }
+        binding.tvname.append(ParseUser.getCurrentUser().get("firstName") + " " + ParseUser.getCurrentUser().get("lastName") +"!");
 
         // Define 2 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);

@@ -76,19 +76,10 @@ public class ProfileFragment extends Fragment {
             Glide.with(requireContext()).load(profileImage.getUrl()).circleCrop().into(binding.ivProfile);
         }
         //set user's name
-        String username = ParseUser.getCurrentUser().getUsername();
-        binding.tvProfileName.setText(username);
+        String firstName = ParseUser.getCurrentUser().get("firstName").toString();
+        String lastName = ParseUser.getCurrentUser().get("lastName").toString();
 
-        binding.logoutBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                //this will now be null
-                ParseUser currentUser = ParseUser.getCurrentUser();
-                Intent i = new Intent(getContext(), FrontActivity.class);
-                startActivity(i);
-            }
-        });
+        binding.tvProfileName.setText(firstName + " " + lastName);
 
         binding.btnProfile.setOnClickListener(new View.OnClickListener() {
             @Override

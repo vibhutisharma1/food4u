@@ -56,7 +56,6 @@ public class RateActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
     }
 
     public void findAmazeRated() throws ParseException {

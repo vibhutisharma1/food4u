@@ -78,11 +78,11 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         holder.rootView.setTag(recipe);
         //find rating value
         String name = recipe.getRecipeName();
-        try {
-            checkIfRated(name);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            checkIfRated(name);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
         //set the recipe name
         holder.tvName.setText(name);
