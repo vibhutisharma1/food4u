@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
 
@@ -37,12 +36,13 @@
         android:layout_marginStart="35dp"
         android:layout_marginTop="38dp"
         android:layout_marginEnd="29dp"
-        android:background="@drawable/login_enter"
+        android:background="@drawable/background_button"
+        android:backgroundTint="@color/back_green"
         android:fontFamily="@font/open_sans"
         android:gravity="center"
         android:text="Sign Up"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/black"
         android:textSize="35sp"
         tools:layout_editor_absoluteX="131dp"
         tools:layout_editor_absoluteY="428dp" />
@@ -56,7 +56,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="126dp"
         android:layout_marginEnd="95dp"
-        android:src="@drawable/logo_name"
+        android:src="@drawable/logo_name_svg"
         tools:srcCompat="@tools:sample/avatars" />
 
 

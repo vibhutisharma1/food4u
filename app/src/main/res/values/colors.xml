@@ -9,6 +9,13 @@
     <color name="white">#FFFFFFFF</color>
     <color name="holo_green_light">#ff99cc00</color>
     <color name="holo_darker_gray">#ffaaaaaa</color>
-    <color name="red">#CD2512</color>
-<!--    <color name="tint">"#FEFBDE"</color>-->
+    <color name="orange">#FFAF34</color>
+    <color name="yellow">#FFCD34</color>
+    <color name="green">#579d27</color>
+    <color name="light_red">#FEEDEC</color>
+    <color name="light_yellow">#FCFAED</color>
+    <color name="light_green">#f6fbf0</color>
+    <color name="back_green">#E7EDAC</color>
+    <color name="grapefruit">#FD5956</color>
+
 </resources>

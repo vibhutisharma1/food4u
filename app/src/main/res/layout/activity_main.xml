@@ -13,9 +13,9 @@
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:layout_marginStart="0dp"
-        android:background="@color/white"
+        android:background="@color/light_green"
         android:minHeight="?attr/actionBarSize"
-        android:iconTint="@color/red"
+        android:backgroundTint="@color/back_green"
         app:titleTextColor="@android:color/white">
     </androidx.appcompat.widget.Toolbar>
 

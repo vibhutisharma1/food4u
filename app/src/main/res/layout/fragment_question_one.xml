@@ -13,13 +13,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginStart="2dp"
-        android:layout_marginEnd="-1dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="12dp"
         android:fontFamily="@font/open_sans"
         android:gravity="center_horizontal|top"
         android:text="What is Your Health Goal?"
         android:textAppearance="@style/what_age_ra"
-        android:textSize="30sp" />
+        android:textColor="#303030"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvHealth"

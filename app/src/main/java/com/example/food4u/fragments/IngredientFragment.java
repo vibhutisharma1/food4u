@@ -1,5 +1,6 @@
 package com.example.food4u.fragments;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -48,10 +49,10 @@ public class IngredientFragment extends Fragment {
             // Create Checkbox Dynamically
             CheckBox checkBox = new CheckBox(getContext());
             checkBox.setText(ingredients.get(i));
+            checkBox.setTextAppearance(getActivity(), R.style.ingredientFont);
+            checkBox.setButtonTintList(ColorStateList.valueOf(getResources().getColor(R.color.green)));
             //add to linear list
             binding.ingredientList.addView(checkBox);
         }
-        //TODO: change font to open sans and text size
-
     }
 }

@@ -23,6 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -38,6 +39,7 @@ public class Recipe implements Serializable {
     String calories;
     String servings;
     ArrayList<String> ingredients;
+    ArrayList<String> dietLabels;
     Map<String, String> nutrientMap;
 
     public Recipe(String recipeName, String image, String recipeURL){
@@ -46,7 +48,7 @@ public class Recipe implements Serializable {
         this.recipeURL = recipeURL;
     }
 
-    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> nutrientMap) {
+    public Recipe(String recipeName, String image, String recipeURL, ArrayList<String> ingredients, String calories, String servings, Map<String, String> nutrientMap, ArrayList<String> dietLabels) {
         this.recipeName = recipeName;
         this.image = image;
         this.recipeURL = recipeURL;
@@ -54,6 +56,7 @@ public class Recipe implements Serializable {
         this.servings = servings;
         this.ingredients = ingredients;
         this.nutrientMap = nutrientMap;
+        this.dietLabels = dietLabels;
     }
 
     public ArrayList<String> getIngredients() {
@@ -76,9 +79,14 @@ public class Recipe implements Serializable {
         return image;
     }
 
+    public ArrayList<String> getDietLabels() {
+        return dietLabels;
+    }
+
     public String getRecipeName() {
         return recipeName;
     }
+
 
     public static void retrieveFromAPI(String url, Context context, List<Recipe> allRecipes, HomeAdapter adapter) {
         //call api with current url
@@ -128,16 +136,24 @@ public class Recipe implements Serializable {
                 //retrieves an array of ingredients and add them to the recipe
                 ArrayList<String> ingredients = new ArrayList<>();
                 JSONArray ingredientList = currentRecipe.getJSONArray("ingredientLines");
-
                 for (int j = 0; j < ingredientList.length(); j++) {
                     ingredients.add(ingredientList.get(j).toString());
                 }
+
                 //create hash map of key-nutrient labels and value-quantity
                 JSONObject totalNutrients = currentRecipe.getJSONObject("totalNutrients");
-
                 Map<String, String> nutrients = parseNutrition(totalNutrients);
 
-                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories, servings, nutrients);
+                //retrieve diet label strings
+                ArrayList<String> diet = new ArrayList<>();
+                JSONArray dietStrings = currentRecipe.getJSONArray("dietLabels");
+                for (int y = 0; y < dietStrings.length(); y++) {
+                    diet.add(dietStrings.get(y).toString());
+                }
+
+                //store in recipe object
+                Recipe recipe = new Recipe(recipeName, image, recipeURL, ingredients, calories,
+                        servings, nutrients, diet);
                 allRecipes.add(recipe);
                 //randomize order
                 Collections.shuffle(allRecipes);

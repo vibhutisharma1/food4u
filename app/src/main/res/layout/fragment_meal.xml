@@ -8,18 +8,6 @@
     tools:context=".fragments.MealFragment">
 
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:layout_marginStart="0dp"
-        android:background="#E65E7A"
-        android:minHeight="?attr/actionBarSize"
-        app:titleTextColor="@android:color/white">
-
-    </androidx.appcompat.widget.Toolbar>
-
-
     <com.mackhartley.roundedprogressbar.RoundedProgressBar
         android:id="@+id/progressBar"
         android:layout_width="382dp"
@@ -31,15 +19,15 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="9dp"
         android:layout_marginEnd="9dp"
-        app:rpbBackgroundColor="#F1E8B8"
+        app:rpbBackgroundColor="#E8E5E5"
         app:rpbBackgroundTextColor="#252925"
         app:rpbCornerRadiusBottomLeft="6dp"
         app:rpbCornerRadiusBottomRight="20dp"
         app:rpbCornerRadiusTopLeft="20dp"
         app:rpbCornerRadiusTopRight="6dp"
         app:rpbIsRadiusRestricted="false"
-        app:rpbProgressColor="#3BCEAC"
-        app:rpbProgressTextColor="#F28969"
+        app:rpbProgressColor="@color/orange"
+        app:rpbProgressTextColor="@color/black"
         app:rpbTextPadding="12dp">
 
         <TextView
@@ -49,6 +37,7 @@
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/open_sans"
             android:text="Calories"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +89,7 @@
         android:layout_marginTop="7dp"
         android:fontFamily="@font/open_sans_semibold"
         android:text="Daily Menu"
-        android:textColor="#FFFAFA"
+        android:textColor="@color/black"
         android:textSize="25sp"
         app:lineHeight="46sp" />
 
@@ -117,11 +106,11 @@
         app:progress_background_color="@color/holo_darker_gray"
         app:progress_blur_radius="5dp"
         app:progress_blur_style="solid"
-        app:progress_end_color="#0EAD69"
-        app:progress_start_color="#0EAD69"
+        app:progress_end_color="@color/green"
+        app:progress_start_color="@color/green"
         app:progress_stroke_width="3dp"
         app:progress_style="solid_line"
-        app:progress_text_color="#0EAD69" />
+        app:progress_text_color="@color/green" />
 
     <com.dinuscxj.progressbar.CircleProgressBar
         android:id="@+id/carbProgress"

@@ -8,12 +8,19 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
@@ -21,7 +28,9 @@ import com.example.food4u.fragments.DirectionFragment;
 import com.example.food4u.fragments.IngredientFragment;
 import com.example.food4u.fragments.NutritionFragment;
 import com.google.android.material.tabs.TabLayout;
+
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class DetailsActivity extends AppCompatActivity implements Serializable {
 
@@ -34,6 +43,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
     private FragmentManager fm;
     private FragmentTransaction ft;
     private boolean mealAdded;
+    private float rating;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -108,39 +118,50 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             }
         });
 
-        //like double click
-        binding.likeStar.setOnTouchListener(new View.OnTouchListener() {
+        binding.btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                Log.e(TAG, "Inside touch method");
-                gestureDetector = new GestureDetector(DetailsActivity.this, new GestureListener());
-                binding.likeStar.setPressed(true);
-                binding.likeStar.setActivated(true);
-                return gestureDetector.onTouchEvent(event);
+            public void onClick(View v) {
+                onBackPressed();
             }
-            class GestureListener extends GestureDetector.SimpleOnGestureListener {
-
-                @Override
-                public boolean onDown(MotionEvent e) {
-                    return true;
-                }
-
-                // event when double tap occurs
-                @Override
-                public boolean onDoubleTap(MotionEvent e) {
-                    binding.likeStar.setPressed(true);
-                    binding.likeStar.setActivated(true);
-                    return true;
-                }
-            }
-
         });
+
+        //add diet labels
+        ArrayList<String> dietLabels = recipe.getDietLabels();
+        for (int i = 0; i < dietLabels.size(); i++) {
+            // Create labels dynamically
+            Button diet = new Button(this);
+            //edit appearance
+            String label = dietLabels.get(i).toLowerCase();
+            diet.setAllCaps(false);
+            diet.setText(label);
+            diet.setTextColor(getResources().getColor(R.color.green));
+            diet.setBackgroundResource(R.drawable.background_green);
+            diet.setLayoutParams(new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT));
+            //add to linear list
+            if (i <= 1) {
+                binding.lldietLabels.addView(diet);
+            } else {
+                binding.lldietTwo.addView(diet);
+            }
+        }
+
+        //ratings
+        rating = binding.foodRating.getRating();
+
+        //change color of star
+        LayerDrawable stars = (LayerDrawable) binding.foodRating.getProgressDrawable();
+        stars.getDrawable(1).setColorFilter(getResources().getColor(R.color.yellow), PorterDuff.Mode.SRC_ATOP);
+        stars.getDrawable(2).setColorFilter(getResources().getColor(R.color.orange), PorterDuff.Mode.SRC_ATOP);
 
         //set details view image and recipe name
         binding.tvRecipe.setText(recipe.getRecipeName());
         Glide.with(this).load(recipe.getImage()).circleCrop().fitCenter().into(binding.ivFood);
 
     }
+
+
     @Override
     protected void onStart() {
         super.onStart();

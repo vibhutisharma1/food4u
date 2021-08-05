@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- drawable/rectangle_5.xml -->
 <vector
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="112dp"
-    android:height="89dp"
+    android:width="20dp"
+    android:height="10dp"
     android:viewportWidth="112"
     android:viewportHeight="89"
     >
+
 
     <group>
 
@@ -17,7 +17,7 @@
 
         <path
             android:pathData="M0 0V89H112V0"
-            android:fillColor="@color/light_yellow"
+            android:fillColor= "@color/light_green"
             />
 
     </group>

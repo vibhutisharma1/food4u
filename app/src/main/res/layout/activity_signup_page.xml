@@ -32,7 +32,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="57dp"
         android:layout_marginEnd="74dp"
-        android:src="@drawable/logo_name"
+        android:src="@drawable/logo_name_svg"
         tools:srcCompat="@tools:sample/avatars" />
 
 

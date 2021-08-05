@@ -3,13 +3,8 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 
         <item name="colorPrimary">@color/white</item>
-        <item name="colorPrimaryDark">@color/red</item>
+        <item name="colorPrimaryDark">@color/green</item>
         <item name="colorAccent">#46C6E9</item>
-    </style>
-
-    <style name="myRatingBar" parent="@android:style/Widget.RatingBar">
-        <item name="android:progressDrawable">@drawable/michelin</item>
-        <item name="android:indeterminateDrawable">@drawable/michelin</item>
     </style>
 
     <style name="what_age_ra">
@@ -48,19 +43,6 @@
 
     </style>
 
-    <style name="food4u">
-
-        <item name="android:textSize">
-            64sp
-        </item>
-
-        <item name="android:textColor">
-            #46C6E9
-        </item>
-
-    </style>
-
-
     <style name="explore_new">
 
         <item name="android:textSize">
@@ -72,5 +54,13 @@
         </item>
 
     </style>
+
+    <style name="ingredientFont">
+        <item name="android:fontFamily">@font/open_sans</item>
+        <item name="android:textColor">#303030</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:padding">2dip</item>
+    </style>
+
 
 </resources>

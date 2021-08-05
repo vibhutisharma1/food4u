@@ -233,14 +233,22 @@ public class MealFragment extends Fragment implements Serializable {
     }
 
     public void updateNewProgressBars() {
-        binding.progressBar.setProgressPercentage(getPercentage(caloriesBefore), true);
+        double percent = getPercentage(caloriesBefore);
+        if(percent >=85){
+            binding.progressBar.setTextPadding(220);
+        }
+        binding.progressBar.setProgressPercentage(percent, true);
         binding.proteinProgress.setProgress(protein);
         binding.fatProgress.setProgress(fat);
         binding.carbProgress.setProgress(carbs);
     }
 
     public void updateProgressBars() {
-        binding.progressBar.setProgressPercentage(getPercentage(currentCalories), true);
+        double percent = getPercentage(currentCalories);
+        if(percent >=85){
+            binding.progressBar.setTextPadding(220);
+        }
+        binding.progressBar.setProgressPercentage(percent, true);
         binding.proteinProgress.setProgress(currentProtein);
         binding.fatProgress.setProgress(currentFat);
         binding.carbProgress.setProgress(currentCarbs);
@@ -270,14 +278,21 @@ public class MealFragment extends Fragment implements Serializable {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void bounce() {
+        //start circle animation but dont animate if no nutrition
         proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
-        circleMovement(proteinCircle, addProtein, binding.proteinProgress);
+        if(Integer.parseInt(meal.getProtein()) != 0){
+            circleMovement(proteinCircle, addProtein, binding.proteinProgress);
+        }
 
         carbCircle = new Circle(addCarb.getX(), addCarb.getY());
-        circleMovement(carbCircle, addCarb, binding.carbProgress);
+        if(Integer.parseInt(meal.getCarb()) != 0){
+            circleMovement(carbCircle, addCarb, binding.carbProgress);
+        }
 
         fatCircle = new Circle(addFat.getX(), addFat.getY());
-        circleMovement(fatCircle, addFat, binding.fatProgress);
+        if(Integer.parseInt(meal.getFat()) != 0) {
+            circleMovement(fatCircle, addFat, binding.fatProgress);
+        }
 
         //checks if they collided/overlap
         if (isCollision(binding.proteinProgress, addProtein) || isCollision(binding.carbProgress, addCarb) || isCollision(binding.fatProgress, addFat)) {
