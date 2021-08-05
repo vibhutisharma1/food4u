@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public static String REQUEST_URL = "https://api.edamam.com/api/recipes/v2?type=public&app_id=20517fda&app_key=56d94b548860a8480583b6eb00346efe";
     public static final String TAG = "MainActivity";
     public static final String TO_MEAL = TAG + "TO_MEAL";
-    String fromDetails;
+    private String fromDetails;
     private Recipe recipe;
     private boolean mealAdded;
 

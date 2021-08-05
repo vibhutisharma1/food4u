@@ -14,6 +14,7 @@ public class ParseApplication extends Application {
         super.onCreate();
 
         // Register your parse models
+        ParseObject.registerSubclass(Favorite.class);
         ParseObject.registerSubclass(PersonalInfo.class);
         ParseObject.registerSubclass(Meal.class);
         Parse.initialize(new Parse.Configuration.Builder(this)

@@ -17,6 +17,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 import android.provider.MediaStore;
+import android.provider.Telephony;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.bumptech.glide.Glide;
 import com.example.food4u.FrontActivity;
 import com.example.food4u.MainActivity;
 import com.example.food4u.QuestionActivity;
+import com.example.food4u.RateActivity;
 import com.example.food4u.databinding.FragmentProfileBinding;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -107,6 +109,14 @@ public class ProfileFragment extends Fragment {
                 Log.e(TAG, "inside on blick edit picture");
                 onPickPhoto(v);
 
+            }
+        });
+
+        binding.btFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), RateActivity.class);
+                startActivity(intent);
             }
         });
     }

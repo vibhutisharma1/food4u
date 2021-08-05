@@ -28,8 +28,8 @@
         android:layout_height="50dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="6dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/add_meal" />
 
     <RelativeLayout
@@ -59,7 +59,7 @@
             android:layout_height="449dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            android:layout_marginEnd="0dp"
+            android:layout_marginEnd="-1dp"
             android:layout_marginBottom="2dp">
 
         </FrameLayout>
@@ -86,14 +86,17 @@
         android:layout_below="@+id/tvRecipe"
         android:layout_alignParentStart="true"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:numStars="3" />
 
     <Button
         android:id="@+id/btnBack"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="7dp"
         android:background="@drawable/back" />
 
     <LinearLayout
@@ -119,6 +122,20 @@
         android:layout_marginEnd="4dp"
         android:layout_toEndOf="@+id/foodRating"
         android:orientation="horizontal"></LinearLayout>
+
+    <Button
+        android:id="@+id/btSave"
+        android:layout_width="61dp"
+        android:layout_height="26dp"
+        android:layout_below="@+id/btnMeal"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="11dp"
+        android:background="@drawable/clicked"
+        android:fontFamily="@font/open_sans"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/orange" />
 
 </RelativeLayout>
 

@@ -16,5 +16,6 @@
 
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="clickable_string">This is a <u>clickable string</u></string>
+    <string name="title_activity_rate">RateActivity</string>
 
 </resources>

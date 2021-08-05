@@ -1,5 +1,6 @@
 package com.example.food4u;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -21,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.databinding.ActivityDetailsBinding;
@@ -28,6 +30,9 @@ import com.example.food4u.fragments.DirectionFragment;
 import com.example.food4u.fragments.IngredientFragment;
 import com.example.food4u.fragments.NutritionFragment;
 import com.google.android.material.tabs.TabLayout;
+import com.parse.ParseUser;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -38,12 +43,10 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
     private Recipe recipe;
     private static final String TAG = "DetailsActivity";
     public static final String CURRENT_RECIPE = TAG + ".CurrentRecipe";
-    private GestureDetector gestureDetector;
     private TabLayout tabLayout;
     private FragmentManager fm;
     private FragmentTransaction ft;
     private boolean mealAdded;
-    private float rating;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -147,8 +150,17 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
             }
         }
 
-        //ratings
-        rating = binding.foodRating.getRating();
+
+        //save rating in parse server
+        Favorite favoriteRecipe = new Favorite();
+        binding.btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                float rating = binding.foodRating.getRating();
+                favoriteRecipe.createObject(recipe.getRecipeName(), recipe.getRecipeURL(), rating);
+                Toast.makeText(DetailsActivity.this, "Rating saved",Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //change color of star
         LayerDrawable stars = (LayerDrawable) binding.foodRating.getProgressDrawable();
@@ -175,5 +187,6 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
         ft.replace(R.id.simpleFrameLayout, fragment).setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN).commit();
 
     }
+
 
 }
