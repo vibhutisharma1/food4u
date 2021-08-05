@@ -78,11 +78,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         holder.rootView.setTag(recipe);
         //find rating value
         String name = recipe.getRecipeName();
-//        try {
-//            checkIfRated(name);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
 
         //set the recipe name
         holder.tvName.setText(name);
@@ -95,22 +90,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
         System.out.println(recipeList.size());
         return recipeList.size();
     }
-    public void checkIfRated(String name) throws ParseException {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Favorite");
-        query.whereEqualTo("Recipe", name);
-        if(query.getFirst() != null){
-            int rating = Integer.parseInt(query.getFirst().get("Rating").toString());
-            if(rating == 1){
-                red = true;
-            }else if(rating == 2){
-                green = true;
-            }else if(rating == 3){
-                yellow = true;
-            }
-        }
-
-    }
-
 
     public class VH extends RecyclerView.ViewHolder {
         final View rootView;

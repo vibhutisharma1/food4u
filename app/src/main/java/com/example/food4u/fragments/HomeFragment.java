@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,6 +65,7 @@ public class HomeFragment extends Fragment {
 
         // allows for optimizations
         binding.rvPosts.setHasFixedSize(true);
+        //binding.rvCuisine.setHasFixedSize(true);
         //set profile pic if there is one
         ParseFile profileImage = ParseUser.getCurrentUser().getParseFile("profile_image");
         if (profileImage != null) {
@@ -73,7 +75,7 @@ public class HomeFragment extends Fragment {
 
         // Define 2 column grid layout
         final GridLayoutManager layout = new GridLayoutManager(getContext(), 2);
-
+        LinearLayoutManager horizontalLayout = new LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false);
         //add the new health tags to url
         String healthTags = QuestionOne.healthStringTags;
 
@@ -104,6 +106,7 @@ public class HomeFragment extends Fragment {
         binding.rvPosts.setAdapter(adapter);
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
+        //binding.rvCuisine.setLayoutManager(horizontalLayout);
 
         //get recipes based on health tags
         Recipe.retrieveFromAPI(mealAddition, getContext(), allRecipes, adapter);

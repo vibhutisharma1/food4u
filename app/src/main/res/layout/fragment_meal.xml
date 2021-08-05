@@ -26,7 +26,7 @@
         app:rpbCornerRadiusTopLeft="20dp"
         app:rpbCornerRadiusTopRight="6dp"
         app:rpbIsRadiusRestricted="false"
-        app:rpbProgressColor="@color/orange"
+        app:rpbProgressColor="@color/back_green"
         app:rpbProgressTextColor="@color/black"
         app:rpbTextPadding="12dp">
 
@@ -47,7 +47,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvMeals"
         android:layout_width="match_parent"
-        android:layout_height="568dp"
+        android:layout_height="626dp"
         android:layout_below="@+id/proteinProgress"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -143,11 +143,11 @@
         app:progress_background_color="@color/holo_darker_gray"
         app:progress_blur_radius="5dp"
         app:progress_blur_style="solid"
-        app:progress_end_color="#540D6E"
-        app:progress_start_color="#540D6E"
+        app:progress_end_color="@color/red"
+        app:progress_start_color="@color/red"
         app:progress_stroke_width="3dp"
         app:progress_style="solid_line"
-        app:progress_text_color="#540D6E" />
+        app:progress_text_color="@color/red" />
 
     <TextView
         android:id="@+id/textView5"
