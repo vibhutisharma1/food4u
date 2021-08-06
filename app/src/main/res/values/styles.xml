@@ -62,5 +62,26 @@
         <item name="android:padding">2dip</item>
     </style>
 
+    <style name="fork_it">
+
+        <item name="android:textSize">
+            50sp
+        </item>
+
+        <item name="android:textColor">
+            #71993F
+        </item>
+
+    </style>
+
+
+    <!-- strings.xml -->
+    <string name="fork_it">
+
+fork it
+</string>
+
+
+
 
 </resources>

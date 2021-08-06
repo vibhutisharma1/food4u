@@ -1,17 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/back_green"
     tools:context=".SignupPage">
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/konfettiView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
+    <TextView
+        android:id="@+id/instagramLogo"
+        android:layout_width="359dp"
+        android:layout_height="110dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="18dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/open_sans_bold"
+        android:gravity="center_horizontal|top"
+        android:text="fork it"
+        android:textAppearance="@style/fork_it"
+        android:textColor="@color/red"
+        android:textSize="60sp"
+        android:textStyle="bold" />
 
 
     <Button
         android:id="@+id/login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="352dp"
+        android:layout_height="62dp"
         android:layout_below="@+id/password"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -19,21 +44,10 @@
         android:layout_marginStart="2dp"
         android:layout_marginTop="42dp"
         android:layout_marginEnd="4dp"
+        android:background="@drawable/login_enter"
         android:text="Sign Up"
         tools:layout_editor_absoluteX="131dp"
         tools:layout_editor_absoluteY="428dp" />
-
-    <ImageView
-        android:id="@+id/instagramLogo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
-        android:layout_marginEnd="74dp"
-        android:src="@drawable/icon"
-        tools:srcCompat="@tools:sample/avatars" />
 
 
     <EditText

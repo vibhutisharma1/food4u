@@ -14,8 +14,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.example.food4u.Cuisine;
+import com.example.food4u.CuisineAdapter;
 import com.example.food4u.HomeAdapter;
 import com.example.food4u.MainActivity;
 import com.example.food4u.PersonalInfo;
@@ -38,6 +41,8 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     protected HomeAdapter adapter;
     protected List<Recipe> allRecipes;
+    protected List<Cuisine> allCuisines;
+    protected CuisineAdapter adapterCuisine;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -65,7 +70,7 @@ public class HomeFragment extends Fragment {
 
         // allows for optimizations
         binding.rvPosts.setHasFixedSize(true);
-        //binding.rvCuisine.setHasFixedSize(true);
+        binding.rvCuisine.setHasFixedSize(true);
         //set profile pic if there is one
         ParseFile profileImage = ParseUser.getCurrentUser().getParseFile("profile_image");
         if (profileImage != null) {
@@ -80,6 +85,7 @@ public class HomeFragment extends Fragment {
         String healthTags = QuestionOne.healthStringTags;
 
         allRecipes = new ArrayList<>();
+        allCuisines = new ArrayList<>();
 
         //get their health tag
         ParseQuery<ParseObject> query = ParseQuery.getQuery("personalInfo");
@@ -102,15 +108,28 @@ public class HomeFragment extends Fragment {
 
         // Create an adapter
         adapter = new HomeAdapter(getContext(), allRecipes);
+        adapterCuisine = new CuisineAdapter(getContext(), allCuisines);
         // Bind adapter to list
         binding.rvPosts.setAdapter(adapter);
+        binding.rvCuisine.setAdapter(adapterCuisine);
         //set layout manager
         binding.rvPosts.setLayoutManager(layout);
-        //binding.rvCuisine.setLayoutManager(horizontalLayout);
+        binding.rvCuisine.setLayoutManager(horizontalLayout);
 
         //get recipes based on health tags
         Recipe.retrieveFromAPI(mealAddition, getContext(), allRecipes, adapter);
+        setAllCuisines();
     }
+    public void setAllCuisines(){
+        String [] cuisines = {"American", "Asian", "Chinese", "Indian", "Italian",
+                "Japanese", "Mexican", "Middle Eastern"};
+        for(int x = 0; x < cuisines.length; x++){
+            Cuisine cuisine = new Cuisine(cuisines[x]);
+            allCuisines.add(cuisine);
+        }
+
+    }
+
 
 
     //displays recipes based on current time to get accurate mealTypes(breakfast, lunch, dinner)

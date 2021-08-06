@@ -4,11 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.QuestionTwo">
-    <!-- question1 -->
 
 
-    <!-- Rectangle 37 -->
-
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="460dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/background_button"
+        android:fontFamily="@font/open_sans"
+        android:text="Show me the Recipes!" />
 
     <ScrollView
         android:id="@+id/content"
@@ -19,12 +27,11 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_centerVertical="true"
-        android:layout_marginStart="-4dp"
+        android:layout_marginStart="-3dp"
         android:layout_marginTop="-23dp"
         android:layout_marginEnd="1dp"
         android:layout_marginBottom="10dp">
 
-            android:background="@drawable/gradient_background" />
     </ScrollView>
 
     <TextView
@@ -35,11 +42,13 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="-3dp"
         android:layout_marginTop="8dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/open_sans"
         android:gravity="center_horizontal|top"
         android:text="Personal Info"
         android:textAppearance="@style/what_age_ra"
-        android:textSize="34sp" />
+        android:textColor="#303030"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etAge"
@@ -55,16 +64,6 @@
         android:fontFamily="@font/open_sans"
         android:hint="Age"
         android:inputType="number" />
-
-    <Button
-        android:id="@+id/btnDone"
-        android:layout_width="400dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="660dp"
-        android:background="@drawable/background_button"
-        android:fontFamily="@font/open_sans"
-        android:text="Show me the Recipes!" />
 
     <TextView
         android:id="@+id/tvAge"

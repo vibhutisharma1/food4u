@@ -24,6 +24,7 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,7 +61,9 @@ public class RateActivity extends AppCompatActivity {
 
     public void findAmazeRated() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Favorite");
+        query.include("user");
         query.whereEqualTo("Rating", 3);
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
         //add favorite recipes into buttons
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -102,6 +105,8 @@ public class RateActivity extends AppCompatActivity {
     public void findMehRated() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Favorite");
         query.whereEqualTo("Rating", 2);
+        query.include("user");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
         //add favorite recipes into buttons
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
@@ -142,6 +147,8 @@ public class RateActivity extends AppCompatActivity {
     public void findNoRated() throws ParseException {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Favorite");
         query.whereEqualTo("Rating", 1);
+        query.include("user");
+        query.whereEqualTo("user", ParseUser.getCurrentUser());
         //add favorite recipes into buttons
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override

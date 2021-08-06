@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.food4u.FrontActivity;
+import com.example.food4u.GroceryList;
 import com.example.food4u.MainActivity;
 import com.example.food4u.QuestionActivity;
 import com.example.food4u.RateActivity;
@@ -107,6 +108,14 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getContext(), RateActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.btGrocery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), GroceryList.class);
                 startActivity(intent);
             }
         });

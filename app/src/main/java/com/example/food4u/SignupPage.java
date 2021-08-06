@@ -15,6 +15,10 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
+
 public class SignupPage extends AppCompatActivity {
 
     Button signupBtn;
@@ -37,7 +41,6 @@ public class SignupPage extends AppCompatActivity {
         emailTxt = findViewById(R.id.email);
         first = findViewById(R.id.etFirstName);
         last = findViewById(R.id.etLastName);
-
         signupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

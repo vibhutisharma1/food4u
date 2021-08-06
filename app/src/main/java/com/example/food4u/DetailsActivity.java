@@ -118,6 +118,7 @@ public class DetailsActivity extends AppCompatActivity implements Serializable {
                 mealAdded = true;
                 intent.putExtra("MEAL_ADDED", mealAdded);
                 startActivity(intent);
+                Toast.makeText(DetailsActivity.this, "Meal successfully forked!", Toast.LENGTH_SHORT).show();
             }
         });
 

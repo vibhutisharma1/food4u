@@ -37,9 +37,6 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
     private List<Recipe> recipeList;
     private static final String TAG = "HomeAdapter" ;
     OnLongClickListener longClickListener;
-    private boolean red;
-    private boolean yellow;
-    private boolean green;
 
     public interface OnLongClickListener{
         void onItemLongClicked(int position);
@@ -76,9 +73,7 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.VH> {
     public void onBindViewHolder(final VH holder, int position) {
         Recipe recipe = recipeList.get(position);
         holder.rootView.setTag(recipe);
-        //find rating value
         String name = recipe.getRecipeName();
-
         //set the recipe name
         holder.tvName.setText(name);
         // Instruct Glide to load the image

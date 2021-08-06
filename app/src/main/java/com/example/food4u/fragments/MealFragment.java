@@ -28,6 +28,7 @@ import com.example.food4u.HomeAdapter;
 
 import com.example.food4u.Meal;
 import com.example.food4u.PersonalInfo;
+import com.example.food4u.R;
 import com.example.food4u.Recipe;
 
 import com.example.food4u.databinding.FragmentMealBinding;
@@ -45,6 +46,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class MealFragment extends Fragment implements Serializable {
 
@@ -234,7 +239,7 @@ public class MealFragment extends Fragment implements Serializable {
 
     public void updateNewProgressBars() {
         double percent = getPercentage(caloriesBefore);
-        if(percent >=85){
+        if (percent >= 85) {
             binding.progressBar.setTextPadding(220);
         }
         binding.progressBar.setProgressPercentage(percent, true);
@@ -245,7 +250,7 @@ public class MealFragment extends Fragment implements Serializable {
 
     public void updateProgressBars() {
         double percent = getPercentage(currentCalories);
-        if(percent >=85){
+        if (percent >= 85) {
             binding.progressBar.setTextPadding(220);
         }
         binding.progressBar.setProgressPercentage(percent, true);
@@ -273,24 +278,25 @@ public class MealFragment extends Fragment implements Serializable {
 
     //calculate the percentage of calories eaten
     public Double getPercentage(double currentCalories) {
-        return (currentCalories / totalCalories) * 100;
+        double percentage = (currentCalories / totalCalories) * 100;
+        return percentage;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void bounce() {
         //start circle animation but dont animate if no nutrition
         proteinCircle = new Circle(addProtein.getX(), addProtein.getY());
-        if(Integer.parseInt(meal.getProtein()) != 0){
+        if (Integer.parseInt(meal.getProtein()) != 0) {
             circleMovement(proteinCircle, addProtein, binding.proteinProgress);
         }
 
         carbCircle = new Circle(addCarb.getX(), addCarb.getY());
-        if(Integer.parseInt(meal.getCarb()) != 0){
+        if (Integer.parseInt(meal.getCarb()) != 0) {
             circleMovement(carbCircle, addCarb, binding.carbProgress);
         }
 
         fatCircle = new Circle(addFat.getX(), addFat.getY());
-        if(Integer.parseInt(meal.getFat()) != 0) {
+        if (Integer.parseInt(meal.getFat()) != 0) {
             circleMovement(fatCircle, addFat, binding.fatProgress);
         }
 
@@ -467,7 +473,8 @@ public class MealFragment extends Fragment implements Serializable {
                             String recipe = objects.get(i).get("recipeUrl").toString();
                             String image = objects.get(i).get("image").toString();
 
-                            //update nutrition information
+//                            //update nutrition information
+
                             currentCalories += Double.parseDouble(objects.get(i).get("calories").toString());
                             currentProtein += Integer.parseInt(objects.get(i).get("protein").toString());
                             currentCarbs += Integer.parseInt(objects.get(i).get("carbs").toString());

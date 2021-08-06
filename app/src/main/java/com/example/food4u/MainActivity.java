@@ -58,7 +58,8 @@ public class MainActivity extends AppCompatActivity {
         // Make sure the toolbar exists in the activity and is not null
         setSupportActionBar(toolbar);
 
-        toolbar.setTitleTextColor(getResources().getColor(R.color.orange));
+        toolbar.setTitleTextColor(getResources().getColor(R.color.red));
+        getSupportActionBar().setIcon(R.drawable.fork);
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
