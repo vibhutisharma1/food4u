@@ -96,11 +96,14 @@ public class HomeFragment extends Fragment {
 
         if (healthTags != null) {
             try {
-                main.REQUEST_URL += query.getFirst().getString("health");
+                String health = query.getFirst().getString("health");
+                main.REQUEST_URL += health;
+                Log.e(TAG, health);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
+
         //another url to hold mealType to keep separate from main request url for search
         String mealAddition = main.REQUEST_URL;
         mealAddition += "&mealType=" + mealType();
