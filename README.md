@@ -1,39 +1,11 @@
-# food4u
+# fork it
 turn your health goals into a reality! this app creates specific recipes for you based on your health goals 
 # README
-**MyMeals:** App that allows users to enter their own recipes or use app suggestions and generates a meal plan and grocery list for the week.
+App that aligns users health goals with their eating habits. 
 
-## 1. User Stories
+The app gives you recipe recommendations for each meal based on the time of day(For example, breakfast options between the times of 6am-11am). Users can also search recipes and explore different cuisines. Moreover, the app calculates your daily calorie and macro(fat, carbs, and protein) intake based on your personal information. So when you add a recipe to your meals for the day it will inform you how much of your daily calories and macro intake that accounts for. Users can view a recipe’s details view that has the ingredients, nutrition facts, and directions. Additionally, users can edit their profile picture, health goals, and grocery list. I learned so much while making this app and am so excited to share it with you all!
 
-**Required Must-have Stories**
-
- - [X] User can create an account
- - [X] User can log in
- - [X] User can select health tags to filter recipes
- - [x] User can view displayed recipes and different meal types (breakfast, lunch, dinner) based on time of day
- - [ ] User is able to add meals to Meal Plan
- - [ ] User gets persoanlized calorie and macro calculation 
- - [ ] User gets a visual representation of calorie and macro nutrient goal
- - [ ] User can view their favorite meals in their profile 
- - [ ] User can share their favorite recipe to Instagram and Facebook
- - [ ] User can edit their profile to change preferences 
-
-**Optional Nice-to-have Stories**
+https://user-images.githubusercontent.com/63756365/129393021-29fd3b86-821d-43b0-a25e-e43c9687da4e.mp4
 
 
 
-## 2. Working Schedule
-
-
-## 3. Screen Archetypes
-
-
-
-## 4. Navigation
-
-
-## 5. Schema
-### Models
-
-
-## 6. Wireframes
